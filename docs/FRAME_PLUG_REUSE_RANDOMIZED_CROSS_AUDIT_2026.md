@@ -20,3 +20,20 @@ Five synthetic regression tests check cross-subtype reuse, same-versus-other-wea
 
 ## Next
 Read live audit counts and exact-hash examples; investigate any overlaps against runtime socket evidence and independently verified frame descriptions. Maintain strict provenance in Hunter/Titan/Warlock Artifact-first PvE and ordinary 6v6 candidate studies. Do not claim a playable roll or measured DPS, TTK, DR, cooldown or uptime from this index. Preserve the 45 historical candidate shells.
+
+## Live audit readback — 29 October 2026, 19:24 UTC
+[Extended GitHub Actions run 40939473203](https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40939473203) **completed successfully** on source commit `5e19dc31`; artifact `destiny-extended-definitions` ID `12927255313` uploaded (94,289,949 bytes). The direct job log identifies Bungie manifest `245114.26.10.13.2000-1-bnet.66137`, 2,208 equippable weapon definitions and:
+
+| Exact-hash plug identity metric | Observed count |
+| --- | ---: |
+| Distinct `frames`-labelled initial plug hashes | 325 |
+| Those reused across more than one weapon item hash | 187 |
+| Those spanning more than one numeric weapon subtype | 149 |
+| Those also in at least one weapon's randomized socket pool | 207 |
+| Those also randomized on a weapon where they are an initial `frames` plug | 204 |
+
+The counts **overlap** and must not be added together. They refer to distinct plug hashes, not weapon counts, active frame counts or legal trait pairs. The direct log includes `Iron Grip` plug hash `11551321` and `Adrenaline Junkie` plug hash `11612903` as concrete examples. These are named weapon traits represented by the ambiguous `frames` initial-plug category, further demonstrating that category alone cannot assign an intrinsic.
+
+After this run, commits `a5ffb577` and `cc352719` additionally fail closed when a socket index refers to a weapon hash missing from the same supplied manifest, with a fifth synthetic regression test. [GitHub Actions test run 40939652720](https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40939652720) **completed successfully: 163/163 tests**. A subsequent extended live synchronization incorporating the stale-index fix was in progress at this note; do not claim it succeeded until readback.
+
+**Inference boundary:** These counts show structural role ambiguity and cross-socket reuse, not that a weapon can equip a specific trait, that an intrinsic frame is active, or that any enhanced perk or Artifact interaction is legal. The next validation requires runtime socket instances and independent acquisition/weapon-frame evidence.
