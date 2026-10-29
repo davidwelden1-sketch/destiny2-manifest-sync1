@@ -55,6 +55,17 @@ def build_index(items, plugsets, roll_flags=None):
                 sockets.append({
                     "socket_index": index,
                     "socket_type_hash": socket.get("socketTypeHash"),
+                    # Definition visibility is only a default; live instance state can override it.
+                    "default_visible": (socket.get("defaultVisible")
+                                        if isinstance(socket.get("defaultVisible"), bool) else None),
+                    "plug_sources": (socket.get("plugSources")
+                                     if isinstance(socket.get("plugSources"), int)
+                                     and not isinstance(socket.get("plugSources"), bool)
+                                     and socket.get("plugSources") >= 0 else None),
+                    "vendor_purchase_initialization_blocked": (
+                        socket.get("preventInitializationOnVendorPurchase")
+                        if isinstance(socket.get("preventInitializationOnVendorPurchase"), bool)
+                        else None),
                     "candidate_plug_hashes": sorted(candidates),
                     "randomized_candidate_plug_hashes": sorted(randomized),
                     "currently_rollable_randomized_candidate_plug_hashes": sorted(current),
