@@ -1,0 +1,53 @@
+{
+  "reviewed_on": "2026-10-29",
+  "scope": "Artifact 2.0 allocation and Gifted Conviction evidence",
+  "artifact": {
+    "official": {
+      "max_perks": 7,
+      "buckets": 3,
+      "source": "https://help.bungie.net/hc/en-us/articles/47117806971796--12-Creating-a-Good-Build"
+    },
+    "community_crosscheck": {
+      "slots": [
+        {
+          "count": 2,
+          "max_tier": 1
+        },
+        {
+          "count": 3,
+          "max_tier": 2
+        },
+        {
+          "count": 2,
+          "max_tier": 3
+        }
+      ],
+      "source": "https://github.com/JaredEzz/destiny2-buildcrafting/blob/master/general/artifact-perks.md",
+      "evidence": "community datamine/video claims; not independently inspected live UI"
+    },
+    "historical_catalog_warning": "Legacy five-column light.gg listings must not be used as current 2.0 tiers",
+    "official_patch": "https://origin-static01.bungie.net/7/en/News/Article/destiny_update_9_7_0"
+  },
+  "gifted_conviction": {
+    "intrinsic_source": "https://www.light.gg/db/items/1627691271/gifted-conviction/",
+    "reported_pve_dr_by_applications": [
+      0.25,
+      0.4,
+      0.5
+    ],
+    "reported_pvp_dr_by_applications": [
+      0.05,
+      0.075,
+      0.1
+    ],
+    "reported_duration_s": 10,
+    "reported_range_m_approx": 15,
+    "distinct_jolt_applications_required": true,
+    "multi_target_single_jolt_counts_once": true,
+    "source_last_updated": "2024-11-16",
+    "current_in_game_measured": false,
+    "external_dr_stacking_measured": false,
+    "source": "https://www.light.gg/db/items/1627691271/gifted-conviction/"
+  },
+  "status": "structural rule implemented; gameplay verification not established"
+}
