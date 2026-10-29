@@ -174,5 +174,56 @@ class TestInitialFrameEvidence(unittest.TestCase):
         self.assertEqual(report["multi_frame_socket_type_pairs_top"], [])
 
 
+    def test_unique_dominant_pair_surfaces_exact_hash_outlier(self):
+        def weapon(hash_value, left, right):
+            return {"hash": hash_value, "name": f"Weapon {hash_value}",
+                    "itemType": 3, "equippable": True, "socketEntries": [
+                        {"singleInitialItemHash": 501, "socketTypeHash": left},
+                        {"singleInitialItemHash": 502, "socketTypeHash": right}]}
+        rows = [weapon(11, 900, 901), weapon(12, 901, 900),
+                weapon(13, 900, 901), weapon(14, 900, 902),
+                {"hash": 501, "name": "Intrinsic A", "plugCategoryIdentifier": "frames"},
+                {"hash": 502, "name": "Intrinsic B", "plugCategoryIdentifier": "frames"}]
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["multi_frame_dominant_socket_type_pair"], "900,901")
+        self.assertEqual(report["multi_frame_exception_count"], 1)
+        outlier = report["multi_frame_exception_examples"][0]
+        self.assertEqual(outlier["item_hash"], 14)
+        self.assertEqual(outlier["socket_type_hashes"], [900, 902])
+        self.assertEqual(outlier["initial_plug_names"], ["Intrinsic A", "Intrinsic B"])
+        self.assertEqual(outlier["reason"], "non_dominant_socket_type_pair")
+        self.assertFalse(outlier["active_frame_verified"])
+        self.assertFalse(outlier["current_acquisition_verified"])
+
+    def test_tied_pairs_do_not_invent_dominant_frame_structure(self):
+        rows = [
+            {"hash": h, "itemType": 3, "equippable": True,
+             "socketEntries": [{"singleInitialItemHash": 501, "socketTypeHash": 900},
+                               {"singleInitialItemHash": 502, "socketTypeHash": t}]}
+            for h, t in ((11, 901), (12, 902))]
+        rows.extend([{"hash": 501, "plugCategoryIdentifier": "frames"},
+                     {"hash": 502, "plugCategoryIdentifier": "frames"}])
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertIsNone(report["multi_frame_dominant_socket_type_pair"])
+        self.assertEqual(report["multi_frame_exception_count"], 2)
+        self.assertEqual({r["reason"] for r in report["multi_frame_exception_examples"]},
+                         {"no_unique_dominant_pair"})
+
+    def test_unknown_socket_type_is_explicit_exception(self):
+        rows = [
+            {"hash": h, "itemType": 3, "equippable": True,
+             "socketEntries": [{"singleInitialItemHash": 501, "socketTypeHash": 900},
+                               {"singleInitialItemHash": 502, "socketTypeHash": t}]}
+            for h, t in ((11, 901), (12, 901), (13, True))]
+        rows.extend([{"hash": 501, "plugCategoryIdentifier": "frames"},
+                     {"hash": 502, "plugCategoryIdentifier": "frames"}])
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["multi_frame_dominant_socket_type_pair"], "900,901")
+        self.assertEqual(report["multi_frame_exception_count"], 1)
+        self.assertEqual(report["multi_frame_exception_examples"][0]["item_hash"], 13)
+        self.assertEqual(report["multi_frame_exception_examples"][0]["reason"],
+                         "unknown_socket_type")
+
+
 if __name__ == "__main__":
     unittest.main()
