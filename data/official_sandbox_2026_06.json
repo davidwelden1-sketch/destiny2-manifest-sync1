@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+  "published_on": "2026-06-09",
+  "game_version": "9.7.0",
+  "provenance": "official_patch_notes",
+  "observations": [
+    {
+      "id": "adaptive_auto_crit",
+      "category": "auto_rifle",
+      "archetype": "adaptive",
+      "activity": "pvp",
+      "metric": "precision_damage",
+      "old_value": 26.25,
+      "new_value": 27.1,
+      "unit": "damage_per_hit",
+      "qualification": "Patch-note base value; no current live-game verification"
+    },
+    {
+      "id": "adaptive_auto_body",
+      "category": "auto_rifle",
+      "archetype": "adaptive",
+      "activity": "pvp",
+      "metric": "body_damage",
+      "old_value": 15,
+      "new_value": 15.5,
+      "unit": "damage_per_hit",
+      "qualification": "Patch-note base value; no current live-game verification"
+    },
+    {
+      "id": "high_impact_auto_rpm",
+      "category": "auto_rifle",
+      "archetype": "high_impact",
+      "activity": "pvp",
+      "metric": "rpm",
+      "old_value": 360,
+      "new_value": 400,
+      "unit": "rpm",
+      "qualification": "Exclusions apply to Cerberus+1 and unspun Sweet Business"
+    }
+  ]
+}
