@@ -27,6 +27,8 @@ jobs:
         run: python -m simulator.pve_phase_sweep
       - name: Audit source evidence and permissions
         run: python -m simulator.evidence_audit
+      - name: Flag stale and outdated sources
+        run: python -m simulator.freshness_audit
       - name: Publish report as downloadable artifact
         uses: actions/upload-artifact@v4
         with:
@@ -37,6 +39,7 @@ jobs:
             reports/pvp_ttk_sweep.json
             reports/evidence_audit.json
             reports/pve_phase_sweep.json
+            reports/freshness.json
           retention-days: 30
       - name: Open or update failure tracking issue
         if: failure()
