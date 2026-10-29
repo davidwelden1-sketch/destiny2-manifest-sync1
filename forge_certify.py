@@ -3,7 +3,7 @@ import json
 import sys
 from datetime import date, datetime
 
-CRITICAL = ("artifact", "stacking", "subclass", "armor", "weapons", "stats", "rotation")
+CRITICAL = ("artifact", "stacking", "subclass", "armor", "weapons", "stats", "rotation", "weapon_legality", "defensive_uptime", "gameplay_evidence")
 def _dated(s, as_of):
     try:
         return bool(s) and date.fromisoformat(s) <= date.fromisoformat(as_of)
@@ -49,6 +49,28 @@ def certify(build, as_of=None):
     for field in ("subclass", "armor", "weapons", "stats", "rotation"):
         value = build.get(field)
         checks[field] = "PASS" if value and build.get("audits", {}).get(field) == "verified" and build.get("audit_sources", {}).get(field) else "BLOCKED: missing or unaudited"
+    # Separate structural assertions from actual manifest and gameplay evidence.
+    rolls = build.get("weapon_roll_evidence") or []
+    checks["weapon_legality"] = ("PASS" if rolls and all(
+        isinstance(r, dict) and r.get("item_hash") and r.get("manifest_version")
+        and r.get("socket_perk_hashes") and r.get("source_url")
+        and _dated(r.get("verified_on"), as_of) and r.get("roll_legal") is True
+        for r in rolls) else "BLOCKED: exact item hashes, legal socket/perk combinations and manifest evidence required")
+    defense = build.get("defensive_uptime_evidence") or {}
+    checks["defensive_uptime"] = ("PASS" if defense.get("raw_evidence_url")
+        and defense.get("activity") and defense.get("patch_version")
+        and defense.get("sample_count", 0) >= 2
+        and defense.get("control_trials", 0) >= 1
+        and defense.get("measured_dr") is not None
+        and defense.get("measured_uptime") is not None
+        and _dated(defense.get("verified_on"), as_of)
+        else "BLOCKED: measured DR and uptime with control trials, raw evidence and patch context required")
+    gameplay = build.get("gameplay_evidence") or {}
+    checks["gameplay_evidence"] = ("PASS" if gameplay.get("raw_evidence_url")
+        and gameplay.get("independent_reproduction_url")
+        and gameplay.get("reviewer") and gameplay.get("patch_version")
+        and gameplay.get("activity") and _dated(gameplay.get("verified_on"), as_of)
+        else "BLOCKED: independent same-patch gameplay reproduction and reviewer signoff required")
     blockers = [{"check": k, "reason": v, "next_action": {
         "artifact": "Import current Artifact catalog and verify legal selection, tiers, unlocks, and activity",
         "stacking": "Attach official or measured evidence for each interaction and test combined effects",
@@ -57,6 +79,9 @@ def certify(build, as_of=None):
         "weapons": "Validate manifest socket pools and obtainable perk combinations",
         "stats": "Validate stat totals, breakpoints and cooldown inputs",
         "rotation": "Validate triggers, durations and ability regeneration sequence",
+        "weapon_legality": "Resolve every weapon variant hash and perk socket against current manifest",
+        "defensive_uptime": "Measure damage resistance and uptime in-game with baseline/control trials",
+        "gameplay_evidence": "Attach raw footage and independent same-patch reproduction with reviewer signoff",
     }[k]} for k, v in checks.items() if v != "PASS"]
     return {"build": build.get("name", "unnamed"), "as_of": as_of,
             "blockers": blockers, "blocker_count": len(blockers),
