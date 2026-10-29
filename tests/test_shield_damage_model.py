@@ -22,6 +22,16 @@ class ShieldDamageModelTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             damage_through_layers(100, frost_dr=.35)
 
+    def test_zero_shield_damage_multiplier(self):
+        r = damage_through_layers(100, frost_dr=.35, overshield_dr=1.0,
+                                  frost_affects_shield=False)
+        self.assertEqual(r["health_damage"], 0)
+        self.assertFalse(r["verified_in_game"])
+
+    def test_boolean_hypothesis_only(self):
+        with self.assertRaises(ValueError):
+            damage_through_layers(100, frost_dr=.35, frost_affects_shield=1)
+
     def test_invalid_resistance(self):
         with self.assertRaises(ValueError):
             damage_through_layers(100, frost_dr=1, frost_affects_shield=True)
