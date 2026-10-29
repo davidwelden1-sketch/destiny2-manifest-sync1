@@ -1,0 +1,68 @@
+{
+  "reviewed_on": "2026-10-29",
+  "status": "source_leads_not_imported_measurements",
+  "sources": [
+    {
+      "id": "aegis_boss_damage",
+      "url": "https://docs.google.com/spreadsheets/d/1_5wtBjRYHHxuF4oJKDb_iOGZs-wTkzB6RYbnyNLbuz4/edit",
+      "type": "original_author_reported_in_game_testing",
+      "scope": [
+        "Templar weapon damage",
+        "Templar ability damage",
+        "stacking",
+        "sustained DPS",
+        "Ergo Sum"
+      ],
+      "note": "Original testing source; sheet warns Sustained tab is incomplete; individual cells, patch version and permissions unverified",
+      "reuse_permission_confirmed": false,
+      "current_calibration_eligible": false
+    },
+    {
+      "id": "owl_sector_2026_10",
+      "url": "https://www.owlsector.net/about",
+      "type": "secondary_snapshot",
+      "snapshot_date": "2026-10-02",
+      "note": "Derived from Compendium, Clarity and Aegis; not independently measured by Owl Sector",
+      "current_calibration_eligible": false
+    },
+    {
+      "id": "compendium_void_overshield",
+      "url": "https://www.owlsector.net/glossary",
+      "type": "secondary_community_report",
+      "observation": {
+        "shield_hp": 45,
+        "shield_damage_resistance_pve": 0.7,
+        "derived_effective_shield_hp": 150
+      },
+      "note": "Reported values not independently reproduced; avoid interpreting as additive Guardian DR",
+      "current_calibration_eligible": false
+    },
+    {
+      "id": "frost_armor_calculator",
+      "url": "https://wewantdestiny3.com/damage-resist-calculator/",
+      "type": "secondary_community_report",
+      "observation": {
+        "pve_dr_per_stack_claim": 0.07,
+        "five_stack_claim": 0.35
+      },
+      "note": "Needs primary measurement protocol and 2026 patch confirmation",
+      "current_calibration_eligible": false
+    },
+    {
+      "id": "bungie_update_9_7_0",
+      "url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "type": "official_patch_notes",
+      "note": "June 9 2026 official changes to Frost Armor, cooldown stats, artifacts, class interactions; patch note not a raw gameplay measurement",
+      "current_calibration_eligible": false
+    },
+    {
+      "id": "clarity_character_stats",
+      "url": "https://database-clarity.github.io/Character-Stats/",
+      "type": "explicitly_outdated",
+      "note": "Hosted site says SEVERELY OUTDATED DO NOT USE",
+      "current_calibration_eligible": false
+    }
+  ],
+  "imported_raw_measurement_rows": 0,
+  "independently_verified_current_measurement_rows": 0
+}
