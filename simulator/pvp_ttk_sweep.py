@@ -6,7 +6,6 @@ weapon roll, measured TTK or claim of live-game validity.
 import json
 from pathlib import Path
 from simulator.patch_import import load_patch_notes
-from simulator.ttk import ttk_seconds
 
 ROOT = Path(__file__).resolve().parents[1]
 
