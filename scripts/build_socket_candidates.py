@@ -13,10 +13,15 @@ def classify_roll_flags(plugs, records):
     """Classify explicit Bungie flags; missing or conflicting entries are unknown."""
     current, noncurrent, unknown = set(), set(), set()
     for plug in plugs:
-        statuses = {row.get("currentlyCanRoll") for row in (records or [])
-                    if isinstance(row, dict) and row.get("plugItemHash") == plug
-                    and (row.get("currentlyCanRoll") is None
-                         or isinstance(row.get("currentlyCanRoll"), bool))}
+        statuses = set()
+        for row in (records or []):
+            if not isinstance(row, dict) or type(row.get("plugItemHash")) is not int:
+                continue
+            if row["plugItemHash"] == plug:
+                status = row.get("currentlyCanRoll")
+                # Malformed or missing statuses must contaminate confidence,
+                # not be ignored beside an otherwise explicit True record.
+                statuses.add(status if type(status) is bool else None)
         if statuses == {True}:
             current.add(plug)
         elif statuses == {False}:
@@ -40,11 +45,11 @@ def build_index(items, plugsets, roll_flags=None):
                 if h is not None:
                     sources.append({"field": field, "hash": h})
                     by_source[field] = set(x for x in plugsets.get(str(h), [])
-                                           if isinstance(x, int) and x > 0)
+                                           if type(x) is int and x > 0)
             initial = socket.get("singleInitialItemHash")
             if initial is not None:
                 sources.append({"field": "singleInitialItemHash", "hash": initial})
-                if isinstance(initial, int) and initial > 0:
+                if type(initial) is int and initial > 0:
                     by_source["singleInitialItemHash"] = {initial}
             randomized = by_source.get("randomizedPlugSetHash", set())
             randomized_set = socket.get("randomizedPlugSetHash")
