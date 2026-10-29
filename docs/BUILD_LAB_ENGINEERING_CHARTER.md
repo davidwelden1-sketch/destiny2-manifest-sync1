@@ -1,6 +1,6 @@
-# Build Lab Engineering Charter
+# Project FORGE — Engineering Charter
 
-Owner: ChatGPT-led implementation under user direction.
+Research & Development Director: FORGE (ChatGPT-based research and engineering assistant), working under user direction.\nProject: Project FORGE — Destiny 2 Intelligence & Build Engineering.\nLegacy name: Destiny 2 Build Lab (retained for historical references).
 Scope: Destiny 2 PvE and PvP, all classes. Artifact-first synergy; exact legal combinations.
 
 ## Definition of done
