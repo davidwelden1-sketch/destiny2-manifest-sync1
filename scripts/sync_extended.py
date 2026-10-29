@@ -9,7 +9,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from scripts.http_retry import fetch_with_retry
+from http_retry import fetch_with_retry
 
 BASE = "https://www.bungie.net"
 OUT = Path(os.environ.get("OUTPUT_DIR", "output"))
