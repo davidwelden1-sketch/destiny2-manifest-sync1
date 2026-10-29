@@ -46,6 +46,8 @@ def audit_cross_variant_phantoms(index, manifest_version, sample_limit=5):
         if not isinstance(h, int) or isinstance(h, bool) or h <= 0 or h in seen:
             raise ValueError("Duplicate or invalid weapon item hash")
         seen.add(h)
+        # Validate even singleton weapons; malformed data must never evade the audit.
+        socket_pools(item)
         groups[item["name"].strip().casefold()].append(item)
     rows = []
     for name, variants in sorted(groups.items()):
