@@ -4,7 +4,7 @@ from simulator.champion import intrinsic_champion_rule, SPECIFIC, BASE, SOURCE
 
 class TestIntrinsicChampionRules(unittest.TestCase):
     def test_all_official_specific_frame_rules(self):
-        self.assertEqual(len(SPECIFIC), 18)
+        self.assertEqual(len(SPECIFIC), 19)
         for (frame, weapon_type), effect in SPECIFIC.items():
             with self.subTest(frame=frame, weapon_type=weapon_type):
                 row = intrinsic_champion_rule("adaptive", frame, weapon_type)
