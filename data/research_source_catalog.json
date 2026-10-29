@@ -52,8 +52,19 @@
       "name": "PvP Outgoing Damage Spreadsheet",
       "url": "https://docs.google.com/spreadsheets/d/1b57Hb8m1L3daFfUckQQqvvN6VOpD03KEssvQLMFpC5I/edit",
       "type": "community_research",
-      "use": "weapon damage measurements",
-      "caveat": "Verify version, units, weapon stat and activity before ingestion"
+      "use": "historical reference only",
+      "caveat": "Verify version, units, weapon stat and activity before ingestion",
+      "explicitly_outdated": true,
+      "reported_sheet_version": "1.9.2",
+      "reported_sheet_date": "2025-02-20",
+      "warning": "Sheet states LOTS OF THIS IS PRETTY OUTDATED; cannot be used for current calibration."
+    },
+    {
+      "id": "clarity_live_usage",
+      "name": "Clarity Live Database",
+      "url": "https://github.com/Database-Clarity/Live-Clarity-Database",
+      "reuse_permission_confirmed": false,
+      "warning": "README directs third-party consumers to partnership and usage guidance. Do not redistribute raw content before review."
     }
   ],
   "imported_measurements": 0,
