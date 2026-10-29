@@ -25,6 +25,12 @@ FAMILIES = (
     "DestinyTraitDefinition",
     "DestinyBreakerTypeDefinition",
     "DestinyEnergyTypeDefinition",
+    "DestinyTalentGridDefinition",
+    "DestinyNodeStepSummaryDefinition",
+    "DestinyInventoryBucketDefinition",
+    "DestinyItemCategoryDefinition",
+    "DestinyPresentationNodeDefinition",
+    "DestinyPowerCapDefinition",
 )
 
 def fetch(url):
