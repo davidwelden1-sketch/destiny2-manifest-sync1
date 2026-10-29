@@ -63,3 +63,22 @@ jobs:
           else
             gh issue create --repo "$REPOSITORY" --title "$title" --body "$body"
           fi
+
+      - name: Publish verifiable successful run receipt
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          title="Build Lab verified workflow receipts"
+          body="SUCCESS: all preceding audit steps and artifact upload completed. Run: ${RUN_URL}; commit: ${COMMIT_SHA}; attempt: ${{ github.run_attempt }}. This verifies CI execution, not live-game measurements."
+          existing=$(gh issue list --repo "$REPOSITORY" --state all --search "$title in:title" --json number,title --jq '.[] | select(.title == "Build Lab verified workflow receipts") | .number' | head -1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$REPOSITORY" --title "$title" --body "$body"
+          fi
