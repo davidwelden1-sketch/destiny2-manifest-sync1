@@ -31,6 +31,8 @@ jobs:
         run: python scripts/audit_candidates.py
       - name: Report exact weapon hashes with hidden or unknown randomized sockets
         run: python scripts/audit_weapon_socket_visibility.py
+      - name: Audit Bungie socket-type whitelist compatibility of randomized weapon plugs
+        run: python scripts/audit_weapon_socket_categories.py
       - name: Summarize game-wide randomized weapon sockets
         run: python scripts/query_weapon_pairs.py
       - name: Query dual Void Breach pickup trait sockets
