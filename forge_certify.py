@@ -48,7 +48,7 @@ def certify(build, as_of=None):
         value = build.get(field)
         checks[field] = "PASS" if value and build.get("audits", {}).get(field) == "verified" and build.get("audit_sources", {}).get(field) else "BLOCKED: missing or unaudited"
     return {"build": build.get("name", "unnamed"), "as_of": as_of,
-            "status": "CERTIFIED" if all(v == "PASS" for v in checks.values()) else "NOT_CERTIFIED",
+            "status": "READY_FOR_EVIDENCE_REVIEW" if all(v == "PASS" for v in checks.values()) else "NOT_CERTIFIED",
             "checks": checks}
 
 if __name__ == "__main__":
