@@ -9,15 +9,14 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from urllib.request import Request, urlopen
+from scripts.http_retry import fetch_with_retry
 
 BASE = "https://www.bungie.net"
 OUT = Path(os.environ.get("OUTPUT_DIR", "output"))
 OUT.mkdir(parents=True, exist_ok=True)
 
 def download(url):
-    with urlopen(Request(url, headers={"User-Agent": "Destiny2BuildLab/0.2"}), timeout=180) as response:
-        return response.read()
+    return fetch_with_retry(url, user_agent="Destiny2BuildLab/0.2", timeout=180)
 
 def main():
     manifest = json.loads(download(BASE + "/Platform/Destiny2/Manifest/"))
