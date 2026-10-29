@@ -1,5 +1,9 @@
 """Configurable linear falloff approximation, not a verified Destiny curve."""
+from math import isfinite
+
 def linear_falloff(distance, start, end, min_multiplier):
+    if not all(isfinite(v) for v in (distance, start, end, min_multiplier)):
+        raise ValueError("Nonfinite falloff inputs")
     if start < 0 or end <= start or distance < 0 or not 0 < min_multiplier <= 1:
         raise ValueError("Invalid falloff inputs")
     if distance <= start:
