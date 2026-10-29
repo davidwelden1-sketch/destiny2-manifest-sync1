@@ -9,7 +9,24 @@ import os
 from pathlib import Path
 
 
-def build_index(items, plugsets):
+def classify_roll_flags(plugs, records):
+    """Classify explicit Bungie flags; missing or conflicting entries are unknown."""
+    current, noncurrent, unknown = set(), set(), set()
+    for plug in plugs:
+        statuses = {row.get("currentlyCanRoll") for row in (records or [])
+                    if isinstance(row, dict) and row.get("plugItemHash") == plug
+                    and (row.get("currentlyCanRoll") is None
+                         or isinstance(row.get("currentlyCanRoll"), bool))}
+        if statuses == {True}:
+            current.add(plug)
+        elif statuses == {False}:
+            noncurrent.add(plug)
+        else:
+            unknown.add(plug)
+    return current, noncurrent, unknown
+
+
+def build_index(items, plugsets, roll_flags=None):
     result = []
     for item in items:
         if not item.get("equippable") or not item.get("name"):
@@ -29,13 +46,20 @@ def build_index(items, plugsets):
                 sources.append({"field": "singleInitialItemHash", "hash": initial})
                 if isinstance(initial, int) and initial > 0:
                     by_source["singleInitialItemHash"] = {initial}
+            randomized = by_source.get("randomizedPlugSetHash", set())
+            randomized_set = socket.get("randomizedPlugSetHash")
+            records = (roll_flags or {}).get(str(randomized_set))
+            current, noncurrent, unknown = classify_roll_flags(randomized, records)
             candidates = set().union(*by_source.values()) if by_source else set()
             if candidates:
                 sockets.append({
                     "socket_index": index,
                     "socket_type_hash": socket.get("socketTypeHash"),
                     "candidate_plug_hashes": sorted(candidates),
-                    "randomized_candidate_plug_hashes": sorted(by_source.get("randomizedPlugSetHash", set())),
+                    "randomized_candidate_plug_hashes": sorted(randomized),
+                    "currently_rollable_randomized_candidate_plug_hashes": sorted(current),
+                    "noncurrent_randomized_candidate_plug_hashes": sorted(noncurrent),
+                    "unknown_current_roll_randomized_candidate_plug_hashes": sorted(unknown),
                     "reusable_candidate_plug_hashes": sorted(by_source.get("reusablePlugSetHash", set())),
                     "initial_candidate_plug_hashes": sorted(by_source.get("singleInitialItemHash", set())),
                     "plugset_references": sources,
@@ -52,9 +76,11 @@ def main():
     output = Path(os.environ.get("OUTPUT_DIR", "output"))
     items = json.loads((output / "items_extended.json").read_text())
     plugsets = json.loads((output / "plugsets.json").read_text())
-    rows = build_index(items, plugsets)
+    flags_path = output / "plugset_roll_flags.json"
+    roll_flags = json.loads(flags_path.read_text()) if flags_path.is_file() else None
+    rows = build_index(items, plugsets, roll_flags)
     (output / "item_socket_candidates.json").write_text(json.dumps(rows, separators=(",", ":")))
-    print(f"Indexed {len(rows)} equippable items with source-separated socket candidates; roll/enhancement legality unverified")
+    print(f"Indexed {len(rows)} equippable items with source-separated sockets and explicit current-roll flags; acquisition/enhancement legality unverified")
 
 
 if __name__ == "__main__":
