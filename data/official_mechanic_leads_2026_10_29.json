@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-10-29",
+  "manifest_version_observed_ci": "245114.26.10.13.2000-1-bnet.66137",
+  "manifest_observation_source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40957307211",
+  "current_gameplay_measurements": 0,
+  "latest_reviewed_patch": {
+    "id": "9.7.0.6",
+    "date": "2026-10-20",
+    "url": "https://www.bungie.net/7/en/News/Article/destiny_2_update_9_7_0_6",
+    "scope": "Eververse Bright Dust cosmetics fix only; no sandbox changes listed",
+    "not_exhaustive_all_later_publications": true
+  },
+  "leads": [
+    {
+      "id": "lament_charged_light_sword_artifact_activation",
+      "classes": [
+        "Titan",
+        "Hunter",
+        "Warlock"
+      ],
+      "activity": "PvE",
+      "official_patch": "9.5.5.3",
+      "official_patch_date": "2026-02-24",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_5_5_3",
+      "official_claim": "Bungie fixed The Lament charged light attacks failing to activate Sword-based Artifact perks",
+      "related_patch_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "related_claim": "June 9 patch partially restored Lament final combo damage and self-healing; Stronghold infinite guard works only with Heavy swords",
+      "hypothesis": "For a legal single active Artifact containing an applicable sword perk, test charged light event registration separately from final combo, sword guard and Stronghold healing. Titan Stronghold + Lament is a heavy sword candidate, not a certified complete build.",
+      "artifact_legality": "unknown_current_artifact_perk_selection",
+      "current_gameplay_verified": false,
+      "unresolved": [
+        "exact current Sword-based Artifact perk and tier",
+        "event activation and damage ownership",
+        "healing uptime and damage multipliers",
+        "PvP applicability"
+      ]
+    },
+    {
+      "id": "trinity_ghoul_lightning_rod_ammo_progress",
+      "classes": [
+        "Titan",
+        "Hunter",
+        "Warlock"
+      ],
+      "activity": "PvE",
+      "official_patch": "9.7.0",
+      "official_patch_date": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "official_claim": "Bungie fixed Lightning Rod chain kills not granting ammo progress",
+      "hypothesis": "Evaluate Trinity Ghoul chain clear against ammo-meter progress and subsequent special/heavy availability, distinguishing weapon kill attribution from Arc chain event ownership; do not assume all kill-related Exotic or Artifact perks inherit the same credit.",
+      "artifact_legality": "unknown_current_artifact_perk_selection",
+      "current_gameplay_verified": false,
+      "unresolved": [
+        "ammo progress amount by kill type",
+        "PvP mode applicability",
+        "chain kill ownership for artifact and exotic triggers",
+        "ammo pickup timing and comparative DPS"
+      ]
+    }
+  ]
+}
