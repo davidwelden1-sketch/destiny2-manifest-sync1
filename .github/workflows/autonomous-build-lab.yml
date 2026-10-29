@@ -1,0 +1,29 @@
+name: Autonomous Build Lab audit
+on:
+  schedule:
+    - cron: '23 3 * * *'
+    - cron: '23 9 * * *'
+    - cron: '23 15 * * *'
+    - cron: '23 21 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run test suite
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Produce evidence-safe status report
+        run: python -m simulator.automation_report
+      - name: Publish report as downloadable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-lab-audit-${{ github.run_id }}
+          path: reports/latest.json
+          retention-days: 30
