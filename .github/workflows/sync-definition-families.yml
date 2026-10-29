@@ -21,6 +21,8 @@ jobs:
           python-version: '3.12'
       - name: Download official definition families
         run: python scripts/sync_definition_families.py
+      - name: Audit definition catalog
+        run: python scripts/audit_definition_families.py
       - name: Upload definition catalog
         uses: actions/upload-artifact@v4
         with:
