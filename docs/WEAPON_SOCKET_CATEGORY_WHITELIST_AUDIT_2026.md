@@ -20,3 +20,15 @@ The October 2026 source register preserves the 45 historical candidate shells; t
 
 Relevant Bungie update (June 9, 2026): https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0
 Latest located patch (October 20, 2026): https://www.bungie.net/7/en/News/Article/destiny_2_update_9_7_0_6
+
+## Live Bungie manifest results — 2026-10-29 12:23 UTC
+
+GitHub Actions extended sync run [40872545511](https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40872545511) **completed successfully**, uploaded artifact `12895719930` (94,194,661 bytes), and retrieved manifest `245114.26.10.13.2000-1-bnet.66137`. The newly downloaded `DestinySocketTypeDefinition` family contains **1,874 definitions**.
+
+The direct workflow log reports **97,283 randomized weapon plug memberships classified `compatible_whitelist`**, with no missing, malformed, non-whitelisted, or unrestricted memberships reported in this scope. This means the socket whitelist is **non-discriminating for the currently indexed randomized weapon membership population**, not that all rolls are obtainable or all memberships are trait perks.
+
+Top raw plug category identifiers by *membership occurrences* (not unique plugs or weapon rolls): `frames` 37,411; `magazines` 23,669; `barrels` 23,524; `tubes` 3,129; `magazines_gl` 2,469; `batteries` 2,084. These are Bungie metadata identifiers, not independently validated gameplay slot roles. In particular, **do not assume every `frames` membership is a weapon frame or every randomized plug is a damage trait** without additional per-plug inspection.
+
+The hidden Ergo Sum item `1681583613`, socket index 3, socket type `1466776700`, has three compatible plug entries: Solar `2273483223`, Void `3728733956`, Arc `4126105782`. All share plug category hash `1466776700` and category identifier `v300.weapon.damage_type.energy`. This is strong manifest-level evidence of an **elemental damage-type socket**, not a normal perk trait column. Runtime visibility and swapping remain unverified.
+
+The audit successfully separates source categories, but **does not yet certify two active trait columns, enhanced perks, acquisition, damage ownership, or measured combat output**. Next step: examine plug categories and socket indices for known trait hash pairs and classify socket role with exact-hash and live-instance corroboration.
