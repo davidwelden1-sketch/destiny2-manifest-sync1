@@ -65,6 +65,24 @@
       "url": "https://github.com/Database-Clarity/Live-Clarity-Database",
       "reuse_permission_confirmed": false,
       "warning": "README directs third-party consumers to partnership and usage guidance. Do not redistribute raw content before review."
+    },
+    {
+      "id": "d2_ttk_cheatsheet_2026_01",
+      "name": "D2 TTK Cheatsheet",
+      "url": "https://d2-ttk-cheatsheet.vercel.app/",
+      "type": "community_calculator",
+      "reported_updated_on": "2026-01",
+      "explicitly_outdated_for_current_calibration": true,
+      "use": "historical weapon-stat breakpoint hypotheses",
+      "caveat": "January 2026 reference, some displayed TTK values explicitly unresolved; no direct raw measurements imported."
+    },
+    {
+      "id": "d2_theorycraft",
+      "name": "D2 Theorycraft credits and sourcing",
+      "url": "https://d2theorycraft.com/credits",
+      "type": "derived_calculator",
+      "use": "discover source lineage and formulas",
+      "caveat": "Derived from third-party datasets; daily refresh claim does not establish independent in-game measurement or current patch accuracy."
     }
   ],
   "imported_measurements": 0,
