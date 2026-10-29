@@ -74,5 +74,45 @@ class TestInitialFrameEvidence(unittest.TestCase):
         self.assertEqual([x["item_hash"] for x in report["frame_candidates"]], [1])
 
 
+    def test_multi_frame_labelled_plugs_are_counted_per_exact_hash(self):
+        rows = [
+            {"hash": 11, "name": "Multi", "itemType": 3, "equippable": True,
+             "socketEntries": [{"singleInitialItemHash": 501},
+                               {"singleInitialItemHash": 502}]},
+            {"hash": 12, "name": "Single", "itemType": 3, "equippable": True,
+             "socketEntries": [{"singleInitialItemHash": 501}]},
+            {"hash": 501, "name": "Vortex Frame", "plugCategoryIdentifier": "frames"},
+            {"hash": 502, "name": "Other Frame", "plugCategoryIdentifier": "frames"},
+        ]
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["weapons_with_multiple_frame_labelled_initial_plugs"], 1)
+        self.assertEqual(report["multi_frame_labelled_occurrences"], 2)
+        example = report["multi_frame_labelled_examples"][0]
+        self.assertEqual(example["item_hash"], 11)
+        self.assertEqual(example["socket_indexes"], [0, 1])
+        self.assertEqual(example["distinct_initial_plug_hashes"], 2)
+        self.assertEqual(example["initial_plug_names"], ["Other Frame", "Vortex Frame"])
+
+    def test_repeated_same_frame_label_is_not_a_distinct_frame(self):
+        rows = [
+            {"hash": 11, "itemType": 3, "equippable": True,
+             "socketEntries": [{"singleInitialItemHash": 501},
+                               {"singleInitialItemHash": 501}]},
+            {"hash": 501, "name": "Frame", "plugCategoryIdentifier": "frames"},
+        ]
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["weapons_with_multiple_frame_labelled_initial_plugs"], 1)
+        self.assertEqual(report["multi_frame_labelled_examples"][0][
+            "distinct_initial_plug_hashes"], 1)
+        self.assertFalse(any(x["active_frame_verified"]
+                             for x in report["frame_candidates"]))
+
+    def test_no_multiple_frame_labels_returns_empty_examples(self):
+        report = audit_initial_frame_candidates(self.items, "synthetic")
+        self.assertEqual(report["weapons_with_multiple_frame_labelled_initial_plugs"], 0)
+        self.assertEqual(report["multi_frame_labelled_occurrences"], 0)
+        self.assertEqual(report["multi_frame_labelled_examples"], [])
+
+
 if __name__ == "__main__":
     unittest.main()
