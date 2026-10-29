@@ -25,3 +25,11 @@ The earlier 58,756 cross-variant phantom-pair occurrences are a **separate** nam
 Retest 2026 Lotus-Eater Dimensional Shift + Collective Action against the strict roll-status output before comparing Void Breach pickup -> Collective Action activation -> conditional Void Overshield final blow. In an Artifact-enabled PvE activity, separately test Unto the Breach / Volatile Flow effects and distinguish the physical Void Breach from Heavy-ammo-bar progress granted by Bricks from Beyond. Hunter, Titan and Warlock Exotic comparisons remain hypotheses until attribution and measured damage are available. Do not use Artifact-enabled simulations for Competitive or Trials (Bungie Update 9.7.0, June 9, 2026: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0).
 
 This document does not certify any current obtainable roll, enhanced combination, or complete build.
+
+## Live manifest result, 2026-10-29 09:25 UTC
+
+Connected GitHub Actions extended sync [40849229722](https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40849229722) completed successfully on commit `55cbd92b545d17f5b3c4530731994141f2582a1e`. The official retrieved manifest version is `245114.26.10.13.2000-1-bnet.66137`. Its direct job log reports **97,283 randomized weapon plug memberships explicitly marked `currentlyCanRoll=true`**, **zero explicitly false**, and **zero unknown**, for the indexed equippable weapon scope. The exact-hash Dimensional Shift + Collective Action structural query returns **16** candidates in both the ordinary and strict-flag mode. The new extended dataset artifact `12886427175` uploaded successfully (92,750,895 bytes).
+
+**Critical interpretation:** The flag is present, but **non-discriminating in this particular indexed snapshot**. It does not identify any retired plug memberships here. This is a precise evidence blocker, not proof that all historical rolls are obtainable or that the 16 candidates are valid drops. Future work must inspect vendor/loot pool, crafting, socket plug-category, and instance-level evidence rather than using `currentlyCanRoll=true` alone as a certification.
+
+The latest repository change also makes the summary report this no-false/zero-unknown condition explicitly, with a synthetic regression test. Its later CI status must be verified separately.
