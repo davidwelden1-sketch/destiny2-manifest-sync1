@@ -1,4 +1,5 @@
 import unittest
+from math import inf, nan
 from simulator.ttk import WeaponProfile, shots_to_kill, ttk_seconds, optimal_ttk, minimum_precision_hits
 
 class TestTTK(unittest.TestCase):
@@ -21,6 +22,14 @@ class TestTTK(unittest.TestCase):
             WeaponProfile(0, 80, 40)
         with self.assertRaises(ValueError):
             shots_to_kill(0, 20)
+        for invalid in (nan, inf, -inf):
+            with self.subTest(value=str(invalid)):
+                with self.assertRaises(ValueError):
+                    shots_to_kill(100, invalid)
+                with self.assertRaises(ValueError):
+                    WeaponProfile(140, invalid, 40)
+                with self.assertRaises(ValueError):
+                    optimal_ttk(WeaponProfile(140, 80, 40), 100, invalid)
 
 if __name__ == "__main__":
     unittest.main()
