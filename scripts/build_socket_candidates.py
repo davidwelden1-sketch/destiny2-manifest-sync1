@@ -17,6 +17,10 @@ def build_index(items, plugsets):
                 if h is not None:
                     sources.append({"field": field, "hash": h})
                     candidates.update(x for x in plugsets.get(str(h), []) if x is not None)
+            initial = socket.get("singleInitialItemHash")
+            if initial is not None:
+                sources.append({"field": "singleInitialItemHash", "hash": initial})
+                candidates.add(initial)
             if candidates:
                 sockets.append({"socket_index": index, "candidate_plug_hashes": sorted(candidates),
                                 "plugset_references": sources})
