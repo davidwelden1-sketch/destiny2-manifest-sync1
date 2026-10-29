@@ -1,0 +1,50 @@
+{
+  "reviewed_on": "2026-10-29",
+  "status": "partial_official_rules_confirmed_not_gameplay_certified",
+  "artifact_2_0": {
+    "max_selected": 7,
+    "buckets": 3,
+    "available_artifacts": 7,
+    "anti_champion_artifact_perks_removed": true,
+    "source": "https://help.bungie.net/hc/en-us/articles/47117806971796--12-Creating-a-Good-Build",
+    "patch_source": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0"
+  },
+  "data_disc_sample": {
+    "tier_1": [
+      "Fierce Proxemics",
+      "Rapid Remedy"
+    ],
+    "tier_2": [
+      "Blinding Jolts",
+      "Precision Equity"
+    ],
+    "tier_3": [
+      "Tazer Tag",
+      "Sticker Shock"
+    ],
+    "source": "https://www.bungie.net/7/en/News/Article/dev_insights_weapons_artifacts_focusing_preview",
+    "note": "partial published sample, not full legal allocation or unlock rule table"
+  },
+  "gifted_conviction": {
+    "intrinsic": "Activating Ascension or Tempest Strike throws bouncing explosives that jolt and damage; jolting nearby targets grants damage resistance",
+    "source": "https://www.light.gg/db/items/hover/1627691271",
+    "secondary_report": {
+      "dr_pve": [
+        0.25,
+        0.4,
+        0.5
+      ],
+      "stacks": 3,
+      "duration_seconds": 10,
+      "range_meters_approx": 15
+    },
+    "measured_current": false,
+    "independent_reproductions": 0,
+    "stacking_with_other_DR": "not independently verified"
+  },
+  "blocked": [
+    "complete current Artifact perk catalogue and bucket-specific selection limits",
+    "current Gifted Conviction interaction and external DR stacking gameplay trials",
+    "all loadout legality audits"
+  ]
+}
