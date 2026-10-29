@@ -67,5 +67,18 @@ class TestCurrentRollFlags(unittest.TestCase):
         self.assertEqual(c, {1, 3})
 
 
+    def test_all_true_manifest_is_explicitly_non_discriminating(self):
+        all_true = {"10": [{"plugItemHash": h, "currentlyCanRoll": True}
+                           for h in self.plugsets["10"]],
+                    "11": [{"plugItemHash": h, "currentlyCanRoll": True}
+                           for h in self.plugsets["11"]]}
+        index = build_index(self.items, self.plugsets, all_true)
+        report = summarize(index, "test")
+        self.assertEqual(report["currently_rollable_randomized_plug_memberships"], 6)
+        self.assertEqual(report["noncurrent_randomized_plug_memberships"], 0)
+        self.assertFalse(report["explicit_noncurrent_roll_evidence_found"])
+        self.assertIn("cannot distinguish retired rolls", report["roll_flag_caveat"])
+
+
 if __name__ == "__main__":
     unittest.main()
