@@ -4,6 +4,7 @@ Uses official June 2026 9.7.0 patch-note damage only; not a current
 weapon roll, measured TTK or claim of live-game validity.
 """
 import json
+from math import isfinite
 from pathlib import Path
 from simulator.patch_import import load_patch_notes
 
@@ -14,9 +15,9 @@ def run_pvp_sweep(path=None, health_values=(200, 210, 220, 230), rpm=600):
     values = {row["id"]: row for row in data["observations"]}
     crit = values["adaptive_auto_crit"]["new_value"]
     body = values["adaptive_auto_body"]["new_value"]
-    if any(type(h) not in (int, float) or h <= 0 for h in health_values):
+    if any(type(h) not in (int, float) or not isfinite(h) or h <= 0 for h in health_values):
         raise ValueError("positive health values required")
-    if type(rpm) not in (int, float) or rpm <= 0:
+    if type(rpm) not in (int, float) or not isfinite(rpm) or rpm <= 0:
         raise ValueError("positive rpm required")
     rows = []
     for health in health_values:
