@@ -1,0 +1,41 @@
+name: Build Lab recoverable repository backup
+on:
+  schedule:
+    - cron: '41 2 * * 0'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create restorable Git bundle and SHA-256 checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p backup
+          git bundle create backup/destiny2-build-lab.bundle --all
+          (cd backup && sha256sum destiny2-build-lab.bundle > SHA256SUMS)
+          (cd backup && sha256sum -c SHA256SUMS)
+          git bundle verify backup/destiny2-build-lab.bundle
+      - name: Archive independent downloadable snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-lab-repository-backup-${{ github.run_id }}
+          path: backup/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Report backup failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          gh issue create --repo "$REPOSITORY" --title "Build Lab backup failure: ${{ github.run_id }}" --body "Weekly backup failed: ${RUN_URL}. Review logs and repair. A GitHub artifact is NOT a Google Drive copy." || true
