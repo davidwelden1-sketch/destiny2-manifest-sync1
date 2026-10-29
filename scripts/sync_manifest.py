@@ -5,16 +5,14 @@ import hashlib
 import json
 import os
 import pathlib
-import urllib.request
+from http_retry import fetch_with_retry
 
 BASE = "https://www.bungie.net"
 OUT = pathlib.Path(os.environ.get("OUTPUT_DIR", "output"))
 OUT.mkdir(parents=True, exist_ok=True)
 
 def get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Destiny2BuildLabManifestSync/0.1"})
-    with urllib.request.urlopen(req, timeout=120) as response:
-        return response.read()
+    return fetch_with_retry(url, user_agent="Destiny2BuildLabManifestSync/0.1", timeout=120)
 
 def main():
     manifest_url = BASE + "/Platform/Destiny2/Manifest/"
