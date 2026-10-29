@@ -57,6 +57,27 @@ def audit_initial_frame_candidates(items, version):
                 "champion_effect_verified": False,
                 "runtime_socket_state": "unverified",
             })
+    # A single exact weapon hash can carry several initial plugs labelled
+    # 'frames'. They may occupy different sockets and are NOT necessarily
+    # mutually exclusive, or the active intrinsic frame.
+    by_weapon = {}
+    for candidate in candidates:
+        by_weapon.setdefault(candidate["item_hash"], []).append(candidate)
+    multi_frame = []
+    for item_hash, entries in sorted(by_weapon.items()):
+        if len(entries) < 2:
+            continue
+        multi_frame.append({
+            "item_hash": item_hash,
+            "weapon_name": entries[0].get("weapon_name"),
+            "labelled_occurrences": len(entries),
+            "distinct_initial_plug_hashes": len({
+                row["initial_plug_hash"] for row in entries}),
+            "socket_indexes": sorted({row["socket_index"] for row in entries}),
+            "initial_plug_names": sorted({
+                row["initial_plug_name"] for row in entries
+                if isinstance(row["initial_plug_name"], str)}),
+        })
     return {
         "manifest_version": version,
         "equippable_weapon_definitions": len(weapons),
@@ -64,12 +85,17 @@ def audit_initial_frame_candidates(items, version):
         "frames_labelled_initial_plug_occurrences": len(candidates),
         "weapons_with_frames_labelled_initial_plug": len(
             {row["item_hash"] for row in candidates}),
+        "weapons_with_multiple_frame_labelled_initial_plugs": len(multi_frame),
+        "multi_frame_labelled_occurrences": sum(
+            row["labelled_occurrences"] for row in multi_frame),
+        "multi_frame_labelled_examples": multi_frame[:30],
         "unresolved_initial_plug_references": len(unresolved),
         "unresolved_initial_plug_examples": unresolved[:30],
         "frame_candidates": candidates,
         "limitations": (
             "An initial plug with category 'frames' is only a manifest candidate, "
             "not a certified active intrinsic/frame. Exact-hash live state, "
+            "multiple frame-labelled plugs may be different socket roles; "
             "frame-specific weapon type, Champion behavior, acquisition, "
             "enhancement and damage remain unverified."
         ),
@@ -89,7 +115,8 @@ def main():
         json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps({key: value for key, value in report.items()
                       if key not in ("frame_candidates", "initial_plug_category_occurrences",
-                                     "unresolved_initial_plug_examples")}, indent=2))
+                                     "unresolved_initial_plug_examples",
+                                     "multi_frame_labelled_examples")}, indent=2))
 
 
 if __name__ == "__main__":
