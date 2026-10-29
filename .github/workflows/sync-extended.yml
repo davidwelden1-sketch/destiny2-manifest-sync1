@@ -37,6 +37,8 @@ jobs:
         run: python scripts/audit_weapon_socket_roles.py
       - name: Index exact-hash initial frame plug candidates without certifying active frames
         run: python scripts/audit_weapon_frame_candidates.py
+      - name: Cross-audit frame-labelled initial plugs against randomized weapon sockets
+        run: python scripts/audit_frame_plug_reuse.py
       - name: Summarize game-wide randomized weapon sockets
         run: python scripts/query_weapon_pairs.py
       - name: Query dual Void Breach pickup trait sockets
