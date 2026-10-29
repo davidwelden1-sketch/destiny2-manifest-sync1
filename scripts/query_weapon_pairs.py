@@ -9,16 +9,21 @@ import os
 from pathlib import Path
 
 
-def find_pair_candidates(index, plug_a, plug_b):
-    if not all(isinstance(h, int) and h > 0 for h in (plug_a, plug_b)) or plug_a == plug_b:
+def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False):
+    if not all(isinstance(h, int) and not isinstance(h, bool) and h > 0
+               for h in (plug_a, plug_b)) or plug_a == plug_b:
         raise ValueError("Supply two distinct positive plug hashes")
+    if not isinstance(current_roll_only, bool):
+        raise ValueError("current_roll_only must be boolean")
+    field = ("currently_rollable_randomized_candidate_plug_hashes" if current_roll_only
+             else "randomized_candidate_plug_hashes")
     matches = []
     for item in index:
         if item.get("item_type") != 3:  # Destiny itemType 3 = Weapon
             continue
         sockets = item.get("sockets", [])
-        a_sockets = [s for s in sockets if plug_a in s.get("randomized_candidate_plug_hashes", [])]
-        b_sockets = [s for s in sockets if plug_b in s.get("randomized_candidate_plug_hashes", [])]
+        a_sockets = [s for s in sockets if plug_a in s.get(field, [])]
+        b_sockets = [s for s in sockets if plug_b in s.get(field, [])]
         pairs = []
         for a in a_sockets:
             for b in b_sockets:
@@ -34,7 +39,8 @@ def find_pair_candidates(index, plug_a, plug_b):
         if pairs:
             matches.append({"item_hash": item["item_hash"], "name": item["name"],
                             "socket_pairs": sorted(pairs, key=lambda x: (x["a_socket_index"], x["b_socket_index"])),
-                            "evidence": "distinct_randomized_socket_membership_only",
+                            "evidence": ("explicit_currentlyCanRoll_true_on_distinct_randomized_sockets"
+                                         if current_roll_only else "distinct_randomized_socket_membership_only"),
                             "roll_legality": "unverified", "enhanced_perk_legality": "unverified",
                             "current_obtainability": "unverified"})
     return sorted(matches, key=lambda x: x["item_hash"])
@@ -49,12 +55,23 @@ def summarize(index, version):
                 sum(sum(bool(s.get("randomized_candidate_plug_hashes"))
                         for s in x.get("sockets", [])) >= 2 for x in weapons),
             "randomized_socket_entries": len(randomized_sockets),
+            "currently_rollable_randomized_plug_memberships":
+                sum(len(s.get("currently_rollable_randomized_candidate_plug_hashes", []))
+                    for s in randomized_sockets),
+            "noncurrent_randomized_plug_memberships":
+                sum(len(s.get("noncurrent_randomized_candidate_plug_hashes", []))
+                    for s in randomized_sockets),
+            "unknown_current_roll_plug_memberships":
+                sum(len(s.get("unknown_current_roll_randomized_candidate_plug_hashes", []))
+                    for s in randomized_sockets),
             "interpretation": "Structural candidate counts, not unique playable weapons, trait columns, enhanced eligibility or obtainable rolls."}
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--plug-a", type=int)
+    parser.add_argument("--currently-rollable-only", action="store_true",
+                        help="Require explicit Bungie currentlyCanRoll=true on both plugs")
     parser.add_argument("--plug-b", type=int)
     parser.add_argument("--output-dir", default=os.environ.get("OUTPUT_DIR", "output"))
     args = parser.parse_args()
@@ -69,9 +86,12 @@ def main():
     else:
         report = {"manifest_version": meta["manifest_version"],
                   "plug_a": args.plug_a, "plug_b": args.plug_b,
-                  "matches": find_pair_candidates(index, args.plug_a, args.plug_b),
+                  "matches": find_pair_candidates(index, args.plug_a, args.plug_b,
+                                                  current_roll_only=args.currently_rollable_only),
+                  "current_roll_only": args.currently_rollable_only,
                   "interpretation": "Distinct randomized sockets only; not proof of a legal obtainable or enhanced roll."}
-        target = root / f"weapon_pair_{args.plug_a}_{args.plug_b}.json"
+        suffix = "_currently_rollable" if args.currently_rollable_only else ""
+        target = root / f"weapon_pair_{args.plug_a}_{args.plug_b}{suffix}.json"
     target.write_text(json.dumps(report, indent=2))
     print(json.dumps({k: v for k, v in report.items() if k != "matches"}, indent=2))
     if "matches" in report:
