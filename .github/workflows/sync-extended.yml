@@ -33,6 +33,8 @@ jobs:
         run: python scripts/audit_weapon_socket_visibility.py
       - name: Audit Bungie socket-type whitelist compatibility of randomized weapon plugs
         run: python scripts/audit_weapon_socket_categories.py
+      - name: Audit explicit component category labels versus unclassified trait sockets
+        run: python scripts/audit_weapon_socket_roles.py
       - name: Summarize game-wide randomized weapon sockets
         run: python scripts/query_weapon_pairs.py
       - name: Query dual Void Breach pickup trait sockets
