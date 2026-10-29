@@ -46,24 +46,6 @@ jobs:
             reports/freshness.json
             reports/manifest_probe.json
           retention-days: 30
-      - name: Open or update failure tracking issue
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPOSITORY: ${{ github.repository }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          title="Build Lab automated workflow failure"
-          body="An hourly Build Lab run failed. Review the logs and repair the underlying cause. Latest failed run: ${RUN_URL}"
-          existing=$(gh issue list --repo "$REPOSITORY" --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Build Lab automated workflow failure") | .number' | head -1)
-          if [ -n "$existing" ]; then
-            gh issue comment "$existing" --repo "$REPOSITORY" --body "$body"
-          else
-            gh issue create --repo "$REPOSITORY" --title "$title" --body "$body"
-          fi
-
       - name: Publish verifiable successful run receipt
         if: success()
         env:
@@ -82,3 +64,21 @@ jobs:
           else
             gh issue create --repo "$REPOSITORY" --title "$title" --body "$body"
           fi
+      - name: Open or update failure tracking issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          title="Build Lab automated workflow failure"
+          body="An hourly Build Lab run failed. Review the logs and repair the underlying cause. Latest failed run: ${RUN_URL}"
+          existing=$(gh issue list --repo "$REPOSITORY" --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Build Lab automated workflow failure") | .number' | head -1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$REPOSITORY" --title "$title" --body "$body"
+          fi
+
