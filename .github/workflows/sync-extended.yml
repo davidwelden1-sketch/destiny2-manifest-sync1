@@ -16,6 +16,8 @@ jobs:
           python-version: '3.12'
       - name: Fetch and index definitions
         run: python scripts/sync_extended.py
+      - name: Validate definitions and build item-perk relationship index
+        run: python scripts/validate_extended.py
       - name: Upload extended dataset
         uses: actions/upload-artifact@v4
         with:
