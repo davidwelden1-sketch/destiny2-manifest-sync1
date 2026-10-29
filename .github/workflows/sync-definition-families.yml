@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/sync_definition_families.py'
+      - 'scripts/audit_definition_families.py'
+      - 'tests/test_definition_coverage.py'
       - '.github/workflows/sync-definition-families.yml'
   workflow_dispatch:
   schedule:
