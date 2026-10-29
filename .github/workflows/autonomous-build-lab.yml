@@ -1,4 +1,4 @@
-name: Prometheus Labs autonomous audit
+name: Forge Labs autonomous audit
 on:
   push:
     branches: [main]
