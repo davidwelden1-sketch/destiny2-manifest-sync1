@@ -1,0 +1,21 @@
+name: Forge certification checks
+on:
+  push:
+    paths:
+      - 'forge_certify.py'
+      - 'tests/test_forge_certify.py'
+      - '.github/workflows/forge-certification.yml'
+  pull_request:
+    paths:
+      - 'forge_certify.py'
+      - 'tests/test_forge_certify.py'
+jobs:
+  certification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run Forge certification regression tests
+        run: python -m unittest discover -s tests -p 'test_forge_certify.py' -v
