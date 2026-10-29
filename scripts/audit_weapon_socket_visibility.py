@@ -8,7 +8,8 @@ import os
 from pathlib import Path
 
 
-def audit_visibility(index, manifest_version):
+def audit_visibility(index, manifest_version, item_names=None):
+    item_names = item_names or {}
     exceptions = []
     counts = {"visible": 0, "hidden": 0, "unknown": 0}
     for item in index:
@@ -35,6 +36,9 @@ def audit_visibility(index, manifest_version):
                     socket.get("vendor_purchase_initialization_blocked"),
                 "randomized_plug_count": len(plugs),
                 "randomized_plug_hashes": sorted(plugs),
+                "randomized_plug_names": [
+                    {"hash": h, "name": item_names.get(h)} for h in sorted(plugs)
+                ],
                 "explicit_current_roll_count": len(
                     socket.get("currently_rollable_randomized_candidate_plug_hashes") or []),
                 "randomized_plugset_hashes": sorted(
@@ -58,7 +62,10 @@ def main():
     root = Path(os.environ.get("OUTPUT_DIR", "output"))
     index = json.loads((root / "item_socket_candidates.json").read_text())
     meta = json.loads((root / "manifest_metadata_extended.json").read_text())
-    report = audit_visibility(index, meta["manifest_version"])
+    definitions = json.loads((root / "items_extended.json").read_text())
+    item_names = {x["hash"]: x.get("name") for x in definitions
+                  if type(x.get("hash")) is int}
+    report = audit_visibility(index, meta["manifest_version"], item_names)
     (root / "weapon_socket_visibility_exceptions.json").write_text(
         json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
