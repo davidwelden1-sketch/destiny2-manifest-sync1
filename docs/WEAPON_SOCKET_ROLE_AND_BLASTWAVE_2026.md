@@ -1,0 +1,16 @@
+# S288: Conservative game-wide socket-role audit and Titan explosive ownership
+
+Date: 2026-10-29 UTC. Evidence categories: official Bungie patch; official manifest labels; synthetic unit tests; gameplay measurements **not available**.
+
+## Game-wide socket evidence change
+`scripts/audit_weapon_socket_roles.py` now groups all indexed randomized weapon plugs by exact Bungie `plugCategoryIdentifier` and labels sockets conservatively. It recognizes the literal identifiers `barrels`, `magazines`, `magazines_gl`, `tubes`, `batteries`, and `v300.weapon.damage_type.energy` as explicitly **component-labelled**, not automatically as active weapon damage traits. `frames` is **deliberately unclassified**, because the category name alone cannot certify a gameplay role. Missing plug definitions/categories fail closed; a mixed socket cannot be promoted to a certified trait socket.
+
+The previous live category audit counted membership occurrences: barrels 23,524; magazines 23,669; magazines_gl 2,469; tubes 3,129; batteries 2,084. These are **membership counts**, not distinct weapon rolls, and do not by themselves determine how many full sockets are component-only. New live socket-level counts require a successful extended workflow readback. Prior live audit: https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40872545511 ; official schema: https://bungie-net.github.io/multi/schema_Destiny-Definitions-Items-DestinyItemPlugDefinition.html .
+
+## Independent official interaction: Titan Blastwave Striders explosive damage sources
+Bungie 9.7.0 (June 9, 2026) explicitly distinguishes explosive *kill-triggered* traits and *passive* explosive payloads for Blastwave Striders. Dragonfly/Firefly explosions **no longer trigger the blast**; Explosive Payload/Explosive Head explosions **still trigger the blast**. The patch also changes its activator to Shiver Strike melee damage (including Howl of the Storm), adds a short delay after explosive kills, and changes kill thresholds from 13 to 10 for weaker enemies and 7 to 4 for powerful enemies. Official patch: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0 .
+
+**Original test hypothesis, NOT a certified build:** An exact-hash legal Explosive Payload/Explosive Head weapon paired with Blastwave Striders might provide more reliable blast triggers than an otherwise comparable Dragonfly/Firefly weapon. The official wording supports only the specific explosive-trigger distinction, not extra kill credit, self-damage timing, DPS, proc rate, or optimality. Test in PvE and separately in ordinary 6v6 PvP with matched targets and identical armor; use one verified active Artifact of <=7 legal perks where enabled. Competitive and Trials disable Artifact effects per 9.7.0. Verify weapon trait pools and acquisition by exact hash before a complete recommendation.
+
+## Outstanding blockers
+Enhanced perk eligibility, current obtainability, live instance sockets, `frames` category role, damage attribution, cooldown and proc ICD, stacked DR, measured PvP TTK and boss DPS. Preserve 45 historical candidates; no measured gameplay or fully certified build claimed.
