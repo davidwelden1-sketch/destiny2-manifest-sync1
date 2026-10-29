@@ -49,7 +49,17 @@ def certify(build, as_of=None):
     for field in ("subclass", "armor", "weapons", "stats", "rotation"):
         value = build.get(field)
         checks[field] = "PASS" if value and build.get("audits", {}).get(field) == "verified" and build.get("audit_sources", {}).get(field) else "BLOCKED: missing or unaudited"
-    blockers = [{"check": k, "reason": v, "next_action": {\n        "artifact": "Import current Artifact catalog and verify legal selection, tiers, unlocks, and activity",\n        "stacking": "Attach official or measured evidence for each interaction and test combined effects",\n        "subclass": "Validate aspects, fragments, abilities and activity legality",\n        "armor": "Validate Exotic and armor mod legality",\n        "weapons": "Validate manifest socket pools and obtainable perk combinations",\n        "stats": "Validate stat totals, breakpoints and cooldown inputs",\n        "rotation": "Validate triggers, durations and ability regeneration sequence",\n    }[k]} for k, v in checks.items() if v != "PASS"]\n    return {"build": build.get("name", "unnamed"), "as_of": as_of,\n            "blockers": blockers, "blocker_count": len(blockers),
+    blockers = [{"check": k, "reason": v, "next_action": {
+        "artifact": "Import current Artifact catalog and verify legal selection, tiers, unlocks, and activity",
+        "stacking": "Attach official or measured evidence for each interaction and test combined effects",
+        "subclass": "Validate aspects, fragments, abilities and activity legality",
+        "armor": "Validate Exotic and armor mod legality",
+        "weapons": "Validate manifest socket pools and obtainable perk combinations",
+        "stats": "Validate stat totals, breakpoints and cooldown inputs",
+        "rotation": "Validate triggers, durations and ability regeneration sequence",
+    }[k]} for k, v in checks.items() if v != "PASS"]
+    return {"build": build.get("name", "unnamed"), "as_of": as_of,
+            "blockers": blockers, "blocker_count": len(blockers),
             "status": "READY_FOR_EVIDENCE_REVIEW" if all(v == "PASS" for v in checks.values()) else "NOT_CERTIFIED",
             "checks": checks}
 
