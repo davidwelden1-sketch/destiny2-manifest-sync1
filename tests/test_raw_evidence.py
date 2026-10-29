@@ -10,3 +10,9 @@ class EvidenceTests(unittest.TestCase):
         self.assertIn("independent_review_required", validate_observation({"validation_state":"verified_current"}))
     def test_boolean_not_numeric(self):
         self.assertIn("invalid_raw_event", validate_observation({"raw_events":[{"value":True}],"sample_count":1}))
+
+    def test_current_verification_requires_reference_version(self):
+        self.assertIn("current_game_version_required", validate_observation({"validation_state":"verified_current"}))
+
+    def test_stale_game_version_rejected(self):
+        self.assertIn("stale_game_version", validate_observation({"validation_state":"verified_current", "game_version":"old"}, current_game_version="new"))
