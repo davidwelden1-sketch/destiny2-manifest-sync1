@@ -6,15 +6,21 @@ active intrinsic frames, or enhanced perk availability.
 
 def check_socket_membership(item_hash, socket_index, plug_hash, inventory):
     """Check a single item's explicit socket index, never merge names/variants."""
-    if not all(isinstance(x, int) and x >= 0 for x in (item_hash, socket_index, plug_hash)):
+    if not all(type(x) is int and x >= 0 for x in (item_hash, socket_index, plug_hash)):
         raise ValueError("hashes and socket index must be nonnegative integers")
     if not isinstance(inventory, dict):
         raise TypeError("inventory must be a mapping")
     item = inventory.get(item_hash)
     if item is None:
         return {"possible": False, "reason": "item_hash_absent", "certified_roll": False}
+    if not isinstance(item, dict):
+        return {"possible": False, "reason": "malformed_item", "certified_roll": False}
     sockets = item.get("sockets", {})
+    if not isinstance(sockets, dict):
+        return {"possible": False, "reason": "malformed_sockets", "certified_roll": False}
     plugs = sockets.get(socket_index, ())
+    if not isinstance(plugs, (list, tuple, set, frozenset)):
+        return {"possible": False, "reason": "malformed_socket_plugs", "certified_roll": False}
     present = plug_hash in plugs
     return {"possible": present, "reason": "manifest_membership_only" if present else "plug_not_in_socket",
             "certified_roll": False}
