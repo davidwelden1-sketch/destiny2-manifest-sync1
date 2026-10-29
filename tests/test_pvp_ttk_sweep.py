@@ -12,6 +12,13 @@ class PvpTtkSweepTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run_pvp_sweep(health_values=(0,))
 
+    def test_nonfinite_inputs_rejected(self):
+        for value in (float('nan'), float('inf')):
+            with self.assertRaises(ValueError):
+                run_pvp_sweep(health_values=(value,))
+            with self.assertRaises(ValueError):
+                run_pvp_sweep(rpm=value)
+
     def test_ttk_consistent_with_shot_count(self):
         report = run_pvp_sweep(health_values=(220,))
         for row in report["results"]:
