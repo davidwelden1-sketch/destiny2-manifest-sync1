@@ -78,6 +78,39 @@ def audit_initial_frame_candidates(items, version):
                 row["initial_plug_name"] for row in entries
                 if isinstance(row["initial_plug_name"], str)}),
         })
+    # Count paired initial-plug relationships without assigning active frame roles.
+    # Socket indexes and socket type hashes remain definition-level evidence.
+    socket_index_patterns = Counter()
+    socket_type_relationships = Counter()
+    plug_identity_relationships = Counter()
+    socket_type_pairs = Counter()
+    pair_examples = []
+    for row in multi_frame:
+        entries = by_weapon[row["item_hash"]]
+        socket_index_patterns[",".join(str(x["socket_index"]) for x in entries)] += 1
+        plug_identity_relationships[
+            "same_initial_plug" if row["distinct_initial_plug_hashes"] == 1
+            else "different_initial_plugs"] += 1
+        types = [x["socket_type_hash"] for x in entries]
+        if any(type(h) is not int or h <= 0 for h in types):
+            relationship = "unknown_socket_type"
+        elif len(set(types)) == 1:
+            relationship = "same_socket_type"
+        else:
+            relationship = "different_socket_types"
+        socket_type_relationships[relationship] += 1
+        if relationship != "unknown_socket_type":
+            socket_type_pairs[",".join(str(h) for h in sorted(types))] += 1
+        if len(pair_examples) < 30:
+            pair_examples.append({
+                "item_hash": row["item_hash"],
+                "weapon_name": row["weapon_name"],
+                "socket_indexes": row["socket_indexes"],
+                "socket_type_hashes": types,
+                "initial_plug_hashes": [x["initial_plug_hash"] for x in entries],
+                "socket_type_relationship": relationship,
+                "active_frame_verified": False,
+            })
     return {
         "manifest_version": version,
         "equippable_weapon_definitions": len(weapons),
@@ -89,6 +122,12 @@ def audit_initial_frame_candidates(items, version):
         "multi_frame_labelled_occurrences": sum(
             row["labelled_occurrences"] for row in multi_frame),
         "multi_frame_labelled_examples": multi_frame[:30],
+        "multi_frame_socket_index_patterns": dict(sorted(socket_index_patterns.items())),
+        "multi_frame_socket_type_relationships": dict(sorted(socket_type_relationships.items())),
+        "multi_frame_plug_identity_relationships": dict(sorted(plug_identity_relationships.items())),
+        "multi_frame_socket_type_pairs_top": sorted(socket_type_pairs.items(),
+            key=lambda pair: (-pair[1], pair[0]))[:30],
+        "multi_frame_relationship_examples": pair_examples,
         "unresolved_initial_plug_references": len(unresolved),
         "unresolved_initial_plug_examples": unresolved[:30],
         "frame_candidates": candidates,
@@ -116,7 +155,8 @@ def main():
     print(json.dumps({key: value for key, value in report.items()
                       if key not in ("frame_candidates", "initial_plug_category_occurrences",
                                      "unresolved_initial_plug_examples",
-                                     "multi_frame_labelled_examples")}, indent=2))
+                                     "multi_frame_labelled_examples",
+                                     "multi_frame_relationship_examples")}, indent=2))
 
 
 if __name__ == "__main__":
