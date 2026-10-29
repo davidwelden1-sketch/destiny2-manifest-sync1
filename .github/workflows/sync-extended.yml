@@ -35,6 +35,8 @@ jobs:
         run: python scripts/query_weapon_pairs.py --plug-a 1767911158 --plug-b 2562668800
       - name: Query explicitly current-roll dual Void Breach trait sockets
         run: python scripts/query_weapon_pairs.py --plug-a 1767911158 --plug-b 2562668800 --currently-rollable-only
+      - name: Query explicitly current and default-visible dual trait sockets
+        run: python scripts/query_weapon_pairs.py --plug-a 1767911158 --plug-b 2562668800 --currently-rollable-only --default-visible-only
       - name: Audit all same-name weapon variant randomized socket pools
         run: python scripts/audit_weapon_variants.py
       - name: Audit phantom perk pairs created by cross-variant name merging
