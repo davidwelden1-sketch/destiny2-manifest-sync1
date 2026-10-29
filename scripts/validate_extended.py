@@ -48,5 +48,3 @@ print(json.dumps({k: v for k, v in report.items() if k != "unresolved_plugset_ha
 if missing_sets:
     print(f"WARNING: unresolved plug-set references: {len(missing_sets)}")
 
-if __name__ == "__main__":
-    main()
