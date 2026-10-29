@@ -23,6 +23,8 @@ jobs:
         run: python -m simulator.automated_sweep
       - name: Run historical PvP breakpoint sweep
         run: python -m simulator.pvp_ttk_sweep
+      - name: Run PvE boss-phase and ability-uptime sweep
+        run: python -m simulator.pve_phase_sweep
       - name: Audit source evidence and permissions
         run: python -m simulator.evidence_audit
       - name: Publish report as downloadable artifact
@@ -34,6 +36,7 @@ jobs:
             reports/shield_sweep.json
             reports/pvp_ttk_sweep.json
             reports/evidence_audit.json
+            reports/pve_phase_sweep.json
           retention-days: 30
       - name: Open or update failure tracking issue
         if: failure()
