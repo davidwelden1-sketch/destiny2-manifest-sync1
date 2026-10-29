@@ -25,3 +25,20 @@ def build_certified(phases, activity, artifact_selected=False):
     if activity.strip().lower() in {"trials", "trials of osiris", "competitive"} and artifact_selected:
         return False
     return all(p in phases and phase_status(p, phases[p])["complete"] for p in REQUIRED)
+
+def build_certified_with_sources(phases, activity, artifact_selected=False):
+    """Require sourced evidence for every phase, not just status strings.
+
+    Structural source checks cannot prove the source's factual accuracy.
+    """
+    from simulator.source_evidence import sourced_phase_status
+    if not isinstance(phases, dict):
+        raise TypeError("phases must be a dict")
+    if not isinstance(activity, str) or not activity.strip():
+        raise ValueError("activity required")
+    if activity.strip().lower() in {"trials", "trials of osiris", "competitive"} and artifact_selected:
+        return False
+    return all(
+        p in phases and not sourced_phase_status(p, phases[p])["gaps"]
+        for p in REQUIRED
+    )
