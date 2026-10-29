@@ -1,45 +1,52 @@
-"""Forge build certification: fail closed on missing evidence.
-
-Usage: python -m forge_certify path/to/build.json
-No game mechanic is treated as measured without an evidence record.
-"""
+"""Fail-closed Forge build certification. Evidence is not inferred from names."""
 import json
 import sys
-from datetime import date
+from datetime import date, datetime
 
 CRITICAL = ("artifact", "stacking", "subclass", "armor", "weapons", "stats", "rotation")
+def _dated(s, as_of):
+    try:
+        return bool(s) and date.fromisoformat(s) <= date.fromisoformat(as_of)
+    except (ValueError, TypeError):
+        return False
 
 def certify(build, as_of=None):
     as_of = as_of or date.today().isoformat()
     checks = {}
-    artifact = build.get("artifact", {})
-    picks = artifact.get("selected", [])
-    catalog = artifact.get("catalog", {})
-    budget = artifact.get("budget")
-    if not catalog or budget is None or not picks:
-        checks["artifact"] = "BLOCKED: missing catalog, budget or selections"
+    a = build.get("artifact") or {}
+    picks = a.get("selected") or []
+    catalog = a.get("catalog") or {}
+    budget = a.get("budget")
+    if not isinstance(budget, int) or isinstance(budget, bool) or budget <= 0 or not catalog or not picks:
+        checks["artifact"] = "BLOCKED: missing valid catalog, budget or selections"
     elif len(picks) != len(set(picks)) or len(picks) > budget:
         checks["artifact"] = "FAIL: duplicate selections or exceeded budget"
     elif any(p not in catalog for p in picks):
         checks["artifact"] = "FAIL: unknown Artifact perk"
-    elif any(not catalog[p].get("source") or not catalog[p].get("verified_on") for p in picks):
-        checks["artifact"] = "BLOCKED: selection lacks dated evidence"
-    elif artifact.get("valid_on") != as_of or not artifact.get("unlock_rules_verified"):
-        checks["artifact"] = "BLOCKED: current-date or unlock legality not verified"
+    elif any(not catalog[p].get("source") or not _dated(catalog[p].get("verified_on"), as_of) for p in picks):
+        checks["artifact"] = "BLOCKED: perk lacks valid dated source"
+    elif not _dated(a.get("valid_on"), as_of) or not a.get("unlock_rules_verified") or not a.get("season_id"):
+        checks["artifact"] = "BLOCKED: Artifact version or unlock rules not established"
+    elif any(not isinstance(catalog[p].get("tier"), int) for p in picks):
+        checks["artifact"] = "BLOCKED: tier data missing"
+    elif not a.get("allocation_verified"):
+        checks["artifact"] = "BLOCKED: tier allocation not independently validated"
     else:
         checks["artifact"] = "PASS"
-    effects = build.get("effects", [])
+
+    effects = build.get("effects") or []
     if not effects:
         checks["stacking"] = "BLOCKED: no effect interactions"
-    elif any(not all(e.get(k) for k in ("trigger", "stack_group", "stack_rule", "source", "verified_on")) for e in effects):
-        checks["stacking"] = "BLOCKED: incomplete stacking evidence"
-    elif any(e.get("evidence") not in ("measured", "official") for e in effects):
-        checks["stacking"] = "BLOCKED: simulated or unknown stacking"
+    elif any(not all(e.get(k) for k in ("trigger", "stack_group", "stack_rule", "source", "verified_on")) or not _dated(e.get("verified_on"), as_of) for e in effects):
+        checks["stacking"] = "BLOCKED: incomplete or future-dated stacking evidence"
+    elif any(e.get("evidence") not in ("measured", "official") or not e.get("evidence_url") or not e.get("interaction_verified") for e in effects):
+        checks["stacking"] = "BLOCKED: stacking interaction not independently evidenced"
     else:
         checks["stacking"] = "PASS"
+
     for field in ("subclass", "armor", "weapons", "stats", "rotation"):
         value = build.get(field)
-        checks[field] = "PASS" if value and build.get("audits", {}).get(field) == "verified" else "BLOCKED: missing or unaudited"
+        checks[field] = "PASS" if value and build.get("audits", {}).get(field) == "verified" and build.get("audit_sources", {}).get(field) else "BLOCKED: missing or unaudited"
     return {"build": build.get("name", "unnamed"), "as_of": as_of,
             "status": "CERTIFIED" if all(v == "PASS" for v in checks.values()) else "NOT_CERTIFIED",
             "checks": checks}
