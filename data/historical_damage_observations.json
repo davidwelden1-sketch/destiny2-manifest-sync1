@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source": "https://docs.google.com/spreadsheets/d/1b57Hb8m1L3daFfUckQQqvvN6VOpD03KEssvQLMFpC5I/edit",
+  "source_title": "Destiny 2 Outgoing Damage Scaling Spreadsheet v1.9.2",
+  "source_date": "2025-02-20",
+  "observations": [
+    {
+      "metric": "weapon_power_delta_scalar",
+      "value": 0.2073,
+      "unit": "multiplier",
+      "scenario": "weapon ePL delta -234",
+      "activity": "pve",
+      "method": "author-reported single measured example",
+      "sample_size": 1,
+      "game_version": "historical_pre_2026",
+      "status": "historical_unreviewed",
+      "current_calibration_eligible": false,
+      "notes": "The source says this is the lowest author measured; not a replicated measurement series."
+    }
+  ],
+  "explicitly_outdated": true,
+  "usage": "Historical research context only; never calibrate current-game model."
+}
