@@ -3,12 +3,14 @@ on:
   push:
     paths:
       - 'forge_certify.py'
-      - 'tests/test_forge_certify.py'
+      - 'tests/test_forge_*.py'
+      - 'simulator/forge_damage_resistance.py'
       - '.github/workflows/forge-certification.yml'
   pull_request:
     paths:
       - 'forge_certify.py'
-      - 'tests/test_forge_certify.py'
+      - 'tests/test_forge_*.py'
+      - 'simulator/forge_damage_resistance.py'
 jobs:
   certification:
     runs-on: ubuntu-latest
@@ -18,4 +20,4 @@ jobs:
         with:
           python-version: '3.11'
       - name: Run Forge certification regression tests
-        run: python -m unittest discover -s tests -p 'test_forge_certify.py' -v
+        run: python -m unittest discover -s tests -p 'test_forge_*.py' -v
