@@ -1,0 +1,32 @@
+"""Read-only checks for simulator evidence and candidate index artifacts."""
+import json
+import sys
+from pathlib import Path
+
+def audit(root):
+    root = Path(root)
+    report = json.loads((root / "validation_report.json").read_text())
+    candidates = json.loads((root / "item_socket_candidates.json").read_text())
+    errors = []
+    if not report.get("manifest_version"):
+        errors.append("Missing manifest version")
+    hashes = [x["item_hash"] for x in candidates]
+    if hashes != sorted(set(hashes)):
+        errors.append("Candidate index not sorted and unique")
+    for item in candidates:
+        if item.get("roll_legality") != "unverified":
+            errors.append("Unexpected legality certification")
+        for socket in item.get("sockets", []):
+            plugs = socket.get("candidate_plug_hashes", [])
+            if plugs != sorted(set(plugs)):
+                errors.append("Candidate plugs not sorted and unique")
+    result = {"candidate_items": len(candidates), "errors": errors,
+              "manifest_version": report.get("manifest_version")}
+    (root / "candidate_audit.json").write_text(json.dumps(result, indent=2))
+    return result
+
+if __name__ == "__main__":
+    result = audit(sys.argv[1] if len(sys.argv) > 1 else "output")
+    print(json.dumps(result))
+    if result["errors"]:
+        raise SystemExit(1)
