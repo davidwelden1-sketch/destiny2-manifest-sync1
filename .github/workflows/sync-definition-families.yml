@@ -1,0 +1,29 @@
+name: Sync Destiny Definition Families
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/sync_definition_families.py'
+      - '.github/workflows/sync-definition-families.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '12 7 * * *'
+permissions:
+  contents: read
+jobs:
+  definitions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download official definition families
+        run: python scripts/sync_definition_families.py
+      - name: Upload definition catalog
+        uses: actions/upload-artifact@v4
+        with:
+          name: destiny-definition-families
+          path: output/
+          retention-days: 30
