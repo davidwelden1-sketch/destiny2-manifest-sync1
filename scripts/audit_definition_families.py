@@ -79,7 +79,9 @@ def audit(root):
 
 
 if __name__ == "__main__":
-    result = audit(sys.argv[1] if len(sys.argv) > 1 else "output")
+    root = Path(sys.argv[1] if len(sys.argv) > 1 else "output")
+    result = audit(root)
+    (root / "definition_coverage_report.json").write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))
     if result["errors"]:
         raise SystemExit(1)
