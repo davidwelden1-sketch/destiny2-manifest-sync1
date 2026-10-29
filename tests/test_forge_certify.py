@@ -32,7 +32,7 @@ class ForgeCertificationTests(unittest.TestCase):
              "audit_sources":{x:"https://example.invalid" for x in ("subclass","armor","weapons","stats","rotation")}}
         b.update({x:{"selected":"placeholder"} for x in ("subclass","armor","weapons","stats","rotation")})
         # This tests structural checks only: actual evidence must be checked externally.
-        self.assertEqual(certify(b, "2026-10-29")["status"], "CERTIFIED")
+        self.assertEqual(certify(b, "2026-10-29")["status"], "READY_FOR_EVIDENCE_REVIEW")
 
 if __name__ == "__main__":
     unittest.main()
