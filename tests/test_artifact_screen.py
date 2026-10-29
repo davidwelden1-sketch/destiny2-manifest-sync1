@@ -1,5 +1,5 @@
 import unittest
-from simulator.artifact_screen import screen_candidate
+from simulator.artifact_screen import screen_candidate, screen_one_active_artifact
 
 class ArtifactScreenTests(unittest.TestCase):
     def test_class_coverage(self):
@@ -8,6 +8,17 @@ class ArtifactScreenTests(unittest.TestCase):
 
     def test_restricted_activity(self):
         self.assertFalse(screen_candidate("hunter", "Trials", ["A"], ["A"])["eligible"])
+
+    def test_glory_artifact_disabled(self):
+        self.assertFalse(screen_candidate("hunter", "Glory", ["A"], ["A"])["eligible"])
+
+    def test_single_artifact_pool(self):
+        catalog = {"a": ["A", "B"], "b": ["C", "D"]}
+        self.assertFalse(screen_one_active_artifact(
+            "titan", "raid", "a", ["A", "C"], catalog)["eligible"])
+        result = screen_one_active_artifact("titan", "raid", "a", ["A"], catalog)
+        self.assertTrue(result["eligible"])
+        self.assertFalse(result["catalog_independently_verified"])
 
     def test_unknown_perk(self):
         self.assertFalse(screen_candidate("titan", "raid", ["B"], ["A"])["eligible"])
