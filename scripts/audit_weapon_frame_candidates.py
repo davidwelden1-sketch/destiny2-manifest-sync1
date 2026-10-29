@@ -111,6 +111,40 @@ def audit_initial_frame_candidates(items, version):
                 "socket_type_relationship": relationship,
                 "active_frame_verified": False,
             })
+    # Surface exact-hash exceptions to the dominant socket-type pattern.
+    # A dominant pair is only selected when uniquely most frequent; ties
+    # and absent/invalid type hashes must never imply a standard frame role.
+    ranked_pairs = sorted(socket_type_pairs.items(),
+                          key=lambda pair: (-pair[1], pair[0]))
+    dominant_pair = (ranked_pairs[0][0] if ranked_pairs
+                     and ranked_pairs[0][1] > 1
+                     and (len(ranked_pairs) == 1
+                          or ranked_pairs[0][1] > ranked_pairs[1][1])
+                     else None)
+    exceptional_rows = []
+    for row in multi_frame:
+        entries = by_weapon[row["item_hash"]]
+        types = [entry["socket_type_hash"] for entry in entries]
+        if any(type(h) is not int or h <= 0 for h in types):
+            reason = "unknown_socket_type"
+        elif dominant_pair is None:
+            reason = "no_unique_dominant_pair"
+        elif ",".join(str(h) for h in sorted(types)) != dominant_pair:
+            reason = "non_dominant_socket_type_pair"
+        else:
+            continue
+        exceptional_rows.append({
+            "item_hash": row["item_hash"],
+            "weapon_name": row["weapon_name"],
+            "reason": reason,
+            "socket_indexes": [entry["socket_index"] for entry in entries],
+            "socket_type_hashes": types,
+            "initial_plug_hashes": [entry["initial_plug_hash"] for entry in entries],
+            "initial_plug_names": [entry["initial_plug_name"] for entry in entries],
+            "active_frame_verified": False,
+            "current_acquisition_verified": False,
+        })
+    exceptional_rows.sort(key=lambda row: row["item_hash"])
     return {
         "manifest_version": version,
         "equippable_weapon_definitions": len(weapons),
@@ -128,6 +162,9 @@ def audit_initial_frame_candidates(items, version):
         "multi_frame_socket_type_pairs_top": sorted(socket_type_pairs.items(),
             key=lambda pair: (-pair[1], pair[0]))[:30],
         "multi_frame_relationship_examples": pair_examples,
+        "multi_frame_dominant_socket_type_pair": dominant_pair,
+        "multi_frame_exception_count": len(exceptional_rows),
+        "multi_frame_exception_examples": exceptional_rows[:50],
         "unresolved_initial_plug_references": len(unresolved),
         "unresolved_initial_plug_examples": unresolved[:30],
         "frame_candidates": candidates,
