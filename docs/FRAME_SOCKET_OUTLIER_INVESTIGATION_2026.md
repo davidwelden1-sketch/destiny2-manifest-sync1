@@ -21,3 +21,17 @@ Synthetic regression tests cover a unique dominant pair, a tie and a boolean soc
 2. Compare the exceptional socket-type definitions with the dominant pair and independent weapon frame references.
 3. Only promote a weapon to a legal Artifact-first synergy candidate when its active intrinsic, obtainable perk sockets, enhancement status and game-mode rules are independently supported.
 4. Preserve the 45 historical candidates. Do not report theoretical damage/TTK/DR/cooldown outputs as gameplay measurements.
+
+## Live exact-hash results — verified 29 October 2026, 18:17 UTC
+[Extended workflow run 40929129319](https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40929129319) completed **success** on source commit `2b3045f`. The job log reports manifest `245114.26.10.13.2000-1-bnet.66137`, dominant socket-type pair `1215804696,1215804697`, and **exactly four** exceptions. Uploaded artifact `12922400772` contains 94,273,196 bytes.
+
+| Exact item hash | Weapon name | Socket indexes | Socket-type hashes | Initial plugs (manifest names) |
+| --- | --- | --- | --- | --- |
+| `534775659` | PLUG ONE.1 (Adept) | 3,4 | 1215804696 / 1215804696 | Bottomless Grief (`4252909580`); Backup Plan (`1600092898`) |
+| `1681583613` | Ergo Sum | 4,6 | 3530202021 / 1215804696 | Wave Sword Frame (`289811733`); Transcendent Duelist (`2963428707`) |
+| `2200470033` | Cull's Shadow | 1,4 | 63353896 / 1215804697 | Blades of Unmaking (`1980732122`); Soulforge (`695800688`) |
+| `2816212794` | Bad Juju | 3,6 | 1215804697 / 1215804697 | Hip-Fire Grip (`1866048759`); Full Auto Trigger System (`4267945040`) |
+
+**New interpretation:** This live result provides direct counterexamples to treating every `frames`-labelled initial plug as a weapon archetype. `Backup Plan`, `Hip-Fire Grip`, and `Full Auto Trigger System` are names of weapon traits or controls, not sufficient evidence of an intrinsic frame. `Ergo Sum` mixes `Wave Sword Frame` with `Transcendent Duelist` in different socket-type families. `Cull's Shadow` has two distinctly named initial plugs in a separate exceptional type pair. These are **manifest label/role ambiguity examples**, not proof that any of these plugs are simultaneously active or that a roll is currently obtainable.
+
+[GitHub Actions test run 40929153342](https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/40929153342) completed successfully; direct job log reports **158/158 passing tests**, including three new regression tests. The four exact hashes are now priority manual frame-role cases, not newly certified builds.
