@@ -13,6 +13,13 @@ class TestSocketCandidates(unittest.TestCase):
         self.assertEqual(result[0]["roll_legality"], "unverified")
         self.assertEqual(len(result[0]["sockets"][0]["plugset_references"]), 2)
 
+    def test_fixed_initial_socket_is_included(self):
+        items = [{"hash": 102, "name": "Fixed", "equippable": True,
+                  "socketEntries": [{"singleInitialItemHash": 77}]}]
+        result = build_index(items, {})
+        self.assertEqual(result[0]["sockets"][0]["candidate_plug_hashes"], [77])
+        self.assertEqual(result[0]["sockets"][0]["plugset_references"][0]["field"], "singleInitialItemHash")
+
     def test_non_equippable_excluded(self):
         items = [{"hash": 101, "name": "Example", "equippable": False,
                   "socketEntries": [{"randomizedPlugSetHash": 10}]}]
