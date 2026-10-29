@@ -3,7 +3,6 @@
 The ranges below are synthetic normalized scores, not in-game damage,
 and must never be reported as certified or measured build performance.
 """
-from itertools import product
 from simulator.candidate_comparison import compare_candidates
 
 def robust_rank(candidates, weights):
