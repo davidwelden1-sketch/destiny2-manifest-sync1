@@ -13,10 +13,14 @@ class CertificationGateTests(unittest.TestCase):
 
     def test_complete_evidence(self):
         phases = {p: {k: "verified" for k in keys} for p, keys in REQUIRED.items()}
-        self.assertTrue(build_certified(phases, "strike", artifact_selected=True))
+        self.assertFalse(build_certified(phases, "strike", artifact_selected=True))
         self.assertFalse(build_certified(phases, "Trials", artifact_selected=True))
         self.assertFalse(build_certified(phases, "Competitive", artifact_selected=True))
-        self.assertTrue(build_certified(phases, "Competitive", artifact_selected=False))
+        self.assertFalse(build_certified(phases, "Competitive", artifact_selected=False))
+
+    def test_status_only_labels_cannot_certify(self):
+        phases = {p: {k: "verified" for k in keys} for p, keys in REQUIRED.items()}
+        self.assertFalse(build_certified(phases, "raid"))
 
     def test_one_unverified_phase_blocks_build(self):
         phases = {p: {k: "verified" for k in keys} for p, keys in REQUIRED.items()}
