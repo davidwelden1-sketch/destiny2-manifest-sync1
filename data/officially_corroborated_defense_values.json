@@ -1,0 +1,42 @@
+{
+  "reviewed_on": "2026-10-29",
+  "classification": "officially_corroborrated_historical_patch_values_not_current_live_measurements",
+  "entries": [
+    {
+      "id": "frost_armor_five_stacks_pve",
+      "metric": "pve_damage_resistance",
+      "value_approx": 0.35,
+      "prior_value_approx": 0.31,
+      "stacks": 5,
+      "source_url": "https://static01.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_kind": "official_patch_note",
+      "game_version": "9.7.0",
+      "status": "official_patch_value_not_reproduced_in_game",
+      "current_patch_continuity_checked": false
+    },
+    {
+      "id": "frost_armor_rime_max",
+      "metric": "pve_damage_resistance",
+      "value_approx": 0.5,
+      "max_stacks": 7,
+      "source_url": "https://static01.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_kind": "official_patch_note",
+      "game_version": "9.7.0",
+      "status": "official_patch_value_not_reproduced_in_game",
+      "current_patch_continuity_checked": false
+    },
+    {
+      "id": "void_overshield_pve",
+      "metric": "pve_overshield_damage_resistance",
+      "value": 0.7,
+      "effective_shield_hp": 150,
+      "source_url": "https://destiny.bungie.org/patchnotes/287",
+      "source_kind": "archived_official_patch_notes",
+      "status": "historical_official_patch_claim_not_currently_retested",
+      "current_patch_continuity_checked": false,
+      "note": "Resistance applies to shield HP, not Guardian base health. 45HP shield value additionally sourced from Owl Sector secondary Compendium."
+    }
+  ],
+  "raw_measurement_trials": 0,
+  "independent_reproductions": 0
+}
