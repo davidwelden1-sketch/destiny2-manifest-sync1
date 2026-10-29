@@ -1,5 +1,10 @@
 name: Sync Extended Destiny Definitions
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/**'
   workflow_dispatch:
   schedule:
     - cron: '41 6 * * *'
