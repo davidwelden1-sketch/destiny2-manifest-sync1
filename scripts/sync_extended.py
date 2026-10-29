@@ -61,13 +61,24 @@ def main():
         key: [p.get("plugItemHash") for p in value.get("reusablePlugItems", [])]
         for key, value in tables["DestinyPlugSetDefinition"].items()
     }
+    # Preserve Bungie's per-plug currentlyCanRoll signal. This field is distinct
+    # from membership in a historical plug set and is not proof of acquisition.
+    # Missing/non-boolean flags remain unknown; never silently treat as True.
+    plugset_roll_flags = {
+        key: [{"plugItemHash": p.get("plugItemHash"),
+               "currentlyCanRoll": p.get("currentlyCanRoll")
+               if isinstance(p.get("currentlyCanRoll"), bool) else None}
+              for p in value.get("reusablePlugItems", [])]
+        for key, value in tables["DestinyPlugSetDefinition"].items()
+    }
     metadata = {"retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
                 "manifest_version": data.get("version"), "sources": sources,
                 "limitations": "Manifest socket/plug-set possibilities are not proof of obtainable rolls, PvP damage, active artifact, or stacking."}
     for filename, content in (
         ("manifest_metadata_extended.json", metadata),
         ("items_extended.json", rows),
-        ("plugsets.json", plugsets)):
+        ("plugsets.json", plugsets),
+        ("plugset_roll_flags.json", plugset_roll_flags)):
         (OUT / filename).write_text(json.dumps(content, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(json.dumps({"manifest_version": data.get("version"), "items": len(rows),
                       "plugsets": len(plugsets), "sources": sources}, indent=2))
