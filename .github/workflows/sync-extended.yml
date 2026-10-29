@@ -35,6 +35,8 @@ jobs:
         run: python scripts/query_weapon_pairs.py --plug-a 1767911158 --plug-b 2562668800
       - name: Audit all same-name weapon variant randomized socket pools
         run: python scripts/audit_weapon_variants.py
+      - name: Audit phantom perk pairs created by cross-variant name merging
+        run: python scripts/audit_cross_variant_phantom_pairs.py
       - name: Compare same-name weapon variant perk pools
         run: |
           python scripts/compare_weapon_variants.py --name Lotus-Eater
