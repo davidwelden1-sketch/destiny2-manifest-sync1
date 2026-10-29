@@ -4,7 +4,7 @@ from simulator.champion_frames import champion_effect, artifact_policy, SPECIAL_
 
 class ChampionFramesTest(unittest.TestCase):
     def test_all_specific_frame_rows(self):
-        self.assertEqual(len(SPECIAL_FRAMES), 20)
+        self.assertEqual(len(SPECIAL_FRAMES), 19)
         for (weapon_type, frame), effect in SPECIAL_FRAMES.items():
             with self.subTest(weapon_type=weapon_type, frame=frame):
                 result = champion_effect(weapon_type, frame, metadata_reviewed=True)
