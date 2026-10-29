@@ -1,10 +1,7 @@
 name: Autonomous Build Lab audit
 on:
   schedule:
-    - cron: '23 3 * * *'
-    - cron: '23 9 * * *'
-    - cron: '23 15 * * *'
-    - cron: '23 21 * * *'
+    - cron: '23 * * * *'
   workflow_dispatch:
 permissions:
   contents: read
