@@ -67,6 +67,24 @@ class TestCurrentRollFlags(unittest.TestCase):
         self.assertEqual(c, {1, 3})
 
 
+    def test_malformed_duplicate_status_cannot_be_discarded(self):
+        current, retired, unknown = classify_roll_flags({1, 2},
+            [{"plugItemHash": 1, "currentlyCanRoll": True},
+             {"plugItemHash": 1, "currentlyCanRoll": "true"},
+             {"plugItemHash": 2, "currentlyCanRoll": False}])
+        self.assertEqual(current, set())
+        self.assertEqual(retired, {2})
+        self.assertEqual(unknown, {1})
+
+    def test_boolean_plug_membership_is_not_weapon_plug_hash(self):
+        items = [{"hash": 100, "name": "Boolean decoy", "itemType": 3,
+                  "equippable": True, "socketEntries": [
+                      {"randomizedPlugSetHash": 10, "singleInitialItemHash": True},
+                      {"randomizedPlugSetHash": 11}]}]
+        index = build_index(items, {"10": [True, 20], "11": [30]})
+        self.assertEqual(index[0]["sockets"][0]["randomized_candidate_plug_hashes"], [20])
+        self.assertEqual(index[0]["sockets"][0]["initial_candidate_plug_hashes"], [])
+
     def test_all_true_manifest_is_explicitly_non_discriminating(self):
         all_true = {"10": [{"plugItemHash": h, "currentlyCanRoll": True}
                            for h in self.plugsets["10"]],
