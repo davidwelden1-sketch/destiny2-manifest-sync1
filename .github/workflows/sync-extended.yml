@@ -27,6 +27,8 @@ jobs:
         run: python scripts/build_socket_candidates.py
       - name: Audit candidate index
         run: python scripts/audit_candidates.py
+      - name: Index ability candidates
+        run: python scripts/index_ability_candidates.py
       - name: Upload extended dataset
         uses: actions/upload-artifact@v4
         with:
