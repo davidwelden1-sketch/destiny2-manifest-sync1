@@ -53,7 +53,10 @@ def main():
                 {"socketTypeHash": s.get("socketTypeHash"),
                  "singleInitialItemHash": s.get("singleInitialItemHash"),
                  "randomizedPlugSetHash": s.get("randomizedPlugSetHash"),
-                 "reusablePlugSetHash": s.get("reusablePlugSetHash")}
+                 "reusablePlugSetHash": s.get("reusablePlugSetHash"),
+                 "defaultVisible": s.get("defaultVisible"),
+                 "plugSources": s.get("plugSources"),
+                 "preventInitializationOnVendorPurchase": s.get("preventInitializationOnVendorPurchase")}
                 for s in sockets.get("socketEntries", [])],
         })
     rows.sort(key=lambda r: r["hash"])
