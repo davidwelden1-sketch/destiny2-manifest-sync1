@@ -14,6 +14,10 @@ class StackingModelTests(unittest.TestCase):
                 {"group":"b", "multiplier":1.5, "rule":"exclusive_max"}]
         self.assertAlmostEqual(calculate_damage(100, mods)["damage"], 180)
 
+    def test_sub_unity_modifier_not_dropped(self):
+        mods = [{"group": "mitigation", "multiplier": 0.8, "rule": "exclusive_max"}]
+        self.assertAlmostEqual(calculate_damage(100, mods)["damage"], 80)
+
     def test_unknown_rule_rejected(self):
         with self.assertRaises(ValueError):
             calculate_damage(100, [{"group":"a","multiplier":2,"rule":"additive"}])
