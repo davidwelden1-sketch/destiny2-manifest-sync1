@@ -1,4 +1,4 @@
-name: Build Lab recoverable repository backup
+name: Prometheus Labs recoverable repository backup
 on:
   schedule:
     - cron: '41 2 * * 0'
