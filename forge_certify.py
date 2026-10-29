@@ -27,8 +27,10 @@ def certify(build, as_of=None):
         checks["artifact"] = "BLOCKED: perk lacks valid dated source"
     elif not _dated(a.get("valid_on"), as_of) or not a.get("unlock_rules_verified") or not a.get("season_id"):
         checks["artifact"] = "BLOCKED: Artifact version or unlock rules not established"
-    elif any(not isinstance(catalog[p].get("tier"), int) for p in picks):
+    elif any(type(catalog[p].get("tier")) is not int or catalog[p]["tier"] not in (1, 2, 3) for p in picks):
         checks["artifact"] = "BLOCKED: tier data missing"
+    elif sum(catalog[p]["tier"] == 3 for p in picks) > 2 or sum(catalog[p]["tier"] >= 2 for p in picks) > 5:
+        checks["artifact"] = "FAIL: seven-slot 2/3/2 tier allocation exceeded"
     elif not a.get("allocation_verified"):
         checks["artifact"] = "BLOCKED: tier allocation not independently validated"
     else:
