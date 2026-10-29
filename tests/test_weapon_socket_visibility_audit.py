@@ -46,6 +46,11 @@ class TestWeaponSocketVisibilityAudit(unittest.TestCase):
         r = audit_visibility(self.index, "fixture")
         self.assertEqual(r["randomized_weapon_socket_counts"]["hidden"], 1)
 
+    def test_resolves_plug_names_only_from_supplied_manifest(self):
+        row = audit_visibility(self.index, "fixture", {3: "Arc example"})["exceptions"][1]
+        self.assertEqual(row["randomized_plug_names"],
+                         [{"hash": 3, "name": "Arc example"}, {"hash": 8, "name": None}])
+
     def test_unknown_is_not_called_hidden(self):
         row = audit_visibility(self.index, "fixture")["exceptions"][0]
         self.assertIsNone(row["default_visible"])
