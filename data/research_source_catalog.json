@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-29",
+  "sources": [
+    {
+      "id": "clarity_live",
+      "name": "Clarity Live Database",
+      "url": "https://github.com/Database-Clarity/Live-Clarity-Database",
+      "type": "community_research",
+      "reported_updated_on": "2026-10-27",
+      "use": "perk mechanics and quantitative annotations",
+      "caveat": "Verify individual entries, context and game version before using as calibrated observations"
+    },
+    {
+      "id": "clarity_stats",
+      "name": "Clarity Character Stats",
+      "url": "https://github.com/Database-Clarity/Character-Stats",
+      "type": "community_research",
+      "reported_updated_on": "2026-10-26",
+      "use": "ability cooldowns and stat effects",
+      "caveat": "Verify individual entries and applicability to current activity"
+    },
+    {
+      "id": "d2_science",
+      "name": "Destiny Science Resources",
+      "url": "https://www.destiny2.science/",
+      "type": "source_directory",
+      "use": "locate original measured spreadsheets and testing methodology",
+      "caveat": "Directory is not itself a measured observation"
+    },
+    {
+      "id": "owl_sector",
+      "name": "Owl Sector",
+      "url": "https://www.owlsector.net/",
+      "type": "community_aggregator",
+      "reported_data_refreshed_on": "2026-10-02",
+      "use": "cross-check compendium, Clarity and damage references",
+      "caveat": "Aggregates others' work; dated snapshot and not independently measured"
+    },
+    {
+      "id": "pvp_resilience",
+      "name": "PvP Resilience Chart",
+      "url": "https://docs.google.com/spreadsheets/d/1FWMC-Vd_bGEoRkkrn3drWIORCFYyWQVMNlMasa4OE6I/edit",
+      "type": "community_research",
+      "use": "PvP health breakpoints",
+      "caveat": "Verify date and sandbox before ingestion"
+    },
+    {
+      "id": "pvp_damage",
+      "name": "PvP Outgoing Damage Spreadsheet",
+      "url": "https://docs.google.com/spreadsheets/d/1b57Hb8m1L3daFfUckQQqvvN6VOpD03KEssvQLMFpC5I/edit",
+      "type": "community_research",
+      "use": "weapon damage measurements",
+      "caveat": "Verify version, units, weapon stat and activity before ingestion"
+    }
+  ],
+  "imported_measurements": 0,
+  "policy": "Source discovery does not imply measured values have been imported or validated."
+}
