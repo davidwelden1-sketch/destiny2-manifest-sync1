@@ -16,6 +16,14 @@ class WeaponLegalityTests(unittest.TestCase):
     def test_missing_hash(self):
         self.assertFalse(check_socket_membership(999, 2, 11, self.inventory)["possible"])
 
+    def test_boolean_hash_rejected(self):
+        with self.assertRaises(ValueError):
+            check_socket_membership(True, 2, 11, self.inventory)
+
+    def test_malformed_socket_fails_closed(self):
+        bad = {100: {"sockets": {2: "not-a-plug-list"}}}
+        self.assertFalse(check_socket_membership(100, 2, 11, bad)["possible"])
+
     def test_same_socket(self):
         self.assertFalse(check_pair(100, 2, 11, 2, 11, self.inventory)["possible"])
 
