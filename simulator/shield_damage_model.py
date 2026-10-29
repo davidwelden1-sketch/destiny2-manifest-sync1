@@ -11,7 +11,7 @@ def damage_through_layers(incoming, *, frost_dr, overshield_hp=45.0,
     values = (incoming, frost_dr, overshield_hp, overshield_dr)
     if any(type(v) not in (int, float) or not isfinite(v) for v in values):
         raise ValueError("all values must be finite numbers")
-    if incoming < 0 or overshield_hp < 0 or not 0 <= frost_dr < 1 or not 0 <= overshield_dr < 1:
+    if incoming < 0 or overshield_hp < 0 or not 0 <= frost_dr < 1 or not 0 <= overshield_dr <= 1:
         raise ValueError("invalid damage or resistance")
     if type(frost_affects_shield) is not bool:
         raise ValueError("shield stacking hypothesis must be explicit")
