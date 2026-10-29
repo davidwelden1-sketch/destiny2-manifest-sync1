@@ -29,6 +29,10 @@ jobs:
         run: python scripts/audit_candidates.py
       - name: Summarize game-wide randomized weapon sockets
         run: python scripts/query_weapon_pairs.py
+      - name: Compare same-name weapon variant perk pools
+        run: |
+          python scripts/compare_weapon_variants.py --name Lotus-Eater
+          python scripts/compare_weapon_variants.py --name Keraunios
       - name: Index ability candidates
         run: python scripts/index_ability_candidates.py
       - name: Upload extended dataset
