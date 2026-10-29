@@ -114,5 +114,65 @@ class TestInitialFrameEvidence(unittest.TestCase):
         self.assertEqual(report["multi_frame_labelled_examples"], [])
 
 
+    def test_frame_labelled_socket_type_relationships(self):
+        rows = [
+            {"hash": 11, "itemType": 3, "equippable": True,
+             "socketEntries": [
+                 {"singleInitialItemHash": 501, "socketTypeHash": 900},
+                 {"singleInitialItemHash": 502, "socketTypeHash": 901}]},
+            {"hash": 12, "itemType": 3, "equippable": True,
+             "socketEntries": [
+                 {"singleInitialItemHash": 501, "socketTypeHash": 900},
+                 {"singleInitialItemHash": 501, "socketTypeHash": 900}]},
+            {"hash": 13, "itemType": 3, "equippable": True,
+             "socketEntries": [
+                 {"singleInitialItemHash": 501},
+                 {"singleInitialItemHash": 502, "socketTypeHash": 900}]},
+            {"hash": 501, "plugCategoryIdentifier": "frames"},
+            {"hash": 502, "plugCategoryIdentifier": "frames"},
+        ]
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["multi_frame_socket_type_relationships"],
+                         {"different_socket_types": 1, "same_socket_type": 1,
+                          "unknown_socket_type": 1})
+        self.assertEqual(report["multi_frame_plug_identity_relationships"],
+                         {"different_initial_plugs": 2, "same_initial_plug": 1})
+        self.assertEqual(report["multi_frame_socket_index_patterns"], {"0,1": 3})
+        self.assertTrue(all(not row["active_frame_verified"] for row
+                            in report["multi_frame_relationship_examples"]))
+
+    def test_frame_socket_index_patterns_do_not_merge_hashes(self):
+        rows = [
+            {"hash": 11, "itemType": 3, "equippable": True,
+             "socketEntries": [
+                 {}, {"singleInitialItemHash": 501, "socketTypeHash": 901},
+                 {}, {"singleInitialItemHash": 502, "socketTypeHash": 902}]},
+            {"hash": 12, "itemType": 3, "equippable": True,
+             "socketEntries": [
+                 {"singleInitialItemHash": 501, "socketTypeHash": 901},
+                 {"singleInitialItemHash": 502, "socketTypeHash": 902}]},
+            {"hash": 501, "plugCategoryIdentifier": "frames"},
+            {"hash": 502, "plugCategoryIdentifier": "frames"},
+        ]
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["multi_frame_socket_index_patterns"],
+                         {"0,1": 1, "1,3": 1})
+        self.assertEqual(report["multi_frame_socket_type_relationships"],
+                         {"different_socket_types": 2})
+
+    def test_boolean_socket_type_is_unknown(self):
+        rows = [
+            {"hash": 11, "itemType": 3, "equippable": True,
+             "socketEntries": [
+                 {"singleInitialItemHash": 501, "socketTypeHash": True},
+                 {"singleInitialItemHash": 501, "socketTypeHash": 901}]},
+            {"hash": 501, "plugCategoryIdentifier": "frames"},
+        ]
+        report = audit_initial_frame_candidates(rows, "synthetic")
+        self.assertEqual(report["multi_frame_socket_type_relationships"],
+                         {"unknown_socket_type": 1})
+        self.assertEqual(report["multi_frame_socket_type_pairs_top"], [])
+
+
 if __name__ == "__main__":
     unittest.main()
