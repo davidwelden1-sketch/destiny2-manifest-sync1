@@ -70,6 +70,7 @@ def main():
                            "sha256": hashlib.sha256(raw).hexdigest(), "url": url}
     metadata = {"manifest_version": response.get("version"),
                 "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+                "expected_families": list(FAMILIES),
                 "families": catalog, "unavailable_families": missing,
                 "interpretation": "Official definitions; not measured gameplay values or proof of active perk legality."}
     (root / "definition_catalog.json").write_text(json.dumps(metadata, indent=2))
