@@ -25,7 +25,8 @@ def main():
     data = manifest["Response"]
     paths = data["jsonWorldComponentContentPaths"]["en"]
     names = ("DestinyInventoryItemDefinition", "DestinyPlugSetDefinition",
-             "DestinyStatDefinition", "DestinySandboxPerkDefinition")
+             "DestinyStatDefinition", "DestinySandboxPerkDefinition",
+             "DestinySocketTypeDefinition")
     tables = {}
     sources = {}
     for name in names:
@@ -44,6 +45,8 @@ def main():
         stats = item.get("stats") or {}
         rows.append({
             "hash": int(key), "name": d.get("name", ""),
+            "plugCategoryHash": (item.get("plug") or {}).get("plugCategoryHash"),
+            "plugCategoryIdentifier": (item.get("plug") or {}).get("plugCategoryIdentifier"),
             "itemType": item.get("itemType"), "itemSubType": item.get("itemSubType"),
             "tierType": inv.get("tierType"), "equippable": item.get("equippable", False),
             "classType": item.get("classType"), "damageType": item.get("defaultDamageType"),
@@ -74,6 +77,12 @@ def main():
               for p in value.get("reusablePlugItems", [])]
         for key, value in tables["DestinyPlugSetDefinition"].items()
     }
+    socket_types = {
+        key: {"socketCategoryHash": value.get("socketCategoryHash"),
+              "plugWhitelist": value.get("plugWhitelist"),
+              "visibility": value.get("visibility")}
+        for key, value in tables["DestinySocketTypeDefinition"].items()
+    }
     metadata = {"retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
                 "manifest_version": data.get("version"), "sources": sources,
                 "limitations": "Manifest socket/plug-set possibilities are not proof of obtainable rolls, PvP damage, active artifact, or stacking."}
@@ -81,7 +90,8 @@ def main():
         ("manifest_metadata_extended.json", metadata),
         ("items_extended.json", rows),
         ("plugsets.json", plugsets),
-        ("plugset_roll_flags.json", plugset_roll_flags)):
+        ("plugset_roll_flags.json", plugset_roll_flags),
+        ("socket_types.json", socket_types)):
         (OUT / filename).write_text(json.dumps(content, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(json.dumps({"manifest_version": data.get("version"), "items": len(rows),
                       "plugsets": len(plugsets), "sources": sources}, indent=2))
