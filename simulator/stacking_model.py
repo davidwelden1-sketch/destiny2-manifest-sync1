@@ -20,7 +20,7 @@ def calculate_damage(base_damage, modifiers):
             raise ValueError("invalid multiplier")
         if mod.get("rule") != "exclusive_max":
             raise ValueError("unknown stacking rule")
-        groups[group] = max(groups.get(group, 1.0), multiplier)
+        groups[group] = max(groups[group], multiplier) if group in groups else multiplier
     total = base_damage
     for multiplier in groups.values():
         total *= multiplier
