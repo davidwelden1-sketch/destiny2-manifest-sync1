@@ -50,6 +50,10 @@ def summarize(index, version):
     weapons = [x for x in index if x.get("item_type") == 3]
     randomized_sockets = [s for x in weapons for s in x.get("sockets", [])
                           if s.get("randomized_candidate_plug_hashes")]
+    noncurrent_count = sum(len(s.get("noncurrent_randomized_candidate_plug_hashes", []))
+                           for s in randomized_sockets)
+    unknown_count = sum(len(s.get("unknown_current_roll_randomized_candidate_plug_hashes", []))
+                        for s in randomized_sockets)
     return {"manifest_version": version, "indexed_weapon_definitions": len(weapons),
             "weapon_definitions_with_two_or_more_randomized_sockets":
                 sum(sum(bool(s.get("randomized_candidate_plug_hashes"))
@@ -58,12 +62,15 @@ def summarize(index, version):
             "currently_rollable_randomized_plug_memberships":
                 sum(len(s.get("currently_rollable_randomized_candidate_plug_hashes", []))
                     for s in randomized_sockets),
-            "noncurrent_randomized_plug_memberships":
-                sum(len(s.get("noncurrent_randomized_candidate_plug_hashes", []))
-                    for s in randomized_sockets),
-            "unknown_current_roll_plug_memberships":
-                sum(len(s.get("unknown_current_roll_randomized_candidate_plug_hashes", []))
-                    for s in randomized_sockets),
+            "noncurrent_randomized_plug_memberships": noncurrent_count,
+            "unknown_current_roll_plug_memberships": unknown_count,
+            "explicit_noncurrent_roll_evidence_found": noncurrent_count > 0,
+            "roll_flag_caveat": (
+                "No explicit currentlyCanRoll=false memberships found in indexed weapon sockets; "
+                "the flag cannot distinguish retired rolls in this snapshot."
+                if noncurrent_count == 0 and unknown_count == 0 else
+                "Current-roll flags are evidence for a version, not proof of acquisition or enhancement."
+            ),
             "interpretation": "Structural candidate counts, not unique playable weapons, trait columns, enhanced eligibility or obtainable rolls."}
 
 
