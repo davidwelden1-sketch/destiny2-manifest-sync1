@@ -34,5 +34,18 @@ class ForgeCertificationTests(unittest.TestCase):
         # This tests structural checks only: actual evidence must be checked externally.
         self.assertEqual(certify(b, "2026-10-29")["status"], "READY_FOR_EVIDENCE_REVIEW")
 
+
+    def test_too_many_tier_three_perks_rejected(self):
+        catalog = {str(i): {"tier":3, "source":"https://bungie.net", "verified_on":"2026-10-29"} for i in range(3)}
+        b = {"artifact":{"selected":list(catalog),"catalog":catalog,"budget":7,
+            "season_id":"test","valid_on":"2026-10-29","unlock_rules_verified":True,"allocation_verified":True}}
+        self.assertTrue(certify(b, "2026-10-29")["checks"]["artifact"].startswith("FAIL"))
+
+    def test_too_many_upper_tier_perks_rejected(self):
+        catalog = {str(i): {"tier":2, "source":"https://bungie.net", "verified_on":"2026-10-29"} for i in range(6)}
+        b = {"artifact":{"selected":list(catalog),"catalog":catalog,"budget":7,
+            "season_id":"test","valid_on":"2026-10-29","unlock_rules_verified":True,"allocation_verified":True}}
+        self.assertTrue(certify(b, "2026-10-29")["checks"]["artifact"].startswith("FAIL"))
+
 if __name__ == "__main__":
     unittest.main()
