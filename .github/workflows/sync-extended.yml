@@ -23,6 +23,8 @@ jobs:
         run: python scripts/sync_extended.py
       - name: Validate definitions and build item-perk relationship index
         run: python scripts/validate_extended.py
+      - name: Audit referenced weapon plug-set completeness
+        run: python scripts/audit_plugset_integrity.py
       - name: Build searchable socket candidate index
         run: python scripts/build_socket_candidates.py
       - name: Audit candidate index
