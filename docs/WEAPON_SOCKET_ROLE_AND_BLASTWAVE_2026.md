@@ -14,3 +14,6 @@ Bungie 9.7.0 (June 9, 2026) explicitly distinguishes explosive *kill-triggered* 
 
 ## Outstanding blockers
 Enhanced perk eligibility, current obtainability, live instance sockets, `frames` category role, damage attribution, cooldown and proc ICD, stacked DR, measured PvP TTK and boss DPS. Preserve 45 historical candidates; no measured gameplay or fully certified build claimed.
+
+## Additional official cross-system constraint: Stronghold and special swords
+Bungie's June 9, 2026 update explicitly states that Stronghold's **infinite guard capability only works on Heavy-ammo Swords**. Therefore, an Ergo Sum (Special-ammo sword) + Stronghold loadout must **not** be modeled as having Stronghold infinite guard. This is an important counterexample for Titan maximum-survivability build simulations; it does not establish whether other Stronghold benefits apply to Special swords, nor quantify guard DR. Source: https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0 . Do not confuse this with the distinct Ergo Sum hidden elemental plug-set finding. 
