@@ -39,9 +39,18 @@ class TestFramePlugReuse(unittest.TestCase):
         self.index[0]["sockets"][0]["randomized_candidate_plug_hashes"] = [101]
         self.index[1]["sockets"][0]["randomized_candidate_plug_hashes"] = [100]
         self.index[1]["item_hash"] = 13
+        self.items.append({"hash": 13, "name": "Gamma", "itemType": 3,
+                           "equippable": True, "itemSubType": 8, "socketEntries": []})
         report = audit_frame_plug_reuse(self.items, self.index, "synthetic")
         self.assertEqual(report["initial_plug_hashes_also_in_randomized_weapon_sockets"], 1)
         self.assertEqual(report["initial_plug_hashes_randomized_on_same_weapon"], 0)
+
+    def test_stale_index_weapon_hash_cannot_create_overlap(self):
+        self.index[0]["sockets"][0]["randomized_candidate_plug_hashes"] = [101]
+        self.index[1]["item_hash"] = 9999
+        self.index[1]["sockets"][0]["randomized_candidate_plug_hashes"] = [100]
+        report = audit_frame_plug_reuse(self.items, self.index, "synthetic")
+        self.assertEqual(report["initial_plug_hashes_also_in_randomized_weapon_sockets"], 0)
 
     def test_nonframe_and_nonweapon_excluded(self):
         self.items[3]["plugCategoryIdentifier"] = "magazines"
