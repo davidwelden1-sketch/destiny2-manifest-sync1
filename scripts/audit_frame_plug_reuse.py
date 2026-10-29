@@ -17,6 +17,7 @@ def audit_frame_plug_reuse(items, index, version):
     weapons = [row for row in items if isinstance(row, dict)
                and row.get("itemType") == 3 and row.get("equippable") is True
                and type(row.get("hash")) is int and row["hash"] > 0]
+    valid_weapon_hashes = {weapon["hash"] for weapon in weapons}
     occurrences = defaultdict(list)
     for weapon in weapons:
         for socket_index, socket in enumerate(weapon.get("socketEntries") or []):
@@ -40,7 +41,7 @@ def audit_frame_plug_reuse(items, index, version):
         if not isinstance(weapon, dict) or weapon.get("item_type") != 3:
             continue
         item_hash = weapon.get("item_hash")
-        if type(item_hash) is not int or item_hash <= 0:
+        if type(item_hash) is not int or item_hash not in valid_weapon_hashes:
             continue
         for socket in weapon.get("sockets") or []:
             if not isinstance(socket, dict):
