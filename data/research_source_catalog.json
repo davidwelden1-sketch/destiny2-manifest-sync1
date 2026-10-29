@@ -17,8 +17,10 @@
       "url": "https://github.com/Database-Clarity/Character-Stats",
       "type": "community_research",
       "reported_updated_on": "2026-10-26",
-      "use": "ability cooldowns and stat effects",
-      "caveat": "Verify individual entries and applicability to current activity"
+      "use": "historical reference only until warning removed",
+      "caveat": "Official hosted page explicitly says CURRENTLY SEVERELY OUTDATED and DO NOT USE FOR ANYTHING until warning removed. Block current calibration.",
+      "explicitly_outdated": true,
+      "warning_url": "https://database-clarity.github.io/Character-Stats/"
     },
     {
       "id": "d2_science",
@@ -55,5 +57,5 @@
     }
   ],
   "imported_measurements": 0,
-  "policy": "Source discovery does not imply measured values have been imported or validated."
+  "policy": "Repository updated timestamps do not establish data freshness. Explicit source warnings override update dates. No unreviewed measurements can certify current game mechanics."
 }
