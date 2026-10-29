@@ -15,7 +15,10 @@ def socket_provenance(item_hash, item_definitions, plug_sets):
     item = item_definitions.get(str(item_hash), item_definitions.get(item_hash))
     if not isinstance(item, dict):
         return {"item_hash": item_hash, "sockets": [], "status": "item_missing"}
-    sockets = item.get("sockets", {}).get("socketEntries", [])
+    socket_block = item.get("sockets") or {}
+    if not isinstance(socket_block, dict):
+        return {"item_hash": item_hash, "sockets": [], "status": "malformed_sockets"}
+    sockets = socket_block.get("socketEntries", [])
     if not isinstance(sockets, list):
         return {"item_hash": item_hash, "sockets": [], "status": "malformed_sockets"}
     results = []
