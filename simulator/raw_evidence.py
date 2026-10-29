@@ -8,7 +8,7 @@ REQUIRED = ("observation_id", "game_version", "observed_at_utc", "activity_mode"
             "subject_id", "configuration", "test_conditions", "source_url",
             "source_kind", "measurement_method", "raw_events", "sample_count")
 
-def validate_observation(item):
+def validate_observation(item, current_game_version=None):
     errors = []
     if not isinstance(item, dict):
         return ["observation_must_be_object"]
@@ -42,4 +42,9 @@ def validate_observation(item):
             errors.append("invalid_observation_timestamp")
     except (KeyError, AttributeError, ValueError, TypeError):
         errors.append("invalid_observation_timestamp")
+    if item.get("validation_state") == "verified_current":
+        if not current_game_version:
+            errors.append("current_game_version_required")
+        elif item.get("game_version") != current_game_version:
+            errors.append("stale_game_version")
     return sorted(set(errors))
