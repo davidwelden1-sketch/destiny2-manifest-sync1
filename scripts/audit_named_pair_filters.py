@@ -111,6 +111,29 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
             "current_acquisition": "unverified",
         })
 
+    # Socket order is evidence, not cosmetic: the same named perk pair can
+    # appear in opposite columns across exact weapon variants. Never merge
+    # (A in earlier socket, B in later socket) with the reverse orientation.
+    socket_order_counts = {
+        "perk_a_before_perk_b": sum(
+            row["a_socket_index"] < row["b_socket_index"] for row in per_path),
+        "perk_b_before_perk_a": sum(
+            row["b_socket_index"] < row["a_socket_index"] for row in per_path),
+    }
+    if sum(socket_order_counts.values()) != len(per_path):
+        raise ValueError("Every exact socket path must have one orientation")
+    socket_order_by_weapon = []
+    for h in sorted(base_hashes):
+        rows = [row for row in per_path if row["item_hash"] == h]
+        socket_order_by_weapon.append({
+            "item_hash": h,
+            "weapon_name": by_screen["structural"][h]["weapon_name"],
+            "perk_a_before_perk_b": sum(
+                row["a_socket_index"] < row["b_socket_index"] for row in rows),
+            "perk_b_before_perk_a": sum(
+                row["b_socket_index"] < row["a_socket_index"] for row in rows),
+        })
+
     per_weapon = []
     for h in sorted(base_hashes):
         base = by_screen["structural"][h]
@@ -143,6 +166,8 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
         "filter_counts": counts,
         "per_exact_weapon_hash": per_weapon,
         "per_exact_socket_path": per_path,
+        "socket_order_counts": socket_order_counts,
+        "socket_order_by_exact_weapon_hash": socket_order_by_weapon,
         "explicit_current_flag_filter_reduced_rows": (
             counts["explicit_current_flag"]["structural_pair_rows"]
             < counts["structural"]["structural_pair_rows"]),
