@@ -90,10 +90,28 @@ def query_named_pairs(index, items, perk_a, perk_b,
                      for state in ("explicit_component_label_present",
                                    "unknown_missing_category",
                                    "unclassified_not_trait_certified")}
+    # Preserve exact item hashes: one weapon can contribute multiple plug-pair rows.
+    # This is a structural manifest inventory, NOT a list of obtainable rolls.
+    weapon_summaries = {}
+    for row in rows:
+        h = row["item_hash"]
+        if h not in weapon_summaries:
+            weapon_summaries[h] = {
+                "item_hash": h, "weapon_name": row["weapon_name"],
+                "structural_pair_count": 0, "category_role_screens": set(),
+            }
+        summary = weapon_summaries[h]
+        summary["structural_pair_count"] += 1
+        summary["category_role_screens"].add(row["category_role_screen"])
+    unique_weapons = [
+        {**summary, "category_role_screens": sorted(summary["category_role_screens"])}
+        for _, summary in sorted(weapon_summaries.items())
+    ]
     return {
         "perk_a": perk_a, "perk_b": perk_b,
         "structural_match_count": len(rows),
-        "unique_weapon_definition_count": len({row["item_hash"] for row in rows}),
+        "unique_weapon_definition_count": len(unique_weapons),
+        "unique_weapon_definitions": unique_weapons,
         "category_role_screen_counts": screen_counts,
         "resolved_plug_hashes": {"a": resolved[a], "b": resolved[b]},
         "unresolved_names": [label for label, key in ((perk_a, a), (perk_b, b))
@@ -134,8 +152,14 @@ def main():
     report["retrieved_at_utc"] = meta.get("retrieved_at_utc")
     (root / "named_weapon_perk_pair_query.json").write_text(
         json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(json.dumps({k: v for k, v in report.items() if k != "structural_pair_matches"},
-                     indent=2, ensure_ascii=False))
+    # Keep Actions logs readable even for broad perk queries; full rows stay in JSON.
+    preview_limit = 25
+    summary = {k: v for k, v in report.items()
+               if k not in ("structural_pair_matches", "unique_weapon_definitions")}
+    summary["unique_weapon_definitions_preview"] = report["unique_weapon_definitions"][:preview_limit]
+    summary["omitted_weapon_definitions"] = max(
+        0, len(report["unique_weapon_definitions"]) - preview_limit)
+    print(json.dumps(summary, indent=2, ensure_ascii=False))
     print("Structural exact-hash matches:", len(report["structural_pair_matches"]))
 
 
