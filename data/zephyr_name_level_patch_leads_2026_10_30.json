@@ -1,0 +1,48 @@
+{
+  "evidence_type": "name_level_patch_scope_candidates_not_exact_hash_corrections",
+  "reviewed_on": "2026-10-30",
+  "official_patch": {
+    "patch_id": "bungie-9701-zephyr",
+    "weapon_name": "Zephyr",
+    "effective_date": "2026-06-16",
+    "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_1",
+    "correction_type": "perk_column_orientation",
+    "official_statement_summary": "Zephyr was fixed to stop rolling right-column traits in its left column; exact affected hashes not stated."
+  },
+  "variants": [
+    {
+      "item_hash": 3400256755,
+      "weapon_name": "Zephyr",
+      "source_url": "https://www.light.gg/db/items/3400256755/zephyr/",
+      "source_reviewed_on": "2026-10-30",
+      "historical_season": 15
+    },
+    {
+      "item_hash": 1911078836,
+      "weapon_name": "Zephyr",
+      "source_url": "https://www.light.gg/db/items/1911078836/zephyr/",
+      "source_reviewed_on": "2026-10-30",
+      "historical_season": 23
+    },
+    {
+      "item_hash": 601948197,
+      "weapon_name": "Zephyr",
+      "source_url": "https://www.light.gg/db/items/601948197/zephyr/",
+      "source_reviewed_on": "2026-10-30",
+      "historical_season": 25
+    },
+    {
+      "item_hash": 3003492238,
+      "weapon_name": "Zephyr",
+      "source_url": "https://www.light.gg/db/items/3003492238/zephyr/",
+      "source_reviewed_on": "2026-10-30",
+      "historical_season": 29
+    }
+  ],
+  "limitations": [
+    "The June 16 official patch does not identify which item hashes or sockets were changed.",
+    "A community catalog listing is not a live Bungie manifest extraction or authenticated gameplay drop.",
+    "Enhanceable labels differ by historical version; current enhanced perk legality and acquisition are not certified.",
+    "Do not apply a name-level correction as an exact-hash roll invalidation claim."
+  ]
+}
