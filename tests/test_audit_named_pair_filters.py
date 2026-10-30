@@ -1,4 +1,6 @@
 import unittest
+from collections import Counter
+from unittest.mock import patch
 
 from scripts.build_socket_candidates import build_index
 from scripts.audit_named_pair_filters import audit_named_pair_filters
@@ -66,6 +68,55 @@ class NamedPairFilterAuditTests(unittest.TestCase):
         self.assertEqual(result["per_exact_weapon_hash"], [])
         self.assertEqual(result["filter_counts"]["both_filters"]
                          ["unique_weapon_hashes"], 0)
+
+
+    @staticmethod
+    def fake_report(pairs):
+        counts = Counter(h for h, _, _ in pairs)
+        return {
+            "structural_pair_matches": [
+                {"item_hash": h, "perk_a_hash": a, "perk_b_hash": b}
+                for h, a, b in pairs
+            ],
+            "structural_match_count": len(pairs),
+            "unique_weapon_definitions": [
+                {"item_hash": h, "weapon_name": "Weapon",
+                 "structural_pair_count": count, "category_role_screens": []}
+                for h, count in sorted(counts.items())
+            ],
+            "resolved_plug_hashes": {"a": [200, 202], "b": [201, 203]},
+            "unresolved_names": [],
+        }
+
+    def test_filter_cannot_substitute_another_plug_pair_on_same_weapon(self):
+        first, swapped = (100, 200, 201), (100, 202, 203)
+        reports = [self.fake_report(pairs) for pairs in (
+            [first], [swapped], [first], []
+        )]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            with self.assertRaisesRegex(ValueError, "plug pairs exceed"):
+                audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+
+    def test_combined_filter_must_preserve_pair_level_intersection(self):
+        first, second = (100, 200, 201), (100, 202, 203)
+        reports = [self.fake_report(pairs) for pairs in (
+            [first, second], [first], [second], [first]
+        )]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            with self.assertRaisesRegex(ValueError, "Combined filter contains pairs"):
+                audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+
+    def test_duplicate_pair_rows_are_rejected(self):
+        first = (100, 200, 201)
+        reports = [self.fake_report(pairs) for pairs in (
+            [first, first], [first], [first], [first]
+        )]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            with self.assertRaisesRegex(ValueError, "Duplicate exact"):
+                audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
 
 
 if __name__ == "__main__":
