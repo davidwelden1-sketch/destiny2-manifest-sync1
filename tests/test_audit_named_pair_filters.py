@@ -49,6 +49,46 @@ class NamedPairFilterAuditTests(unittest.TestCase):
         self.assertTrue(all(r["roll_legality"] == "unverified"
                             for r in result["per_exact_weapon_hash"]))
 
+    def test_exact_socket_path_export_keeps_variant_and_filter_identity(self):
+        flags = {
+            "10": [{"plugItemHash": 200, "currentlyCanRoll": True}],
+            "11": [{"plugItemHash": 201, "currentlyCanRoll": False}],
+            "12": [{"plugItemHash": 202, "currentlyCanRoll": True}],
+            "13": [{"plugItemHash": 203, "currentlyCanRoll": True}],
+        }
+        index = build_index(self.items[:2], self.plugsets, flags)
+        report = audit_named_pair_filters(index, self.items,
+                                          "Explosive Payload", "Firefly")
+        paths = report["per_exact_socket_path"]
+        self.assertEqual(len(paths), 2)
+        self.assertEqual([(p["item_hash"], p["perk_a_hash"], p["perk_b_hash"],
+                           p["a_socket_index"], p["b_socket_index"]) for p in paths],
+                         [(100, 200, 201, 0, 1), (101, 202, 203, 0, 1)])
+        self.assertEqual([(p["explicit_current_flag"], p["default_visible"],
+                           p["both_filters"]) for p in paths],
+                         [(False, True, False), (True, False, False)])
+        self.assertTrue(all(p["roll_legality"] == "unverified"
+                            and p["enhanced_perk_legality"] == "unverified"
+                            and p["current_acquisition"] == "unverified"
+                            for p in paths))
+
+    def test_exact_socket_path_export_disjoint_filters_never_certifies(self):
+        pair = (100, 200, 201)
+        reports = [
+            self.fake_report([pair], {pair: [(0, 1), (2, 3)]}),
+            self.fake_report([pair], {pair: [(0, 1)]}),
+            self.fake_report([pair], {pair: [(2, 3)]}),
+            self.fake_report([]),
+        ]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            report = audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+        paths = report["per_exact_socket_path"]
+        self.assertEqual(len(paths), 2)
+        self.assertEqual([p["both_filters"] for p in paths], [False, False])
+        self.assertEqual(sum(p["explicit_current_flag"] for p in paths), 1)
+        self.assertEqual(sum(p["default_visible"] for p in paths), 1)
+
     def test_missing_flags_do_not_become_current_roll_proof(self):
         index = build_index(self.items[:2], self.plugsets)
         result = audit_named_pair_filters(index, self.items,
