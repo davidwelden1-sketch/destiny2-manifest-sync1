@@ -6,6 +6,7 @@ import json
 import os
 import pathlib
 from http_retry import fetch_with_retry
+from weapon_socket_refs import build_weapon_socket_reference_index
 
 BASE = "https://www.bungie.net"
 OUT = pathlib.Path(os.environ.get("OUTPUT_DIR", "output"))
@@ -40,6 +41,7 @@ def main():
             "collectibleHash": item.get("collectibleHash"),
         })
     index.sort(key=lambda x: x["hash"])
+    weapon_refs = build_weapon_socket_reference_index(records)
     metadata = {
         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "manifest_version": payload.get("version"),
@@ -47,10 +49,13 @@ def main():
         "definition_url": source_url,
         "definition_sha256": hashlib.sha256(raw).hexdigest(),
         "item_count": len(index),
+        "weapon_definition_count": len(weapon_refs),
+        "weapon_socket_reference_scope": "Definition references only; no plug-set resolution, obtainable rolls, enhanced eligibility or damage certification",
         "scope": "DestinyInventoryItemDefinition (en); API metadata, not measured sandbox values"
     }
     (OUT / "manifest_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     (OUT / "inventory_index.json").write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    (OUT / "weapon_socket_refs_index.json").write_text(json.dumps(weapon_refs, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(json.dumps(metadata, indent=2))
 
 if __name__ == "__main__":
