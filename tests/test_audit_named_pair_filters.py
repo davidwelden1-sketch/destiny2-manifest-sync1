@@ -105,8 +105,31 @@ class NamedPairFilterAuditTests(unittest.TestCase):
         )]
         with patch("scripts.audit_named_pair_filters.query_named_pairs",
                    side_effect=reports):
-            with self.assertRaisesRegex(ValueError, "Combined filter contains pairs"):
+            with self.assertRaisesRegex(ValueError, "Combined filter must equal"):
                 audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+
+    def test_combined_filter_cannot_silently_drop_an_intersecting_pair(self):
+        # An accidental implementation that returns only a proper subset
+        # of the two individually passing filters must be rejected.
+        first, second = (100, 200, 201), (100, 202, 203)
+        reports = [self.fake_report(pairs) for pairs in (
+            [first, second], [first, second], [first], []
+        )]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            with self.assertRaisesRegex(ValueError, "Combined filter must equal"):
+                audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+
+    def test_combined_filter_exact_pair_intersection_is_accepted(self):
+        first, second = (100, 200, 201), (100, 202, 203)
+        reports = [self.fake_report(pairs) for pairs in (
+            [first, second], [first, second], [first], [first]
+        )]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            result = audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+        self.assertEqual(result["filter_counts"]["both_filters"]
+                         ["structural_pair_rows"], 1)
 
     def test_duplicate_pair_rows_are_rejected(self):
         first = (100, 200, 201)
