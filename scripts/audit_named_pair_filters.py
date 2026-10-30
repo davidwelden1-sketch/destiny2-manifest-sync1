@@ -30,6 +30,28 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
     for key, report in reports.items():
         by_screen[key] = {row["item_hash"]: row for row in
                           report["unique_weapon_definitions"]}
+    # A filtered report must retain the same exact weapon+plug-pair identity.
+    # Checking only weapon hashes can miss a swapped perk pair on one weapon.
+    pair_keys = {}
+    for key, report in reports.items():
+        identities = [(r["item_hash"], r["perk_a_hash"], r["perk_b_hash"])
+                      for r in report["structural_pair_matches"]]
+        if len(identities) != len(set(identities)):
+            raise ValueError(f"Duplicate exact weapon/plug pair in {key}")
+        if len(identities) != report["structural_match_count"]:
+            raise ValueError(f"Pair row count mismatch in {key}")
+        if {identity[0] for identity in identities} != set(by_screen[key]):
+            raise ValueError(f"Pair weapon hashes disagree with summaries in {key}")
+        if sum(w["structural_pair_count"] for w in
+               report["unique_weapon_definitions"]) != len(identities):
+            raise ValueError(f"Per-weapon pair counts disagree in {key}")
+        pair_keys[key] = set(identities)
+    for key in ("explicit_current_flag", "default_visible", "both_filters"):
+        if not pair_keys[key].issubset(pair_keys["structural"]):
+            raise ValueError(f"Filtered plug pairs exceed structural baseline in {key}")
+    if not pair_keys["both_filters"].issubset(
+            pair_keys["explicit_current_flag"] & pair_keys["default_visible"]):
+        raise ValueError("Combined filter contains pairs absent from an individual filter")
     base_hashes = set(by_screen["structural"])
     for key in ("explicit_current_flag", "default_visible", "both_filters"):
         if not set(by_screen[key]).issubset(base_hashes):
