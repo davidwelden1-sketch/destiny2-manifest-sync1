@@ -46,14 +46,41 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
                report["unique_weapon_definitions"]) != len(identities):
             raise ValueError(f"Per-weapon pair counts disagree in {key}")
         pair_keys[key] = set(identities)
+    # Identity-only intersections can be wrong when the same plug pair occurs
+    # in several socket paths. A current-roll path and a visible path might be
+    # disjoint; neither is evidence that a single path satisfies BOTH filters.
+    socket_keys = {}
+    for key, report in reports.items():
+        paths = set()
+        for row in report["structural_pair_matches"]:
+            pairs = row.get("socket_pairs")
+            if not isinstance(pairs, list) or not pairs:
+                raise ValueError(f"Missing exact socket-pair evidence in {key}")
+            for pair in pairs:
+                if not isinstance(pair, dict):
+                    raise ValueError(f"Malformed socket-pair evidence in {key}")
+                a, b = pair.get("a_socket_index"), pair.get("b_socket_index")
+                if type(a) is not int or type(b) is not int or min(a, b) < 0 or a == b:
+                    raise ValueError(f"Invalid distinct socket indices in {key}")
+                identity = (row["item_hash"], row["perk_a_hash"],
+                            row["perk_b_hash"], a, b)
+                if identity in paths:
+                    raise ValueError(f"Duplicate exact socket-pair path in {key}")
+                paths.add(identity)
+        if {path[:3] for path in paths} != pair_keys[key]:
+            raise ValueError(f"Socket paths disagree with plug-pair rows in {key}")
+        socket_keys[key] = paths
     for key in ("explicit_current_flag", "default_visible", "both_filters"):
         if not pair_keys[key].issubset(pair_keys["structural"]):
             raise ValueError(f"Filtered plug pairs exceed structural baseline in {key}")
-    expected_both = pair_keys["explicit_current_flag"] & pair_keys["default_visible"]
-    if pair_keys["both_filters"] != expected_both:
+        if not socket_keys[key].issubset(socket_keys["structural"]):
+            raise ValueError(f"Filtered socket paths exceed structural baseline in {key}")
+    expected_both = (socket_keys["explicit_current_flag"]
+                     & socket_keys["default_visible"])
+    if socket_keys["both_filters"] != expected_both:
         raise ValueError(
-            "Combined filter must equal the exact plug-pair intersection "
-            "(missing or extra rows)"
+            "Combined filter must equal the exact socket-path intersection "
+            "(missing or extra paths)"
         )
     base_hashes = set(by_screen["structural"])
     for key in ("explicit_current_flag", "default_visible", "both_filters"):
@@ -83,6 +110,7 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
         })
     counts = {
         key: {"structural_pair_rows": report["structural_match_count"],
+              "distinct_socket_paths": len(socket_keys[key]),
               "unique_weapon_hashes": report["unique_weapon_definition_count"]}
         for key, report in reports.items()
     }
@@ -96,6 +124,7 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
         "explicit_current_flag_filter_reduced_rows": (
             counts["explicit_current_flag"]["structural_pair_rows"]
             < counts["structural"]["structural_pair_rows"]),
+        "socket_path_filter_intersection_verified": True,
         "default_visibility_filter_reduced_rows": (
             counts["default_visible"]["structural_pair_rows"]
             < counts["structural"]["structural_pair_rows"]),
@@ -105,6 +134,8 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
             "not proof that the weapon can currently drop; defaultVisible=true "
             "is not proof of an active runtime socket. No screen certifies "
             "simultaneous obtainable rolls, enhanced perks, or gameplay damage. "
+            "A plug pair must have at least one identical socket path passing both "
+            "filters; matching a weapon+plug identity on disjoint paths is not enough. "
             "No reduction under a filter does not validate its selectivity."
         ),
     }
