@@ -32,7 +32,11 @@ class ForgeCertificationTests(unittest.TestCase):
              "audit_sources":{x:"https://example.invalid" for x in ("subclass","armor","weapons","stats","rotation")}}
         b.update({x:{"selected":"placeholder"} for x in ("subclass","armor","weapons","stats","rotation")})
         # This tests structural checks only: actual evidence must be checked externally.
-        self.assertEqual(certify(b, "2026-10-29")["status"], "READY_FOR_EVIDENCE_REVIEW")
+        result = certify(b, "2026-10-29")
+        self.assertEqual(result["status"], "NOT_CERTIFIED")
+        self.assertTrue(result["checks"]["weapon_legality"].startswith("BLOCKED"))
+        self.assertTrue(result["checks"]["defensive_uptime"].startswith("BLOCKED"))
+        self.assertTrue(result["checks"]["gameplay_evidence"].startswith("BLOCKED"))
 
 
     def test_too_many_tier_three_perks_rejected(self):
