@@ -11,11 +11,25 @@
   },
   "variants": [
     {
+      "item_hash": 4203034886,
+      "weapon_name": "Zephyr",
+      "source_url": "https://www.light.gg/db/items/4203034886/zephyr/",
+      "source_reviewed_on": "2026-10-30",
+      "historical_season": 2
+    },
+    {
       "item_hash": 3400256755,
       "weapon_name": "Zephyr",
       "source_url": "https://www.light.gg/db/items/3400256755/zephyr/",
       "source_reviewed_on": "2026-10-30",
       "historical_season": 15
+    },
+    {
+      "item_hash": 396910433,
+      "weapon_name": "Zephyr",
+      "source_url": "https://www.light.gg/db/items/396910433/zephyr/",
+      "source_reviewed_on": "2026-10-30",
+      "historical_season": 19
     },
     {
       "item_hash": 1911078836,
@@ -43,6 +57,7 @@
     "The June 16 official patch does not identify which item hashes or sockets were changed.",
     "A community catalog listing is not a live Bungie manifest extraction or authenticated gameplay drop.",
     "Enhanceable labels differ by historical version; current enhanced perk legality and acquisition are not certified.",
-    "Do not apply a name-level correction as an exact-hash roll invalidation claim."
+    "Do not apply a name-level correction as an exact-hash roll invalidation claim.",
+    "Season 2 Zephyr is Arc while later versions are Stasis; name matching cannot transfer elemental effects or perk pools."
   ]
 }
