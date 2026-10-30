@@ -58,6 +58,20 @@ class ArtifactEventRulesTests(unittest.TestCase):
             self.assertIsNone(result["healing_amount"])
             self.assertFalse(result["certified"])
 
+    def test_all_three_classes_use_same_single_artifact_gate(self):
+        for character_class in ("hunter", "titan", "warlock"):
+            with self.subTest(character_class=character_class):
+                report = kinetic_impacts_gl_screen(
+                    "primary", "grandmaster nightfall", ARTIFACT_ID,
+                    ["Kinetic Impacts"], self.catalog,
+                    character_class=character_class)
+                self.assertEqual(report["status"], "official_historical_gl_ammo_eligibility")
+                self.assertFalse(report["certified"])
+        with self.assertRaises(ValueError):
+            kinetic_impacts_gl_screen(
+                "primary", "control", ARTIFACT_ID,
+                ["Kinetic Impacts"], self.catalog, character_class="invalid")
+
     def test_invalid_ammo_and_event_fail_closed(self):
         for ammo in (None, "", "infinite", 1):
             with self.assertRaises(ValueError):
