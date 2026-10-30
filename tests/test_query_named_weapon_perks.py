@@ -71,6 +71,27 @@ class NamedPerkQueryTests(unittest.TestCase):
         self.assertEqual(report["category_role_screen_counts"]["unknown_missing_category"], 2)
         self.assertEqual(report["roll_legality"], "unverified")
 
+    def test_unique_weapon_summary_does_not_confuse_plug_pairs_with_weapons(self):
+        weapon = self.items[0]
+        index = build_index([weapon], {"10": [200, 202], "11": [201, 203]})
+        report = query_named_pairs(index, self.items, "Explosive Payload", "Firefly")
+        self.assertEqual(report["structural_match_count"], 4)
+        self.assertEqual(report["unique_weapon_definition_count"], 1)
+        self.assertEqual(report["unique_weapon_definitions"], [{
+            "item_hash": 100, "weapon_name": "Weapon",
+            "structural_pair_count": 4,
+            "category_role_screens": ["unknown_missing_category"],
+        }])
+        self.assertEqual(report["roll_legality"], "unverified")
+
+    def test_weapon_summaries_are_stably_sorted_by_exact_hash(self):
+        report = query_named_pairs(self.index, self.items, "Explosive Payload", "Firefly")
+        self.assertEqual([w["item_hash"] for w in report["unique_weapon_definitions"]],
+                         [100, 101])
+        self.assertEqual(sum(w["structural_pair_count"]
+                             for w in report["unique_weapon_definitions"]),
+                         report["structural_match_count"])
+
     def test_explicit_component_category_is_flagged_not_certified(self):
         self.items[4]["plugCategoryIdentifier"] = "barrels"
         self.items[5]["plugCategoryIdentifier"] = "v300.weapon.trait"
