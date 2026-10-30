@@ -4,6 +4,7 @@ A Bungie patch naming a weapon does not identify which item hashes or socket
 paths were affected. This is a REVIEW QUEUE, never a roll certification.
 """
 from datetime import date
+import re
 from urllib.parse import urlparse
 
 
@@ -27,6 +28,20 @@ def _https(value, bungie=False):
         raise ValueError("Source URL must be HTTPS")
     if bungie and parsed.hostname != "www.bungie.net":
         raise ValueError("Patch must cite official Bungie URL")
+
+
+def _catalog_source_for_hash(url, item_hash):
+    """A light.gg item page must name the exact hash being audited.
+
+    Other HTTPS catalogs may use different URL structures and remain source
+    leads only; this check does not authenticate a page or certify a roll.
+    """
+    _https(url)
+    parsed = urlparse(url)
+    if parsed.hostname in ("light.gg", "www.light.gg"):
+        match = re.fullmatch(r"/db/items/([0-9]+)(?:/[^/]*)?/?", parsed.path)
+        if match is None or int(match.group(1)) != item_hash:
+            raise ValueError("light.gg catalog URL must match exact item_hash")
 
 
 def audit_name_level_patch_leads(variants, patches, checked_on):
@@ -64,7 +79,7 @@ def audit_name_level_patch_leads(variants, patches, checked_on):
             raise ValueError("Invalid or duplicate item_hash")
         if not isinstance(name, str) or not name.strip():
             raise ValueError("Variant weapon_name required")
-        _https(variant.get("source_url"))
+        _catalog_source_for_hash(variant.get("source_url"), item_hash)
         reviewed = _date(variant.get("source_reviewed_on"))
         if reviewed > checked:
             raise ValueError("Future catalog review")
