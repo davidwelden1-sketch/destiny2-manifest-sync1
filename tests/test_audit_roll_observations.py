@@ -97,6 +97,67 @@ class ExactRollObservationAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Duplicate exact socket path"):
             audit_roll_observations(report, [], self.checked)
 
+    def correction(self, **changes):
+        c = {
+            "correction_id": "patch-1",
+            "item_hash": 100, "perk_a_hash": 201, "perk_b_hash": 202,
+            "a_socket_index": 3, "b_socket_index": 4,
+            "effective_at_utc": "2026-10-30T12:00:00Z",
+            "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+            "correction_action": "perk_replaced",
+        }
+        c.update(changes)
+        return c
+
+    def test_patch_correction_flags_prior_capture_without_certifying_roll(self):
+        result = audit_roll_observations(
+            self.report, [self.observation()], self.checked,
+            corrections=[self.correction()])
+        first, second = result["per_exact_socket_path"]
+        self.assertTrue(first["post_patch_revalidation_required"])
+        self.assertEqual(first["observations_predating_patch_correction"], ["capture-1"])
+        self.assertEqual(first["roll_legality"], "unverified")
+        self.assertFalse(second["post_patch_revalidation_required"])
+
+    def test_correction_does_not_cross_weapon_hash_or_reverse_socket(self):
+        result = audit_roll_observations(
+            self.report, [self.observation()], self.checked,
+            corrections=[self.correction(a_socket_index=4, b_socket_index=3)])
+        self.assertFalse(result["per_exact_socket_path"][0]
+                         ["post_patch_revalidation_required"])
+        self.assertEqual(result["unmatched_correction_ids"], ["patch-1"])
+
+    def test_capture_after_correction_is_not_predating_evidence(self):
+        result = audit_roll_observations(
+            self.report, [self.observation(observed_at_utc="2026-10-30T14:00:00Z")],
+            self.checked, corrections=[self.correction()])
+        first = result["per_exact_socket_path"][0]
+        self.assertTrue(first["post_patch_revalidation_required"])
+        self.assertEqual(first["observations_predating_patch_correction"], [])
+        self.assertEqual(first["current_acquisition"], "unverified")
+
+    def test_patch_claim_requires_valid_metadata_and_no_future_effective_date(self):
+        for changes in (
+            {"correction_id": ""},
+            {"source_url": "https://example.org/fake-patch"},
+            {"correction_action": "buffed"},
+            {"effective_at_utc": "2026-11-01T00:00:00Z"},
+            {"item_hash": True},
+        ):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                audit_roll_observations(self.report, [], self.checked,
+                                        corrections=[self.correction(**changes)])
+
+    def test_duplicate_patch_ids_rejected_and_no_claims_is_backward_compatible(self):
+        with self.assertRaisesRegex(ValueError, "duplicate correction_id"):
+            audit_roll_observations(self.report, [], self.checked,
+                                    corrections=[self.correction(), self.correction()])
+        result = audit_roll_observations(self.report, [], self.checked)
+        self.assertEqual(result["unmatched_correction_ids"], [])
+        self.assertFalse(result["per_exact_socket_path"][0]
+                         ["post_patch_revalidation_required"])
+
+
 
 if __name__ == "__main__":
     unittest.main()
