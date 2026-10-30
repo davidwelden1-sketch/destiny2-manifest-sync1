@@ -12,12 +12,10 @@ SOURCE_DATE = "2026-06-09"
 ARTIFACT_ID = "Slayer Baron Apothecary Satchel"
 
 
-def _screen(perk, activity, artifact_id, selected_perks, artifact_catalog):
+def _screen(perk, activity, artifact_id, selected_perks, artifact_catalog, character_class):
     result = screen_one_active_artifact(
-        "titan", activity, artifact_id, selected_perks, artifact_catalog
+        character_class, activity, artifact_id, selected_perks, artifact_catalog
     )
-    # Artifact mechanics are class-agnostic. The class argument above only
-    # exercises the shared single-Artifact selection gate.
     if not result["eligible"]:
         return {"status": "artifact_selection_blocked", "reason": result["reason"]}
     if artifact_id != ARTIFACT_ID:
@@ -28,7 +26,7 @@ def _screen(perk, activity, artifact_id, selected_perks, artifact_catalog):
 
 
 def kinetic_impacts_gl_screen(ammo_type, activity, artifact_id,
-                              selected_perks, artifact_catalog):
+                              selected_perks, artifact_catalog, *, character_class="titan"):
     """Screen the *GL ammo-type* part of Kinetic Impacts, not its hit trigger.
 
     Heavy is a comparison baseline. Primary/Special GLs are supported by the
@@ -39,7 +37,7 @@ def kinetic_impacts_gl_screen(ammo_type, activity, artifact_id,
     }:
         raise ValueError("ammo_type must be primary, special, or heavy")
     blocked = _screen("Kinetic Impacts", activity, artifact_id,
-                      selected_perks, artifact_catalog)
+                      selected_perks, artifact_catalog, character_class)
     if blocked:
         return {**blocked, "certified": False, "source_url": SOURCE_URL}
     ammo = ammo_type.strip().lower()
@@ -61,7 +59,7 @@ def kinetic_impacts_gl_screen(ammo_type, activity, artifact_id,
 
 
 def curative_orbs_tangle_screen(event, activity, artifact_id,
-                               selected_perks, artifact_catalog):
+                               selected_perks, artifact_catalog, *, character_class="titan"):
     """Distinguish Tangle destruction from pickup without inventing healing."""
     if not isinstance(event, str) or not event.strip():
         raise ValueError("event must be a nonempty string")
