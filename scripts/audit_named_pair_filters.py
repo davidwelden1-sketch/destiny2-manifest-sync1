@@ -49,9 +49,12 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
     for key in ("explicit_current_flag", "default_visible", "both_filters"):
         if not pair_keys[key].issubset(pair_keys["structural"]):
             raise ValueError(f"Filtered plug pairs exceed structural baseline in {key}")
-    if not pair_keys["both_filters"].issubset(
-            pair_keys["explicit_current_flag"] & pair_keys["default_visible"]):
-        raise ValueError("Combined filter contains pairs absent from an individual filter")
+    expected_both = pair_keys["explicit_current_flag"] & pair_keys["default_visible"]
+    if pair_keys["both_filters"] != expected_both:
+        raise ValueError(
+            "Combined filter must equal the exact plug-pair intersection "
+            "(missing or extra rows)"
+        )
     base_hashes = set(by_screen["structural"])
     for key in ("explicit_current_flag", "default_visible", "both_filters"):
         if not set(by_screen[key]).issubset(base_hashes):
