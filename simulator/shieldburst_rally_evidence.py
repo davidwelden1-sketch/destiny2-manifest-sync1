@@ -13,7 +13,7 @@ REVIEWED_DATE = "2026-10-30"
 _DAMAGE_TYPES = {"kinetic", "solar", "arc", "void", "stasis", "strand"}
 
 
-def rally_scouching_rounds_eligibility(*, class_name, subclass, aspect_equipped,
+def rally_scorching_rounds_eligibility(*, class_name, subclass, aspect_equipped,
                                       barricade_type, barricade_deployed,
                                       actor_is_ally, ally_behind_barricade,
                                       weapon_damage_type):
