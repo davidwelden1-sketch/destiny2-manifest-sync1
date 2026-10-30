@@ -98,10 +98,10 @@ class NameLevelPatchLeadTests(unittest.TestCase):
                 "data/zephyr_name_level_patch_leads_2026_10_30.json")
         fixture = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual({v["item_hash"] for v in fixture["variants"]},
-                         {3400256755, 1911078836, 601948197, 3003492238})
+                         {4203034886, 3400256755, 396910433, 1911078836, 601948197, 3003492238})
         result = audit_name_level_patch_leads(
             fixture["variants"], [fixture["official_patch"]], fixture["reviewed_on"])
-        self.assertEqual(result["potential_name_matches"], 4)
+        self.assertEqual(result["potential_name_matches"], 6)
         for row in result["per_item_hash"]:
             self.assertEqual(row["exact_hash_affected"], "unknown")
             self.assertEqual(row["current_manifest_path_match"], "unverified")
