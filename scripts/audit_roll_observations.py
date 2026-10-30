@@ -38,7 +38,7 @@ def _utc(value):
     return parsed
 
 
-def audit_roll_observations(pair_report, observations, checked_at_utc):
+def audit_roll_observations(pair_report, observations, checked_at_utc, corrections=None):
     """Join source-labelled observations by exact hash AND socket path.
 
     Historical captures are leads, not authenticated current-roll certification.
@@ -53,6 +53,34 @@ def audit_roll_observations(pair_report, observations, checked_at_utc):
     if not isinstance(paths, list) or not isinstance(observations, list):
         raise ValueError("Paths and observations must be lists")
     checked = _utc(checked_at_utc)
+    if corrections is None:
+        corrections = []
+    if not isinstance(corrections, list):
+        raise ValueError("Patch corrections must be a list")
+    correction_by_path = {}
+    correction_ids = set()
+    for correction in corrections:
+        key = _path_key(correction)
+        correction_id = correction.get("correction_id")
+        if (not isinstance(correction_id, str) or not correction_id.strip()
+                or correction_id in correction_ids):
+            raise ValueError("Missing or duplicate correction_id")
+        correction_ids.add(correction_id)
+        effective = _utc(correction.get("effective_at_utc"))
+        if effective > checked:
+            raise ValueError("Future patch correction cannot be applied")
+        source = correction.get("source_url")
+        if not isinstance(source, str) or not source.startswith("https://www.bungie.net/"):
+            raise ValueError("Patch correction requires a Bungie HTTPS source URL")
+        if correction.get("correction_action") not in ("perk_removed", "perk_replaced"):
+            raise ValueError("Unknown patch correction action")
+        correction_by_path.setdefault(key, []).append({
+            "correction_id": correction_id,
+            "effective_at_utc": correction["effective_at_utc"],
+            "source_url": source,
+            "correction_action": correction["correction_action"],
+            "evidence_grade": "submitted_patch_reference_not_independently_authenticated",
+        })
     keyed = {}
     for path in paths:
         key = _path_key(path)
@@ -94,11 +122,22 @@ def audit_roll_observations(pair_report, observations, checked_at_utc):
             unmatched.append(evidence_id)
     rows = []
     for key in sorted(keyed):
+        row_corrections = sorted(correction_by_path.get(key, []),
+                                 key=lambda c: (c["effective_at_utc"], c["correction_id"]))
+        predating = sorted({
+            observation["evidence_id"]
+            for observation in matched[key]
+            if any(_utc(observation["observed_at_utc"]) <
+                   _utc(c["effective_at_utc"]) for c in row_corrections)
+        })
         row = {field: val for field, val in zip(KEY_FIELDS, key)}
         row.update({
             "weapon_name": keyed[key].get("weapon_name"),
             "historical_exact_path_observation": bool(matched[key]),
             "observations": sorted(matched[key], key=lambda e: e["evidence_id"]),
+            "patch_correction_claims": row_corrections,
+            "post_patch_revalidation_required": bool(row_corrections),
+            "observations_predating_patch_correction": predating,
             "current_acquisition": "unverified",
             "roll_legality": "unverified",
             "enhanced_perk_legality": "unverified",
@@ -110,11 +149,16 @@ def audit_roll_observations(pair_report, observations, checked_at_utc):
         "manifest_exact_socket_paths": len(rows),
         "historically_observed_paths": sum(r["historical_exact_path_observation"] for r in rows),
         "unmatched_evidence_ids": sorted(unmatched),
+        "unmatched_correction_ids": sorted(
+            c["correction_id"] for key, rows in correction_by_path.items()
+            if key not in keyed for c in rows),
         "per_exact_socket_path": rows,
         "interpretation": (
             "External captures are not authenticated by this audit. A matching historical "
             "item/plug/socket path does not prove a current obtainable roll, enhanced perk, "
-            "active Artifact, or measured PvE/PvP outcome. Version mismatches remain historical."
+            "active Artifact, or measured PvE/PvP outcome. Version mismatches remain historical. "
+            "Submitted patch correction references require independent source verification and "
+            "exact hash mapping; affected historical captures must be revalidated after a correction."
         ),
     }
 
@@ -124,11 +168,15 @@ def main():
     parser.add_argument("--pair-report", required=True)
     parser.add_argument("--observations", required=True)
     parser.add_argument("--checked-at-utc", required=True)
+    parser.add_argument("--corrections", help="Optional exact-hash patch correction claims JSON")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     pair_report = json.loads(Path(args.pair_report).read_text(encoding="utf-8"))
     observations = json.loads(Path(args.observations).read_text(encoding="utf-8"))
-    report = audit_roll_observations(pair_report, observations, args.checked_at_utc)
+    corrections = (json.loads(Path(args.corrections).read_text(encoding="utf-8"))
+                   if args.corrections else None)
+    report = audit_roll_observations(pair_report, observations, args.checked_at_utc,
+                                     corrections=corrections)
     Path(args.output).write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "per_exact_socket_path"}, indent=2))
 
