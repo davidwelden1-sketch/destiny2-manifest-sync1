@@ -90,6 +90,27 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
             set(by_screen["explicit_current_flag"]) & set(by_screen["default_visible"])):
         raise ValueError("Combined filter must be a subset of each individual filter")
 
+    # Export each exact socket path for downstream, per-variant roll review.
+    # These are manifest memberships only, never obtainable or enhanced rolls.
+    per_path = []
+    for item_hash, a_hash, b_hash, a_socket, b_socket in sorted(
+            socket_keys["structural"]):
+        identity = (item_hash, a_hash, b_hash, a_socket, b_socket)
+        per_path.append({
+            "item_hash": item_hash,
+            "weapon_name": by_screen["structural"][item_hash]["weapon_name"],
+            "perk_a_hash": a_hash,
+            "perk_b_hash": b_hash,
+            "a_socket_index": a_socket,
+            "b_socket_index": b_socket,
+            "explicit_current_flag": identity in socket_keys["explicit_current_flag"],
+            "default_visible": identity in socket_keys["default_visible"],
+            "both_filters": identity in socket_keys["both_filters"],
+            "roll_legality": "unverified",
+            "enhanced_perk_legality": "unverified",
+            "current_acquisition": "unverified",
+        })
+
     per_weapon = []
     for h in sorted(base_hashes):
         base = by_screen["structural"][h]
@@ -121,6 +142,7 @@ def audit_named_pair_filters(index, items, perk_a, perk_b):
         "unresolved_names": baseline["unresolved_names"],
         "filter_counts": counts,
         "per_exact_weapon_hash": per_weapon,
+        "per_exact_socket_path": per_path,
         "explicit_current_flag_filter_reduced_rows": (
             counts["explicit_current_flag"]["structural_pair_rows"]
             < counts["structural"]["structural_pair_rows"]),
