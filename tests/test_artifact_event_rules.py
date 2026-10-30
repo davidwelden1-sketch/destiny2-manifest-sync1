@@ -67,6 +67,14 @@ class ArtifactEventRulesTests(unittest.TestCase):
                     character_class=character_class)
                 self.assertEqual(report["status"], "official_historical_gl_ammo_eligibility")
                 self.assertFalse(report["certified"])
+        for character_class in ("hunter", "titan", "warlock"):
+            with self.subTest(curative_class=character_class):
+                report = curative_orbs_tangle_screen(
+                    "tangle_destroy_shot", "grandmaster nightfall", ARTIFACT_ID,
+                    ["Curative Orbs"], self.catalog,
+                    character_class=character_class)
+                self.assertEqual(report["status"], "official_historical_trigger")
+                self.assertFalse(report["certified"])
         with self.assertRaises(ValueError):
             kinetic_impacts_gl_screen(
                 "primary", "control", ARTIFACT_ID,
