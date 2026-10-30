@@ -79,6 +79,7 @@ class NamedPairFilterAuditTests(unittest.TestCase):
                 for h, a, b in pairs
             ],
             "structural_match_count": len(pairs),
+            "unique_weapon_definition_count": len(counts),
             "unique_weapon_definitions": [
                 {"item_hash": h, "weapon_name": "Weapon",
                  "structural_pair_count": count, "category_role_screens": []}
