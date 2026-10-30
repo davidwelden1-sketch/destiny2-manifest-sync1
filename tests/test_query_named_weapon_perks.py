@@ -64,6 +64,34 @@ class NamedPerkQueryTests(unittest.TestCase):
         self.assertEqual([r["item_hash"] for r in rows["structural_pair_matches"]], [100])
         self.assertIn("runtime states may differ", rows["interpretation"])
 
+    def test_report_distinguishes_matches_from_unique_weapon_definitions(self):
+        report = query_named_pairs(self.index, self.items, "Explosive Payload", "Firefly")
+        self.assertEqual(report["structural_match_count"], 2)
+        self.assertEqual(report["unique_weapon_definition_count"], 2)
+        self.assertEqual(report["category_role_screen_counts"]["unknown_missing_category"], 2)
+        self.assertEqual(report["roll_legality"], "unverified")
+
+    def test_explicit_component_category_is_flagged_not_certified(self):
+        self.items[4]["plugCategoryIdentifier"] = "barrels"
+        self.items[5]["plugCategoryIdentifier"] = "v300.weapon.trait"
+        report = query_named_pairs(self.index, self.items, "Explosive Payload", "Firefly")
+        flagged = [r for r in report["structural_pair_matches"]
+                   if r["perk_a_hash"] == 202]
+        self.assertEqual(flagged[0]["category_role_screen"],
+                         "explicit_component_label_present")
+        self.assertEqual(report["category_role_screen_counts"]
+                         ["explicit_component_label_present"], 1)
+        self.assertEqual(report["enhanced_perk_legality"], "unverified")
+
+    def test_unclassified_categories_do_not_certify_trait_role(self):
+        for item in self.items:
+            if item.get("hash") in (200, 201, 202, 203):
+                item["plugCategoryIdentifier"] = "frames"
+        report = query_named_pairs(self.index, self.items, "Explosive Payload", "Firefly")
+        self.assertEqual(report["category_role_screen_counts"]
+                         ["unclassified_not_trait_certified"], 2)
+        self.assertIn("does NOT certify a weapon trait", report["interpretation"])
+
     def test_invalid_names_and_filters_fail_closed(self):
         for names in (("", "Firefly"), ("Firefly", "firefly"), (None, "Firefly")):
             with self.assertRaises(ValueError):
