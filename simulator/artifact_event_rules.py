@@ -64,7 +64,7 @@ def curative_orbs_tangle_screen(event, activity, artifact_id,
     if not isinstance(event, str) or not event.strip():
         raise ValueError("event must be a nonempty string")
     blocked = _screen("Curative Orbs", activity, artifact_id,
-                      selected_perks, artifact_catalog)
+                      selected_perks, artifact_catalog, character_class)
     if blocked:
         return {**blocked, "certified": False, "source_url": SOURCE_URL}
     event = event.strip().lower()
