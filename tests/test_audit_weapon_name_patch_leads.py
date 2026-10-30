@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 import unittest
 
 from scripts.audit_weapon_name_patch_leads import audit_name_level_patch_leads
@@ -90,6 +92,20 @@ class NameLevelPatchLeadTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.audit(variants=[dict(self.variants[0],
                                       source_url="http://example.org")])
+
+    def test_dated_catalog_fixture_remains_uncertified(self):
+        path = (Path(__file__).resolve().parents[1] /
+                "data/zephyr_name_level_patch_leads_2026_10_30.json")
+        fixture = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual({v["item_hash"] for v in fixture["variants"]},
+                         {3400256755, 1911078836, 601948197, 3003492238})
+        result = audit_name_level_patch_leads(
+            fixture["variants"], [fixture["official_patch"]], fixture["reviewed_on"])
+        self.assertEqual(result["potential_name_matches"], 4)
+        for row in result["per_item_hash"]:
+            self.assertEqual(row["exact_hash_affected"], "unknown")
+            self.assertEqual(row["current_manifest_path_match"], "unverified")
+            self.assertEqual(row["roll_legality"], "unverified")
 
     def test_empty_inputs_are_valid(self):
         r = self.audit(variants=[], patches=[])
