@@ -71,11 +71,16 @@ class NamedPairFilterAuditTests(unittest.TestCase):
 
 
     @staticmethod
-    def fake_report(pairs):
+    def fake_report(pairs, paths=None):
         counts = Counter(h for h, _, _ in pairs)
+        paths = paths or {}
         return {
             "structural_pair_matches": [
-                {"item_hash": h, "perk_a_hash": a, "perk_b_hash": b}
+                {"item_hash": h, "perk_a_hash": a, "perk_b_hash": b,
+                 "socket_pairs": [
+                     {"a_socket_index": x, "b_socket_index": y}
+                     for x, y in paths.get((h, a, b), [(0, 1)])
+                 ]}
                 for h, a, b in pairs
             ],
             "structural_match_count": len(pairs),
@@ -131,6 +136,43 @@ class NamedPairFilterAuditTests(unittest.TestCase):
             result = audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
         self.assertEqual(result["filter_counts"]["both_filters"]
                          ["structural_pair_rows"], 1)
+
+    def test_disjoint_socket_paths_do_not_create_false_combined_match(self):
+        # Same weapon+plug pair is present in each individual filter, but
+        # different socket paths satisfy each. Combined filter correctly empty.
+        pair = (100, 200, 201)
+        reports = [
+            self.fake_report([pair], {pair: [(0, 1), (2, 3)]}),
+            self.fake_report([pair], {pair: [(0, 1)]}),
+            self.fake_report([pair], {pair: [(2, 3)]}),
+            self.fake_report([]),
+        ]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            result = audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+        self.assertEqual(result["filter_counts"]["both_filters"]["distinct_socket_paths"], 0)
+        self.assertTrue(result["socket_path_filter_intersection_verified"])
+
+    def test_combined_filter_cannot_omit_common_socket_path(self):
+        pair = (100, 200, 201)
+        reports = [
+            self.fake_report([pair], {pair: [(0, 1), (2, 3)]}),
+            self.fake_report([pair], {pair: [(0, 1), (2, 3)]}),
+            self.fake_report([pair], {pair: [(0, 1)]}),
+            self.fake_report([]),
+        ]
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            with self.assertRaisesRegex(ValueError, "socket-path intersection"):
+                audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+
+    def test_malformed_socket_path_fails_closed(self):
+        pair = (100, 200, 201)
+        reports = [self.fake_report([pair], {pair: [(0, 0)]})] * 4
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            with self.assertRaisesRegex(ValueError, "Invalid distinct socket indices"):
+                audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
 
     def test_duplicate_pair_rows_are_rejected(self):
         first = (100, 200, 201)
