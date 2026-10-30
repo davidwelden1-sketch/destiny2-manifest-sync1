@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-10-30T17:21:28Z",
+  "research_scope": "Game-wide exact weapon roll corrections and PvE/PvP ability trigger exceptions",
+  "evidence_grade": "official_published_patch_notes_not_gameplay_measurement",
+  "manifest_version_last_successful_probe": "245114.26.10.13.2000-1-bnet.66137",
+  "roll_corrections": [
+    {
+      "id": "jun23_2026_europa_moon_rocket_lead_from_gold_replacement",
+      "patch": "9.7.0.2",
+      "published_date": "2026-06-23",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "official_summary": "Europa and Moon Rocket Launchers could unintentionally drop Lead from Gold; Bungie changed existing affected instances to Impromptu Ammunition.",
+      "affected_exact_item_hashes": [],
+      "affected_exact_socket_paths": [],
+      "roll_legality": "requires_exact_hash_mapping_and_current_manifest_check",
+      "enhanced_legality": "unverified",
+      "code_integration": "Use audit_roll_observations --corrections only after independent exact item/plug/socket hashes and effective timestamp are verified; never fabricate a correction row."
+    },
+    {
+      "id": "jun23_2026_raid_adept_base_pool_sync",
+      "patch": "9.7.0.2",
+      "published_date": "2026-06-23",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "official_summary": "Certain raid Adept weapon perk pools were out of sync with base versions; Bungie updated Adepts including existing inventory instances.",
+      "affected_exact_item_hashes": [],
+      "affected_exact_socket_paths": [],
+      "roll_legality": "requires_base_adept_version_diff",
+      "enhanced_legality": "unverified"
+    }
+  ],
+  "ability_trigger_leads": [
+    {
+      "id": "jun09_2026_free_grapple_no_grenade_kickstart",
+      "patch": "9.7.0",
+      "published_date": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "official_summary": "Bungie fixed Grenade Kickstart activating when using a free Grapple from a Grapple Tangle or the Grappler modifier.",
+      "pve_implication": "Do not count Grenade Kickstart refund for free Grapple events in ability uptime model.",
+      "pvp_implication": "Check activity legality and availability of free Grapple sources before modeling opening or sustained cooldowns.",
+      "artifact_selection": "not_yet_verified",
+      "gameplay_measurements": 0
+    },
+    {
+      "id": "jun09_2026_cusp_withering_gaze_projectile_aim_fix",
+      "patch": "9.7.0",
+      "published_date": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "official_summary": "Fixed Withering Gaze on Cusp Sempiternal failing to weaken unless aiming when projectile made contact.",
+      "pve_implication": "Projectile impact aiming state must not be treated as an ongoing mandatory activation gate; actual fire/swap trigger timing still requires testing.",
+      "pvp_implication": "Do not infer Guardian damage or TTK from this combatant-oriented weakening fix.",
+      "artifact_selection": "not_yet_verified",
+      "gameplay_measurements": 0
+    }
+  ],
+  "current_certified_builds_from_these_leads": 0
+}
