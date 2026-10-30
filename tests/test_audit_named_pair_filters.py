@@ -214,6 +214,34 @@ class NamedPairFilterAuditTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Invalid distinct socket indices"):
                 audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
 
+    def test_socket_orientation_counts_are_exact_and_do_not_infer_rolls(self):
+        pair = (100, 200, 201)
+        reports = [self.fake_report([pair], {pair: [(3, 4), (4, 3)]})] * 4
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            result = audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+        self.assertEqual(result["socket_order_counts"],
+                         {"perk_a_before_perk_b": 1, "perk_b_before_perk_a": 1})
+        self.assertEqual(result["socket_order_by_exact_weapon_hash"][0]["item_hash"], 100)
+        self.assertEqual(result["socket_order_by_exact_weapon_hash"][0]
+                         ["perk_b_before_perk_a"], 1)
+        self.assertTrue(all(p["roll_legality"] == "unverified"
+                            for p in result["per_exact_socket_path"]))
+
+    def test_socket_orientation_preserves_same_named_variant_hashes(self):
+        first, second = (100, 200, 201), (101, 202, 203)
+        paths = {first: [(3, 4)], second: [(4, 3)]}
+        reports = [self.fake_report([first, second], paths)] * 4
+        with patch("scripts.audit_named_pair_filters.query_named_pairs",
+                   side_effect=reports):
+            result = audit_named_pair_filters([], [], "Explosive Payload", "Firefly")
+        self.assertEqual(result["socket_order_counts"],
+                         {"perk_a_before_perk_b": 1, "perk_b_before_perk_a": 1})
+        self.assertEqual(
+            [(r["item_hash"], r["perk_a_before_perk_b"], r["perk_b_before_perk_a"])
+             for r in result["socket_order_by_exact_weapon_hash"]],
+            [(100, 1, 0), (101, 0, 1)])
+
     def test_duplicate_pair_rows_are_rejected(self):
         first = (100, 200, 201)
         reports = [self.fake_report(pairs) for pairs in (
