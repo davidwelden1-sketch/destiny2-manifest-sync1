@@ -43,6 +43,8 @@ jobs:
         run: python scripts/query_weapon_pairs.py
       - name: Resolve Explosive Payload plus Firefly by exact perk hashes and exact weapon variant
         run: python -m scripts.query_named_weapon_perks --perk-a "Explosive Payload" --perk-b "Firefly"
+      - name: Compare exact-hash Explosive Payload and Firefly current-roll and visibility evidence
+        run: python -m scripts.audit_named_pair_filters --perk-a "Explosive Payload" --perk-b "Firefly"
       - name: Query dual Void Breach pickup trait sockets
         run: python scripts/query_weapon_pairs.py --plug-a 1767911158 --plug-b 2562668800
       - name: Query explicitly current-roll dual Void Breach trait sockets
