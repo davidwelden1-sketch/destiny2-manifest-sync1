@@ -105,6 +105,41 @@ class WeaponPlugSetReferenceTests(unittest.TestCase):
             build_weapon_plug_set_reference_index(self.weapons, self.plug_sets,
                                                    {"31": {"displayProperties": "bad"}})
 
+    def test_exact_plug_category_metadata_and_redaction(self):
+        definitions = {"31": {"displayProperties": {"name": "Example Trait"},
+                              "plug": {"plugCategoryHash": 99,
+                                       "plugCategoryIdentifier": "v400.weapon.mod"},
+                              "redacted": False},
+                       "32": {"displayProperties": {"name": "Other"},
+                              "plug": {"plugCategoryHash": 100},
+                              "redacted": True}}
+        plugs = build_weapon_plug_set_reference_index(
+            self.weapons, self.plug_sets, definitions)[0]["resolvedPlugSets"][0]["plugs"]
+        self.assertEqual(plugs[0]["plugCategoryHash"], 99)
+        self.assertEqual(plugs[0]["plugCategoryIdentifier"], "v400.weapon.mod")
+        self.assertIs(plugs[0]["plugRedacted"], False)
+        self.assertEqual(plugs[1]["plugCategoryHash"], 100)
+        self.assertIsNone(plugs[1]["plugCategoryIdentifier"])
+        self.assertIs(plugs[1]["plugRedacted"], True)
+        self.assertIsNone(plugs[2]["plugCategoryHash"])
+
+    def test_missing_plug_metadata_fails_closed_as_unknown(self):
+        plugs = self.run_join()[0]["resolvedPlugSets"][0]["plugs"]
+        self.assertIsNone(plugs[0]["plugCategoryHash"])
+        self.assertIsNone(plugs[0]["plugCategoryIdentifier"])
+        self.assertIsNone(plugs[0]["plugRedacted"])
+
+    def test_invalid_plug_category_and_redaction_rejected(self):
+        bad = ({"plug": "not a dict"},
+               {"plug": {"plugCategoryHash": True}},
+               {"plug": {"plugCategoryHash": -1}},
+               {"plug": {"plugCategoryIdentifier": 22}},
+               {"redacted": "yes"})
+        for item in bad:
+            with self.subTest(item=item), self.assertRaises(ValueError):
+                build_weapon_plug_set_reference_index(
+                    self.weapons, self.plug_sets, {"31": item})
+
     def test_invalid_top_level_types(self):
         with self.assertRaises(TypeError):
             build_weapon_plug_set_reference_index({}, {})
