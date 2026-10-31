@@ -15,6 +15,14 @@ SOURCE_URL = "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2"
 
 # Source-level scope, not a list of current obtainable item hashes.
 CHANGES = {
+    "kinetic_brick_element_conversion": {
+        "scope": "weapon_damage_type_and_ammo", "affected_modes": ("pve", "pvp"),
+        "fact": "Fixed Kinetic ammo brick pickup converting some non-Kinetic weapon damage to Kinetic and granting ammo to some non-Kinetic weapons.",
+    },
+    "exotic_catalyst_progression": {
+        "scope": "catalyst_progression", "affected_modes": ("pve", "pvp"),
+        "fact": "Fixed catalyst progression for One Thousand Voices, Fafnir and Tarrabah; does not prove catalyst possession or completion.",
+    },
     "europa_moon_rocket_lead_from_gold": {
         "scope": "weapon_roll", "affected_modes": ("pve", "pvp"),
         "fact": "Lead from Gold was unintended on Europa/Moon rockets; existing instances were changed to Impromptu Ammunition.",
