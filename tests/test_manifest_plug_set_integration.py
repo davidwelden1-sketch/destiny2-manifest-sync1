@@ -81,6 +81,25 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
             self.assertEqual(meta["plug_set_definition_sha256"],
                              hashlib.sha256(self.urls["https://www.bungie.net/fixture/plugsets.json"]).hexdigest())
 
+
+    def test_category_name_samples_require_explicit_provenance(self):
+        self.plugsets["900"]["isFakePlugSet"] = False
+        self.plugsets["900"]["redacted"] = False
+        self.urls["https://www.bungie.net/fixture/plugsets.json"] = json.dumps(self.plugsets).encode()
+        with tempfile.TemporaryDirectory() as folder:
+            with patch.object(sync_manifest, "OUT", pathlib.Path(folder)):
+                with patch.object(sync_manifest, "get", side_effect=self.urls.__getitem__):
+                    sync_manifest.main()
+            report = json.loads((pathlib.Path(folder) / "weapon_plug_category_provenance.json").read_text())
+            self.assertEqual(report["counts"]["categoriesWithNamedExplicitPlugExamples"], 1)
+            category = report["categories"][0]
+            self.assertEqual(category["sampleNamedDefinitionPlugs"],
+                             [{"plugHash": 777, "name": "Synthetic Trait"}])
+            self.assertEqual(category["sampleWeaponDefinitions"],
+                             [{"itemHash": 101, "name": "Test"}])
+            self.assertIsNone(report["certifiedObtainableRollCount"])
+            self.assertIsNone(report["certifiedEnhancedPerkCount"])
+
     def test_missing_plug_set_component_fails_closed(self):
         del self.manifest["Response"]["jsonWorldComponentContentPaths"]["en"]["DestinyPlugSetDefinition"]
         self.urls["https://www.bungie.net/Platform/Destiny2/Manifest/"] = json.dumps(self.manifest).encode()
