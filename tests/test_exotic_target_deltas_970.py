@@ -83,13 +83,17 @@ class ExoticTargetDeltas970Tests(unittest.TestCase):
                 audit(bad, "boss")
 
     def test_reject_invalid_activity_target_baseline(self):
-        for kwargs in (
+        for overrides in (
             {"target": "guardian"}, {"target": ""},
-            {"activity": "gambit"}, {"baseline": "maybe"},
-            {"baseline": ""}, {"version": ""},
+            {"activity": "gambit"}, {"reference_baseline": "maybe"},
+            {"reference_baseline": ""}, {"source_patch_version": ""},
         ):
-            with self.subTest(kwargs=kwargs), self.assertRaises(ValueError):
-                audit(SLEEPER, "boss", **kwargs)
+            params = {"item_hash": SLEEPER, "target": "boss", "activity": "pve",
+                      "source_patch_version": "9.7.0",
+                      "reference_baseline": "pre_9_7_0"}
+            params.update(overrides)
+            with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                historical_exotic_target_delta(**params)
 
     def test_official_patch_and_hash_evidence_are_separate(self):
         result = audit(ARBALEST, "champion")
