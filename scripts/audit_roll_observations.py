@@ -6,7 +6,9 @@ automatically certifies current drops, enhancement, or gameplay damage.
 """
 import argparse
 import json
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+
+from simulator.loot_pool_970_freshness import audit_loot_pool_freshness
 from pathlib import Path
 
 
@@ -38,7 +40,8 @@ def _utc(value):
     return parsed
 
 
-def audit_roll_observations(pair_report, observations, checked_at_utc, corrections=None):
+def audit_roll_observations(pair_report, observations, checked_at_utc,
+                            corrections=None, loot_source_claims=None):
     """Join source-labelled observations by exact hash AND socket path.
 
     Historical captures are leads, not authenticated current-roll certification.
@@ -81,6 +84,39 @@ def audit_roll_observations(pair_report, observations, checked_at_utc, correctio
             "correction_action": correction["correction_action"],
             "evidence_grade": "submitted_patch_reference_not_independently_authenticated",
         })
+    # External source classifications are keyed by exact item hash, never by
+    # shared display name. They are unverified claims, not roll certificates.
+    if loot_source_claims is None:
+        loot_source_claims = []
+    if not isinstance(loot_source_claims, list):
+        raise ValueError("Loot source claims must be a list")
+    source_by_hash = {}
+    for claim in loot_source_claims:
+        if not isinstance(claim, dict):
+            raise ValueError("Loot source claim must be an object")
+        item_hash = claim.get("item_hash")
+        if type(item_hash) is not int or item_hash <= 0:
+            raise ValueError("Loot source item_hash must be a positive integer")
+        if item_hash in source_by_hash:
+            raise ValueError("Duplicate loot source item_hash")
+        source_url = claim.get("source_url")
+        if not isinstance(source_url, str) or not source_url.startswith("https://"):
+            raise ValueError("Loot source claim requires an HTTPS source URL")
+        freshness = audit_loot_pool_freshness(
+            item_hash=item_hash, source_kind=claim.get("source_kind"),
+            pre_edge_of_fate=claim.get("pre_edge_of_fate"),
+            craftable=claim.get("craftable"),
+            observation_date=claim.get("observation_date"),
+            activity=claim.get("activity", "pve"),
+            observed_manifest_version=claim.get("observed_manifest_version"),
+            reference_manifest_version=version,
+        )
+        if date.fromisoformat(freshness["observation_date"]) > checked.date():
+            raise ValueError("Future loot source claim cannot be used")
+        source_by_hash[item_hash] = {
+            **freshness, "claim_source_url": source_url,
+            "claim_authenticated": False,
+        }
     keyed = {}
     for path in paths:
         key = _path_key(path)
@@ -141,6 +177,7 @@ def audit_roll_observations(pair_report, observations, checked_at_utc, correctio
             "current_acquisition": "unverified",
             "roll_legality": "unverified",
             "enhanced_perk_legality": "unverified",
+            "loot_source_freshness": source_by_hash.get(key[0]),
         })
         rows.append(row)
     return {
@@ -149,6 +186,8 @@ def audit_roll_observations(pair_report, observations, checked_at_utc, correctio
         "manifest_exact_socket_paths": len(rows),
         "historically_observed_paths": sum(r["historical_exact_path_observation"] for r in rows),
         "unmatched_evidence_ids": sorted(unmatched),
+        "unmatched_loot_source_item_hashes": sorted(set(source_by_hash) -
+                                                   {key[0] for key in keyed}),
         "unmatched_correction_ids": sorted(
             c["correction_id"] for key, rows in correction_by_path.items()
             if key not in keyed for c in rows),
@@ -158,7 +197,9 @@ def audit_roll_observations(pair_report, observations, checked_at_utc, correctio
             "item/plug/socket path does not prove a current obtainable roll, enhanced perk, "
             "active Artifact, or measured PvE/PvP outcome. Version mismatches remain historical. "
             "Submitted patch correction references require independent source verification and "
-            "exact hash mapping; affected historical captures must be revalidated after a correction."
+            "exact hash mapping; affected historical captures must be revalidated after a correction. "
+            "Externally submitted loot-source classifications are not authenticated and cannot "
+            "certify an obtainable or enhanceable weapon roll."
         ),
     }
 
@@ -169,14 +210,18 @@ def main():
     parser.add_argument("--observations", required=True)
     parser.add_argument("--checked-at-utc", required=True)
     parser.add_argument("--corrections", help="Optional exact-hash patch correction claims JSON")
+    parser.add_argument("--loot-source-claims", help="Optional item-hash source freshness claims JSON")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     pair_report = json.loads(Path(args.pair_report).read_text(encoding="utf-8"))
     observations = json.loads(Path(args.observations).read_text(encoding="utf-8"))
     corrections = (json.loads(Path(args.corrections).read_text(encoding="utf-8"))
                    if args.corrections else None)
+    loot_claims = (json.loads(Path(args.loot_source_claims).read_text(encoding="utf-8"))
+                   if args.loot_source_claims else None)
     report = audit_roll_observations(pair_report, observations, args.checked_at_utc,
-                                     corrections=corrections)
+                                     corrections=corrections,
+                                     loot_source_claims=loot_claims)
     Path(args.output).write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "per_exact_socket_path"}, indent=2))
 
