@@ -72,6 +72,12 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
             self.assertEqual(meta["plug_set_definition_count"], 1)
             self.assertEqual(meta["resolved_weapon_definition_count"], 1)
             self.assertEqual(meta["plug_category_coverage_counts"]["uniqueRandomizedCategoryIdentifiers"], 1)
+            socket_map = json.loads((path / "weapon_plug_category_socket_map.json").read_text())
+            self.assertEqual(socket_map["counts"]["uniqueCategoryIdentities"], 1)
+            self.assertEqual(socket_map["counts"]["unknownCategoryOccurrences"], 1)
+            self.assertEqual(socket_map["categories"][0]["socketPositions"][0]["socketIndex"], 0)
+            self.assertIsNone(socket_map["certifiedCrossSocketPairCount"])
+            self.assertEqual(meta["plug_category_socket_map_counts"]["uniqueCategoryIdentities"], 1)
             self.assertEqual(meta["plug_set_definition_sha256"],
                              hashlib.sha256(self.urls["https://www.bungie.net/fixture/plugsets.json"]).hexdigest())
 
