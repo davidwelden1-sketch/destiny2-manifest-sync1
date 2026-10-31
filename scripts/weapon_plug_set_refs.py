@@ -12,14 +12,17 @@ def _hash(value, label):
     return value
 
 
-def build_weapon_plug_set_reference_index(weapon_socket_refs, plug_sets):
+def build_weapon_plug_set_reference_index(weapon_socket_refs, plug_sets, item_definitions=None):
     """Join exact item/socket hashes to the same-version plug-set definitions.
 
     Output includes missing and redacted definitions, and preserves tri-state
-    currentlyCanRoll. It does not infer socket purpose or playable perk pairs.
+    currentlyCanRoll. Optional same-manifest item definitions resolve display
+    names without inferring socket purpose, enhancement or playable perk pairs.
     """
     if not isinstance(weapon_socket_refs, list) or not isinstance(plug_sets, dict):
         raise TypeError("weapon socket references must be a list and plug sets a mapping")
+    if item_definitions is not None and not isinstance(item_definitions, dict):
+        raise TypeError("item definitions must be a mapping or None")
     result = []
     for weapon in weapon_socket_refs:
         if not isinstance(weapon, dict):
@@ -60,8 +63,21 @@ def build_weapon_plug_set_reference_index(weapon_socket_refs, plug_sets):
                     can_roll = plug.get("currentlyCanRoll")
                     if can_roll is not None and type(can_roll) is not bool:
                         raise ValueError("currentlyCanRoll must be bool or null")
-                    plugs.append({"plugItemHash": _hash(plug.get("plugItemHash"), "plugItemHash"),
-                                  "currentlyCanRoll": can_roll})
+                    plug_hash = _hash(plug.get("plugItemHash"), "plugItemHash")
+                    plug_definition = (item_definitions.get(str(plug_hash))
+                                       if item_definitions is not None else None)
+                    if plug_definition is not None and not isinstance(plug_definition, dict):
+                        raise ValueError("malformed plug item definition")
+                    display = (plug_definition.get("displayProperties") or {}) if plug_definition else {}
+                    if not isinstance(display, dict):
+                        raise ValueError("malformed plug display properties")
+                    name = display.get("name")
+                    if not isinstance(name, str) or not name.strip():
+                        name = None
+                    plugs.append({"plugItemHash": plug_hash,
+                                  "currentlyCanRoll": can_roll,
+                                  "plugName": name,
+                                  "plugDefinitionFound": plug_definition is not None})
                 fake, redacted = definition.get("isFakePlugSet"), definition.get("redacted")
                 if any(x is not None and type(x) is not bool for x in (fake, redacted)):
                     raise ValueError("plug-set flags must be bool or null")
