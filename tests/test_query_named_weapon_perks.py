@@ -113,6 +113,31 @@ class NamedPerkQueryTests(unittest.TestCase):
                          ["unclassified_not_trait_certified"], 2)
         self.assertIn("does NOT certify a weapon trait", report["interpretation"])
 
+    def test_duplicate_exact_hash_different_names_fails_closed(self):
+        # A malformed manifest join must not make one plug hash appear
+        # under multiple perk names, even if each name is plausible.
+        duplicate = {"hash": 200, "name": "Different Trait",
+                     "plugCategoryIdentifier": "frames"}
+        with self.assertRaisesRegex(ValueError, "Duplicate item definition hash"):
+            resolve_names(self.index, self.items + [duplicate],
+                          ["Explosive Payload", "Firefly"])
+        with self.assertRaisesRegex(ValueError, "Duplicate item definition hash"):
+            query_named_pairs(self.index, self.items + [duplicate],
+                              "Explosive Payload", "Firefly")
+
+    def test_duplicate_exact_hash_category_conflict_fails_closed(self):
+        # A last-write-wins category join could hide an explicit component.
+        duplicate = {"hash": 201, "name": "Firefly",
+                     "plugCategoryIdentifier": "barrels"}
+        with self.assertRaisesRegex(ValueError, "Duplicate item definition hash"):
+            query_named_pairs(self.index, self.items + [duplicate],
+                              "Explosive Payload", "Firefly")
+
+    def test_duplicate_identical_definition_still_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, "Duplicate item definition hash"):
+            query_named_pairs(self.index, self.items + [dict(self.items[2])],
+                              "Explosive Payload", "Firefly")
+
     def test_invalid_names_and_filters_fail_closed(self):
         for names in (("", "Firefly"), ("Firefly", "firefly"), (None, "Firefly")):
             with self.assertRaises(ValueError):
