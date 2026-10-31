@@ -159,5 +159,111 @@ class ExactRollObservationAuditTests(unittest.TestCase):
 
 
 
+    def loot_claim(self, **changes):
+        claim = {
+            "item_hash": 100, "source_kind": "raid",
+            "pre_edge_of_fate": True, "craftable": True,
+            "observation_date": "2026-06-08",
+            "observed_manifest_version": "manifest-old",
+            "source_url": "https://example.org/raid-observation",
+            "activity": "pve",
+        }
+        claim.update(changes)
+        return claim
+
+    def test_exact_hash_raid_freshness_not_shared_by_same_name(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim()])
+        first, second = result["per_exact_socket_path"]
+        self.assertTrue(first["loot_source_freshness"]["perk_pool_revalidation_required"])
+        self.assertIsNone(second["loot_source_freshness"])
+        self.assertEqual(first["roll_legality"], "unverified")
+
+    def test_loot_source_manifest_mismatch_is_explicit(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim()])
+        row = result["per_exact_socket_path"][0]
+        self.assertEqual(row["loot_source_freshness"]["manifest_version_status"],
+                         "version_mismatch_revalidate")
+        self.assertFalse(row["loot_source_freshness"]["claim_authenticated"])
+
+    def test_dungeon_origin_trait_freshness_is_distinct(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim(source_kind="dungeon",
+                                                craftable=False)])
+        row = result["per_exact_socket_path"][0]["loot_source_freshness"]
+        self.assertTrue(row["origin_trait_revalidation_required"])
+        self.assertFalse(row["perk_pool_revalidation_required"])
+
+    def test_post_patch_claim_does_not_certify_enhancement(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim(
+                observation_date="2026-10-29",
+                observed_manifest_version="manifest-new")])
+        row = result["per_exact_socket_path"][0]
+        self.assertFalse(row["loot_source_freshness"]["perk_pool_revalidation_required"])
+        self.assertFalse(row["loot_source_freshness"]["enhanced_perk_legality_verified"])
+        self.assertEqual(row["enhanced_perk_legality"], "unverified")
+
+    def test_unknown_raid_age_fails_closed_without_inferred_legality(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim(pre_edge_of_fate=None)])
+        row = result["per_exact_socket_path"][0]["loot_source_freshness"]
+        self.assertEqual(row["official_source_level_changes"], [])
+        self.assertFalse(row["current_exact_perk_pair_verified"])
+
+    def test_unmatched_source_hash_reported_without_cross_match(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim(item_hash=999)])
+        self.assertEqual(result["unmatched_loot_source_item_hashes"], [999])
+        self.assertTrue(all(row["loot_source_freshness"] is None
+                            for row in result["per_exact_socket_path"]))
+
+    def test_duplicate_source_hash_rejected(self):
+        with self.assertRaisesRegex(ValueError, "Duplicate loot source"):
+            audit_roll_observations(
+                self.report, [], self.checked,
+                loot_source_claims=[self.loot_claim(), self.loot_claim(
+                    observation_date="2026-06-10")])
+
+    def test_future_source_observation_rejected(self):
+        with self.assertRaisesRegex(ValueError, "Future loot source"):
+            audit_roll_observations(
+                self.report, [], self.checked,
+                loot_source_claims=[self.loot_claim(observation_date="2026-11-01")])
+
+    def test_invalid_source_metadata_rejected(self):
+        for changes in (
+            {"item_hash": True}, {"source_url": "http://example.org"},
+            {"source_kind": "unsupported"}, {"observation_date": "2026-02-30"},
+            {"activity": "unknown"}, {"pre_edge_of_fate": "yes"},
+        ):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                audit_roll_observations(
+                    self.report, [], self.checked,
+                    loot_source_claims=[self.loot_claim(**changes)])
+
+    def test_optional_source_claims_backward_compatible(self):
+        result = audit_roll_observations(self.report, [], self.checked)
+        self.assertEqual(result["unmatched_loot_source_item_hashes"], [])
+        self.assertTrue(all(row["loot_source_freshness"] is None
+                            for row in result["per_exact_socket_path"]))
+
+    def test_source_claim_does_not_override_pvp_artifact_constraint(self):
+        result = audit_roll_observations(
+            self.report, [], self.checked,
+            loot_source_claims=[self.loot_claim(activity="trials")])
+        row = result["per_exact_socket_path"][0]["loot_source_freshness"]
+        self.assertIs(row["artifact_enabled"], False)
+        self.assertFalse(row["current_artifact_selection_verified"])
+
+
+
 if __name__ == "__main__":
     unittest.main()
