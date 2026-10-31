@@ -12,6 +12,7 @@ from plug_coverage_audit import summarize_resolved_plug_coverage
 from plug_uniqueness_audit import audit_unique_weapon_plugs
 from plug_category_coverage_audit import audit_weapon_plug_categories
 from plug_category_provenance import audit_category_provenance
+from plug_category_socket_map import audit_category_socket_map
 
 BASE = "https://www.bungie.net"
 OUT = pathlib.Path(os.environ.get("OUTPUT_DIR", "output"))
@@ -60,6 +61,7 @@ def main():
     unique_plug_coverage = audit_unique_weapon_plugs(resolved_plug_refs)
     plug_category_coverage = audit_weapon_plug_categories(resolved_plug_refs)
     category_provenance = audit_category_provenance(resolved_plug_refs)
+    category_socket_map = audit_category_socket_map(resolved_plug_refs)
     metadata = {
         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "manifest_version": payload.get("version"),
@@ -76,6 +78,7 @@ def main():
         "unique_plug_coverage_counts": unique_plug_coverage["counts"],
         "plug_category_coverage_counts": plug_category_coverage["counts"],
         "plug_category_provenance_counts": category_provenance["counts"],
+        "plug_category_socket_map_counts": category_socket_map["counts"],
         "plug_category_scope": "Same-manifest plug category labels, not certified traits, obtainable/enhanced rolls, PvE or PvP effects",
         "named_plug_resolution_scope": "Same-version DestinyInventoryItemDefinition display labels; names do not certify perk socket roles, roll acquisition or enhancement",
         "plug_set_join_scope": "Same-version definition joins; currentlyCanRoll is tri-state and not current acquisition, cross-socket roll or enhancement certification",
@@ -90,6 +93,7 @@ def main():
     (OUT / "weapon_unique_plug_coverage.json").write_text(json.dumps(unique_plug_coverage, indent=2) + "\n", encoding="utf-8")
     (OUT / "weapon_plug_category_coverage.json").write_text(json.dumps(plug_category_coverage, indent=2) + "\n", encoding="utf-8")
     (OUT / "weapon_plug_category_provenance.json").write_text(json.dumps(category_provenance, indent=2) + "\n", encoding="utf-8")
+    (OUT / "weapon_plug_category_socket_map.json").write_text(json.dumps(category_socket_map, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(metadata, indent=2))
 
 if __name__ == "__main__":
