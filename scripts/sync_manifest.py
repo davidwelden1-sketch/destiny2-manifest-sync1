@@ -14,6 +14,7 @@ from plug_category_coverage_audit import audit_weapon_plug_categories
 from plug_category_provenance import audit_category_provenance
 from plug_category_socket_map import audit_category_socket_map
 from plug_category_role_triage import triage_category_roles
+from category_role_digest import build_category_role_digest
 
 BASE = "https://www.bungie.net"
 OUT = pathlib.Path(os.environ.get("OUTPUT_DIR", "output"))
@@ -64,6 +65,7 @@ def main():
     category_provenance = audit_category_provenance(resolved_plug_refs)
     category_socket_map = audit_category_socket_map(resolved_plug_refs)
     category_role_triage = triage_category_roles(category_provenance, category_socket_map)
+    category_digest = build_category_role_digest(category_role_triage)
     metadata = {
         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "manifest_version": payload.get("version"),
@@ -82,6 +84,7 @@ def main():
         "plug_category_provenance_counts": category_provenance["counts"],
         "plug_category_socket_map_counts": category_socket_map["counts"],
         "plug_category_role_triage_counts": category_role_triage["counts"],
+        "category_role_digest_count": len(category_digest["categories"]),
         "plug_category_scope": "Same-manifest plug category labels, not certified traits, obtainable/enhanced rolls, PvE or PvP effects",
         "named_plug_resolution_scope": "Same-version DestinyInventoryItemDefinition display labels; names do not certify perk socket roles, roll acquisition or enhancement",
         "plug_set_join_scope": "Same-version definition joins; currentlyCanRoll is tri-state and not current acquisition, cross-socket roll or enhancement certification",
@@ -98,7 +101,9 @@ def main():
     (OUT / "weapon_plug_category_provenance.json").write_text(json.dumps(category_provenance, indent=2) + "\n", encoding="utf-8")
     (OUT / "weapon_plug_category_socket_map.json").write_text(json.dumps(category_socket_map, indent=2) + "\n", encoding="utf-8")
     (OUT / "weapon_plug_category_role_triage.json").write_text(json.dumps(category_role_triage, indent=2) + "\n", encoding="utf-8")
+    (OUT / "weapon_category_role_digest.json").write_text(json.dumps(category_digest, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(metadata, indent=2))
+    print("CATEGORY_ROLE_DIGEST_DEFINITION_ONLY=" + json.dumps(category_digest, ensure_ascii=False))
 
 if __name__ == "__main__":
     main()
