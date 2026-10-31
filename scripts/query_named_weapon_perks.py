@@ -19,12 +19,35 @@ def _normalize_name(name):
     return name.strip().casefold()
 
 
+def _validated_by_hash(items):
+    """Fail closed on duplicate exact item hashes, including conflicting labels.
+
+    Silent last-write-wins joins can disguise a barrel/component as a trait
+    or resolve one plug hash under two unrelated names. Bungie item hashes
+    identify definitions; duplicates must be repaired upstream.
+    """
+    if not isinstance(items, list):
+        raise ValueError("Item definitions must be a list")
+    by_hash = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        h = item.get("hash")
+        if type(h) is not int or h <= 0:
+            continue
+        if h in by_hash:
+            raise ValueError("Duplicate item definition hash; refuse ambiguous name/category join")
+        by_hash[h] = item
+    return by_hash
+
+
 def resolve_names(index, items, names):
     """Return each requested name's exact matching randomized plug hashes.
 
     Duplicate display names are kept as distinct hashes. Missing names stay
     unresolved; we never silently fall back to fuzzy or partial matching.
     """
+    by_hash = _validated_by_hash(items)
     requested = [_normalize_name(name) for name in names]
     eligible = set()
     for weapon in index:
@@ -35,10 +58,7 @@ def resolve_names(index, items, names):
                 if type(h) is int and h > 0:
                     eligible.add(h)
     matches = {name: set() for name in requested}
-    for item in items:
-        if not isinstance(item, dict):
-            continue
-        h = item.get("hash")
+    for h, item in by_hash.items():
         label = item.get("name")
         if type(h) is not int or h not in eligible or not isinstance(label, str):
             continue
@@ -57,8 +77,7 @@ def query_named_pairs(index, items, perk_a, perk_b,
     if type(current_roll_only) is not bool or type(default_visible_only) is not bool:
         raise ValueError("Filters must be boolean")
     resolved = resolve_names(index, items, (perk_a, perk_b))
-    by_hash = {item["hash"]: item for item in items if isinstance(item, dict)
-               and type(item.get("hash")) is int}
+    by_hash = _validated_by_hash(items)
     rows = []
     for ah in resolved[a]:
         for bh in resolved[b]:
