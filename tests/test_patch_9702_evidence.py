@@ -13,6 +13,20 @@ class Patch9702EvidenceTests(unittest.TestCase):
             change_key, observation_date, activity=activity, **kwargs
         )
 
+    def test_kinetic_brick_bug_cannot_calibrate_current_damage_element(self):
+        r = self.screen("kinetic_brick_element_conversion")
+        self.assertEqual(r["scope"], "weapon_damage_type_and_ammo")
+        self.assertIn("non-Kinetic weapon damage", r["official_fact"])
+        self.assertTrue(r["revalidation_required"])
+        self.assertFalse(r["gameplay_measured"])
+        self.assertIsNone(r["damage_ownership"])
+
+    def test_catalyst_progression_fix_does_not_certify_catalyst(self):
+        r = self.screen("exotic_catalyst_progression", "2026-06-24")
+        self.assertIn("Fafnir", r["official_fact"])
+        self.assertEqual(r["status"], "post_fix_observation_not_gameplay_certification")
+        self.assertFalse(r["current_roll_or_enhancement_verified"])
+
     def test_historical_europa_moon_rocket_roll_invalidated(self):
         r = self.screen()
         self.assertEqual(r["status"], "pre_fix_observation_requires_revalidation")
@@ -94,7 +108,7 @@ class Patch9702EvidenceTests(unittest.TestCase):
                     self.screen(key, when, mode, **kwargs)
 
     def test_all_known_changes_have_official_provenance(self):
-        self.assertEqual(len(CHANGES), 10)
+        self.assertEqual(len(CHANGES), 12)
         self.assertEqual(PATCH_VERSION, "9.7.0.2")
         self.assertEqual(PATCH_DATE, "2026-06-23")
         self.assertIn("bungie.net", SOURCE_URL)
