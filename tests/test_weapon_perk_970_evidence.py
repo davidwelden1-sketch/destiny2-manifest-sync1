@@ -3,6 +3,7 @@ import unittest
 
 from simulator.weapon_perk_970_evidence import (
     patch_weapon_perk_parameter, attrition_orbs_patch_hit_count,
+    advance_all_star_timer,
 )
 
 
@@ -122,6 +123,54 @@ class WeaponPerk970EvidenceTests(unittest.TestCase):
         self.assertEqual(r["source_date"], "2026-06-09")
         self.assertEqual(r["source_patch_version"], "9.7.0")
         self.assertEqual(r["evidence_grade"], "official_historical_patch_parameter")
+
+
+class AllStar970StowTests(unittest.TestCase):
+    def check(self, *, remaining=7.0, elapsed=2.0, equipped=True,
+              activity="pve", version="9.7.0"):
+        return advance_all_star_timer(remaining, elapsed,
+                                      weapon_equipped=equipped, activity=activity,
+                                      source_patch_version=version)
+
+    def test_equipped_timer_counts_down(self):
+        r = self.check()
+        self.assertEqual(r["remaining_seconds"], 5.0)
+        self.assertFalse(r["timer_paused"])
+
+    def test_stowed_timer_does_not_count_down(self):
+        r = self.check(equipped=False)
+        self.assertEqual(r["remaining_seconds"], 7.0)
+        self.assertTrue(r["timer_paused"])
+
+    def test_elapsed_longer_than_remaining_clamps_zero(self):
+        self.assertEqual(self.check(remaining=1, elapsed=10)["remaining_seconds"], 0)
+
+    def test_pvp_does_not_inherit_damage_multiplier(self):
+        for activity in ("pvp", "competitive", "trials"):
+            r = self.check(activity=activity, equipped=False)
+            self.assertIsNone(r["damage_multiplier"])
+            self.assertFalse(r["gameplay_measured"])
+
+    def test_version_mismatch_does_not_run_clock(self):
+        r = self.check(version="9.7.0.6")
+        self.assertEqual(r["status"], "source_patch_version_mismatch")
+        self.assertIsNone(r["remaining_seconds"])
+
+    def test_timer_inputs_fail_closed(self):
+        for bad in (-1, True, float("nan"), float("inf"), "5"):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                self.check(remaining=bad)
+        with self.assertRaises(ValueError):
+            self.check(equipped=1)
+        with self.assertRaises(ValueError):
+            self.check(activity="unknown")
+
+    def test_no_current_duration_or_activation_certification(self):
+        r = self.check()
+        self.assertFalse(r["initial_duration_verified"])
+        self.assertFalse(r["activation_verified"])
+        self.assertFalse(r["current_game_verified"])
+        self.assertFalse(r["roll_legality_verified"])
 
 
 if __name__ == "__main__":
