@@ -51,7 +51,7 @@ def main():
     plug_definitions = json.loads(plug_raw)
     if not isinstance(plug_definitions, dict):
         raise ValueError("Unexpected plug-set definition structure")
-    resolved_plug_refs = build_weapon_plug_set_reference_index(weapon_refs, plug_definitions)
+    resolved_plug_refs = build_weapon_plug_set_reference_index(weapon_refs, plug_definitions, records)
     metadata = {
         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "manifest_version": payload.get("version"),
@@ -64,8 +64,9 @@ def main():
         "plug_set_definition_sha256": hashlib.sha256(plug_raw).hexdigest(),
         "plug_set_definition_count": len(plug_definitions),
         "resolved_weapon_definition_count": len(resolved_plug_refs),
+        "named_plug_resolution_scope": "Same-version DestinyInventoryItemDefinition display labels; names do not certify perk socket roles, roll acquisition or enhancement",
         "plug_set_join_scope": "Same-version definition joins; currentlyCanRoll is tri-state and not current acquisition, cross-socket roll or enhancement certification",
-        "weapon_socket_reference_scope": "Definition references only; no plug-set resolution, obtainable rolls, enhanced eligibility or damage certification",
+        "weapon_socket_reference_scope": "Definition socket references; separate resolved plug-set index supplies hashes and display names, but not obtainable rolls, enhanced eligibility or damage certification",
         "scope": "DestinyInventoryItemDefinition (en); API metadata, not measured sandbox values"
     }
     (OUT / "manifest_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
