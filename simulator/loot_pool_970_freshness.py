@@ -1,7 +1,7 @@
-"""Conservative 9.7.0 game-wide raid/dungeon loot-pool freshness gate.
+"""Conservative 9.7.0 raid/dungeon/destination loot-pool freshness gate.
 
 Bungie Update 9.7.0 (2026-06-09) refreshed rewards for pre-Edge of Fate
-raids/dungeons. A historical pool or origin trait is not evidence of a
+raids/dungeons and pre-Edge-of-Fate destination rewards. A historical pool or origin trait is not evidence of a
 current legal perk pair, enhanced roll, acquisition, or playable build.
 """
 from datetime import date
@@ -46,6 +46,7 @@ def audit_loot_pool_freshness(*, item_hash, source_kind, pre_edge_of_fate,
     before_patch = observed_at < PATCH_DATE
     affected_raid = source_kind == "raid" and pre_edge_of_fate is True
     affected_dungeon = source_kind == "dungeon" and pre_edge_of_fate is True
+    affected_destination = source_kind == "destination" and pre_edge_of_fate is True
     # Bungie explicitly distinguishes updated CRAFTABLE RAID perk pools from
     # tiered DUNGEON weapons with new origin traits.
     raid_craftable_pool = affected_raid and craftable is True
@@ -58,6 +59,13 @@ def audit_loot_pool_freshness(*, item_hash, source_kind, pre_edge_of_fate,
     if affected_dungeon:
         flags.extend(("dungeon_tiered_weapon_rewards",
                       "dungeon_new_origin_traits"))
+    if affected_destination:
+        # Bungie reports updated destination rewards with new perks, but
+        # explicitly limits destination weapon gear tiers to non-craftables.
+        # No specific item hash, perk, or current drop is certified here.
+        flags.append("pre_edge_destination_rewards_new_perks")
+        if craftable is False:
+            flags.append("destination_noncraftable_tiered_weapon_rewards")
 
     if observed_manifest_version is None or reference_manifest_version is None:
         version_state = "version_comparison_unavailable"
@@ -75,10 +83,16 @@ def audit_loot_pool_freshness(*, item_hash, source_kind, pre_edge_of_fate,
         "activity": activity,
         "artifact_enabled": activity_constraints(activity)["artifact_enabled"],
         "official_source_level_changes": flags,
-        "perk_pool_revalidation_required": before_patch and raid_craftable_pool,
+        "perk_pool_revalidation_required": before_patch and
+            (raid_craftable_pool or affected_destination),
+        "destination_perk_source_revalidation_required": before_patch and
+            affected_destination,
+        "destination_noncraftable_tier_revalidation_required": before_patch and
+            affected_destination and craftable is False,
         "origin_trait_revalidation_required": before_patch and affected_dungeon,
         "tiered_reward_revalidation_required": before_patch and
-            (affected_raid or affected_dungeon),
+            (affected_raid or affected_dungeon or
+             (affected_destination and craftable is False)),
         "manifest_version_status": version_state,
         "current_exact_perk_pair_verified": False,
         "enhanced_perk_legality_verified": False,
