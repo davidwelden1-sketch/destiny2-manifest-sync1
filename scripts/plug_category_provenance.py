@@ -13,7 +13,7 @@ def audit_category_provenance(weapons):
     if not isinstance(weapons, list):
         raise TypeError("weapons must be a list")
     counts = Counter()
-    by_category = defaultdict(lambda: {"plugs": set(), "weapons": set(), "counts": Counter()})
+    by_category = defaultdict(lambda: {"plugs": set(), "weapons": set(), "counts": Counter(), "namedExplicitPlugs": {}, "sampleWeapons": {}})
     identities = defaultdict(set)
     seen_weapons = set()
     for weapon in weapons:
@@ -51,6 +51,9 @@ def audit_category_provenance(weapons):
                     raise ValueError("invalid category hash")
                 if ci is not None and not isinstance(ci, str):
                     raise ValueError("invalid category identifier")
+                name = plug.get("plugName")
+                if name is not None and not isinstance(name, str):
+                    raise ValueError("invalid plug name")
                 roll, redacted = plug.get("currentlyCanRoll"), plug.get("plugRedacted")
                 if any(x is not None and type(x) is not bool for x in (roll, redacted)):
                     raise ValueError("invalid plug provenance flag")
@@ -68,6 +71,15 @@ def audit_category_provenance(weapons):
                     record["counts"]["explicitlyExcludedOccurrences"] += 1
                 elif flags == (False, False) and redacted is False and roll is True:
                     record["counts"]["fullyExplicitDefinitionFlagOccurrences"] += 1
+                    if name is not None and name.strip():
+                        clean = name.strip()
+                        prior = record["namedExplicitPlugs"].get(h)
+                        if prior is not None and prior != clean:
+                            raise ValueError("conflicting same-manifest plug names")
+                        record["namedExplicitPlugs"][h] = clean
+                        weapon_name = weapon.get("name")
+                        if isinstance(weapon_name, str) and weapon_name.strip():
+                            record["sampleWeapons"][item_hash] = weapon_name.strip()
                 else:
                     record["counts"]["unknownProvenanceOccurrences"] += 1
     conflicts = {h: sorted(labels) for h, labels in identities.items() if len(labels) > 1}
@@ -77,12 +89,23 @@ def audit_category_provenance(weapons):
             "uniqueKnownCategoryPlugHashes": len(identities),
             "plugHashesWithConflictingCategoryIdentity": len(conflicts),
             "uniqueCategoryIdentities": len(by_category),
+            "categoriesWithNamedExplicitPlugExamples": sum(bool(v["namedExplicitPlugs"]) for v in by_category.values()),
         },
         "categories": [
             {"categoryHash": h, "identifier": identifier,
              "occurrences": record["counts"]["occurrences"],
              "uniquePlugHashes": len(record["plugs"]),
              "uniqueWeaponDefinitions": len(record["weapons"]),
+             "uniqueNamedExplicitPlugHashes": len(record["namedExplicitPlugs"]),
+             "sampleNamedDefinitionPlugs": [
+                 {"plugHash": ph, "name": name}
+                 for ph, name in sorted(record["namedExplicitPlugs"].items(),
+                                        key=lambda x: (x[1].casefold(), x[0]))[:8]
+             ],
+             "sampleWeaponDefinitions": [
+                 {"itemHash": wh, "name": name}
+                 for wh, name in sorted(record["sampleWeapons"].items())[:8]
+             ],
              "explicitlyExcludedOccurrences": record["counts"]["explicitlyExcludedOccurrences"],
              "fullyExplicitDefinitionFlagOccurrences": record["counts"]["fullyExplicitDefinitionFlagOccurrences"],
              "unknownProvenanceOccurrences": record["counts"]["unknownProvenanceOccurrences"]}
@@ -99,6 +122,7 @@ def audit_category_provenance(weapons):
         "certifiedPvEOrPvPPerformance": False,
         "limitations": (
             "Category identities and explicit provenance flags are structural only. "
+            "Sampled named plugs are only same-manifest definition examples, not a trait-role classification. "
             "No trait role, current acquisition, enhanced eligibility, cross-socket "
             "co-occurrence, Artifact allocation, PvE damage/DR or PvP TTK is certified."
         ),
