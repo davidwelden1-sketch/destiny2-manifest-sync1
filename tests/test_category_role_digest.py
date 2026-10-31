@@ -53,6 +53,17 @@ class CategoryRoleDigestTests(unittest.TestCase):
             {"itemHash": 7, "weaponName": "", "plugHash": 8, "plugName": "Plug"}]
         self.assertIsNone(build_category_role_digest(self.data)["categories"][1]["exampleSameManifestMembership"])
 
+    def test_frames_with_trait_like_name_stays_uncertified(self):
+        # Live October 2026 manifest sample includes 'Adagio' under 'frames'.
+        # A category label must never be used to discard or certify a perk.
+        self.data["categories"][0]["sampleNamedDefinitionMemberships"][0]["plugName"] = "Adagio"
+        rows = build_category_role_digest(self.data)["categories"]
+        frames = next(r for r in rows if r["identifier"] == "frames")
+        self.assertEqual(frames["exampleSameManifestMembership"]["plugName"], "Adagio")
+        self.assertFalse(frames["certifiedPlayableTrait"])
+        self.assertFalse(frames["certifiedObtainableRoll"])
+        self.assertFalse(frames["certifiedEnhancedPerk"])
+
     def test_bad_structure_rejected(self):
         for bad in (None, {}, {"categories": "wrong"}):
             with self.subTest(bad=bad), self.assertRaises(TypeError):
