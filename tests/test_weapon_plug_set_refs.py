@@ -79,6 +79,32 @@ class WeaponPlugSetReferenceTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 self.run_join(sets={"11": bad})
 
+    def test_names_resolve_only_from_exact_hash_same_manifest(self):
+        definitions = {"31": {"displayProperties": {"name": "Example Trait"}},
+                       "32": {"displayProperties": {"name": ""}},
+                       "33": {"displayProperties": {"name": 123}}}
+        rows = build_weapon_plug_set_reference_index(self.weapons, self.plug_sets, definitions)
+        plugs = rows[0]["resolvedPlugSets"][0]["plugs"]
+        self.assertEqual([p["plugName"] for p in plugs], ["Example Trait", None, None])
+        self.assertEqual([p["plugDefinitionFound"] for p in plugs], [True, True, True])
+        self.assertFalse(rows[0]["certifiedEnhancedPerks"])
+        self.assertFalse(rows[0]["certifiedObtainableRoll"])
+
+    def test_missing_name_and_missing_definition_are_not_conflated(self):
+        rows = build_weapon_plug_set_reference_index(self.weapons, self.plug_sets, {})
+        plug = rows[0]["resolvedPlugSets"][0]["plugs"][0]
+        self.assertIsNone(plug["plugName"])
+        self.assertFalse(plug["plugDefinitionFound"])
+
+    def test_malformed_optional_item_definitions_fail_closed(self):
+        with self.assertRaises(TypeError):
+            build_weapon_plug_set_reference_index(self.weapons, self.plug_sets, [])
+        with self.assertRaises(ValueError):
+            build_weapon_plug_set_reference_index(self.weapons, self.plug_sets, {"31": "bad"})
+        with self.assertRaises(ValueError):
+            build_weapon_plug_set_reference_index(self.weapons, self.plug_sets,
+                                                   {"31": {"displayProperties": "bad"}})
+
     def test_invalid_top_level_types(self):
         with self.assertRaises(TypeError):
             build_weapon_plug_set_reference_index({}, {})
