@@ -148,5 +148,54 @@ class CategoryProvenanceTests(unittest.TestCase):
 
 
 
+    def test_exact_named_plug_weapon_memberships(self):
+        self.rows[0]["name"] = "Weapon Alpha"
+        self.rows[1]["name"] = "Weapon Beta"
+        self.rows[1]["resolvedPlugSets"][0]["isFakePlugSet"] = False
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Shared Trait"
+        self.rows[1]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Shared Trait"
+        result = audit_category_provenance(self.rows)
+        category = result["categories"][0]
+        self.assertEqual(category["uniqueNamedExplicitPlugHashes"], 1)
+        self.assertEqual(category["uniqueNamedDefinitionMemberships"], 2)
+        self.assertEqual(result["counts"]["categoriesWithNamedDefinitionMembershipExamples"], 1)
+        self.assertEqual(category["sampleNamedDefinitionMemberships"], [
+            {"plugHash": 8, "plugName": "Shared Trait", "itemHash": 101, "weaponName": "Weapon Alpha"},
+            {"plugHash": 8, "plugName": "Shared Trait", "itemHash": 102, "weaponName": "Weapon Beta"},
+        ])
+        self.assertIsNone(result["certifiedObtainableRollCount"])
+
+    def test_unnamed_weapon_cannot_create_named_membership(self):
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Named Trait"
+        result = audit_category_provenance(self.rows)
+        category = result["categories"][0]
+        self.assertEqual(category["uniqueNamedExplicitPlugHashes"], 1)
+        self.assertEqual(category["uniqueNamedDefinitionMemberships"], 0)
+        self.assertEqual(category["sampleNamedDefinitionMemberships"], [])
+
+    def test_excluded_set_cannot_create_named_membership(self):
+        self.rows[1]["name"] = "Excluded Weapon"
+        self.rows[1]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Excluded Trait"
+        category = audit_category_provenance(self.rows)["categories"][0]
+        self.assertEqual(category["uniqueNamedDefinitionMemberships"], 0)
+        self.assertEqual(category["sampleNamedDefinitionMemberships"], [])
+
+    def test_named_membership_examples_are_bounded_and_deterministic(self):
+        self.rows[0]["name"] = "Sample"
+        self.rows[0]["resolvedPlugSets"][0]["plugs"] = [
+            {"plugItemHash": h, "plugCategoryHash": 55,
+             "plugCategoryIdentifier": "weapon.perks",
+             "plugName": "Trait %02d" % (20 - h),
+             "currentlyCanRoll": True, "plugRedacted": False}
+            for h in range(1, 13)
+        ]
+        category = audit_category_provenance(self.rows)["categories"][0]
+        self.assertEqual(category["uniqueNamedDefinitionMemberships"], 12)
+        self.assertEqual(len(category["sampleNamedDefinitionMemberships"]), 8)
+        self.assertEqual(category["sampleNamedDefinitionMemberships"][0],
+                         {"plugHash": 12, "plugName": "Trait 08", "itemHash": 101, "weaponName": "Sample"})
+
+
+
 if __name__ == "__main__":
     unittest.main()
