@@ -20,7 +20,8 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
         self.items = {"101": {"itemType": 3, "displayProperties": {"name": "Test"},
                               "sockets": {"socketEntries": [
                                   {"randomizedPlugSetHash": 900}]}},
-                      "102": {"itemType": 2}}
+                      "102": {"itemType": 2},
+                      "777": {"itemType": 19, "displayProperties": {"name": "Synthetic Trait"}}}
         self.plugsets = {"900": {"reusablePlugItems": [
             {"plugItemHash": 777, "currentlyCanRoll": True},
             {"plugItemHash": 778, "currentlyCanRoll": False}]}}
@@ -44,6 +45,10 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
                              [(777, True), (778, False)])
             self.assertFalse(rows[0]["certifiedObtainableRoll"])
             self.assertFalse(rows[0]["certifiedEnhancedPerks"])
+            self.assertEqual(plugs[0]["plugName"], "Synthetic Trait")
+            self.assertTrue(plugs[0]["plugDefinitionFound"])
+            self.assertIsNone(plugs[1]["plugName"])
+            self.assertFalse(plugs[1]["plugDefinitionFound"])
             meta = json.loads((path / "manifest_metadata.json").read_text())
             self.assertEqual(meta["manifest_version"], "synthetic-v1")
             self.assertEqual(meta["plug_set_definition_count"], 1)
