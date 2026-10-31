@@ -13,7 +13,7 @@ def audit_category_provenance(weapons):
     if not isinstance(weapons, list):
         raise TypeError("weapons must be a list")
     counts = Counter()
-    by_category = defaultdict(lambda: {"plugs": set(), "weapons": set(), "counts": Counter(), "namedExplicitPlugs": {}, "sampleWeapons": {}})
+    by_category = defaultdict(lambda: {"plugs": set(), "weapons": set(), "counts": Counter(), "namedExplicitPlugs": {}, "sampleWeapons": {}, "namedMemberships": {}})
     identities = defaultdict(set)
     seen_weapons = set()
     for weapon in weapons:
@@ -80,6 +80,7 @@ def audit_category_provenance(weapons):
                         weapon_name = weapon.get("name")
                         if isinstance(weapon_name, str) and weapon_name.strip():
                             record["sampleWeapons"][item_hash] = weapon_name.strip()
+                            record["namedMemberships"][(h, item_hash)] = (clean, weapon_name.strip())
                 else:
                     record["counts"]["unknownProvenanceOccurrences"] += 1
     conflicts = {h: sorted(labels) for h, labels in identities.items() if len(labels) > 1}
@@ -90,6 +91,7 @@ def audit_category_provenance(weapons):
             "plugHashesWithConflictingCategoryIdentity": len(conflicts),
             "uniqueCategoryIdentities": len(by_category),
             "categoriesWithNamedExplicitPlugExamples": sum(bool(v["namedExplicitPlugs"]) for v in by_category.values()),
+            "categoriesWithNamedDefinitionMembershipExamples": sum(bool(v["namedMemberships"]) for v in by_category.values()),
         },
         "categories": [
             {"categoryHash": h, "identifier": identifier,
@@ -97,6 +99,13 @@ def audit_category_provenance(weapons):
              "uniquePlugHashes": len(record["plugs"]),
              "uniqueWeaponDefinitions": len(record["weapons"]),
              "uniqueNamedExplicitPlugHashes": len(record["namedExplicitPlugs"]),
+             "uniqueNamedDefinitionMemberships": len(record["namedMemberships"]),
+             "sampleNamedDefinitionMemberships": [
+                 {"plugHash": ph, "plugName": pn, "itemHash": wh, "weaponName": wn}
+                 for (ph, wh), (pn, wn) in sorted(
+                     record["namedMemberships"].items(),
+                     key=lambda item: (item[1][0].casefold(), item[0][0], item[0][1]))[:8]
+             ],
              "sampleNamedDefinitionPlugs": [
                  {"plugHash": ph, "name": name}
                  for ph, name in sorted(record["namedExplicitPlugs"].items(),
@@ -122,7 +131,7 @@ def audit_category_provenance(weapons):
         "certifiedPvEOrPvPPerformance": False,
         "limitations": (
             "Category identities and explicit provenance flags are structural only. "
-            "Sampled named plugs are only same-manifest definition examples, not a trait-role classification. "
+            "Sampled named plugs and weapon memberships are only same-manifest definition examples, not a trait-role classification. "
             "No trait role, current acquisition, enhanced eligibility, cross-socket "
             "co-occurrence, Artifact allocation, PvE damage/DR or PvP TTK is certified."
         ),
