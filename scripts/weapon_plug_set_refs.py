@@ -74,10 +74,26 @@ def build_weapon_plug_set_reference_index(weapon_socket_refs, plug_sets, item_de
                     name = display.get("name")
                     if not isinstance(name, str) or not name.strip():
                         name = None
+                    plug_meta = plug_definition.get("plug") if plug_definition else None
+                    if plug_meta is not None and not isinstance(plug_meta, dict):
+                        raise ValueError("malformed plug category metadata")
+                    category_hash = plug_meta.get("plugCategoryHash") if plug_meta else None
+                    if category_hash is not None:
+                        _hash(category_hash, "plugCategoryHash")
+                    category_identifier = (plug_meta.get("plugCategoryIdentifier")
+                                           if plug_meta else None)
+                    if category_identifier is not None and not isinstance(category_identifier, str):
+                        raise ValueError("plugCategoryIdentifier must be string or null")
+                    plug_redacted = plug_definition.get("redacted") if plug_definition else None
+                    if plug_redacted is not None and type(plug_redacted) is not bool:
+                        raise ValueError("plug redacted must be bool or null")
                     plugs.append({"plugItemHash": plug_hash,
                                   "currentlyCanRoll": can_roll,
                                   "plugName": name,
-                                  "plugDefinitionFound": plug_definition is not None})
+                                  "plugDefinitionFound": plug_definition is not None,
+                                  "plugCategoryHash": category_hash,
+                                  "plugCategoryIdentifier": category_identifier,
+                                  "plugRedacted": plug_redacted})
                 fake, redacted = definition.get("isFakePlugSet"), definition.get("redacted")
                 if any(x is not None and type(x) is not bool for x in (fake, redacted)):
                     raise ValueError("plug-set flags must be bool or null")
