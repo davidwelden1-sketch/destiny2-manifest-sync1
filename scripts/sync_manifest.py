@@ -9,6 +9,7 @@ from http_retry import fetch_with_retry
 from weapon_socket_refs import build_weapon_socket_reference_index
 from weapon_plug_set_refs import build_weapon_plug_set_reference_index
 from plug_coverage_audit import summarize_resolved_plug_coverage
+from plug_uniqueness_audit import audit_unique_weapon_plugs
 
 BASE = "https://www.bungie.net"
 OUT = pathlib.Path(os.environ.get("OUTPUT_DIR", "output"))
@@ -54,6 +55,7 @@ def main():
         raise ValueError("Unexpected plug-set definition structure")
     resolved_plug_refs = build_weapon_plug_set_reference_index(weapon_refs, plug_definitions, records)
     plug_coverage = summarize_resolved_plug_coverage(resolved_plug_refs)
+    unique_plug_coverage = audit_unique_weapon_plugs(resolved_plug_refs)
     metadata = {
         "retrieved_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "manifest_version": payload.get("version"),
@@ -67,6 +69,7 @@ def main():
         "plug_set_definition_count": len(plug_definitions),
         "resolved_weapon_definition_count": len(resolved_plug_refs),
         "plug_coverage_counts": plug_coverage["counts"],
+        "unique_plug_coverage_counts": unique_plug_coverage["counts"],
         "named_plug_resolution_scope": "Same-version DestinyInventoryItemDefinition display labels; names do not certify perk socket roles, roll acquisition or enhancement",
         "plug_set_join_scope": "Same-version definition joins; currentlyCanRoll is tri-state and not current acquisition, cross-socket roll or enhancement certification",
         "weapon_socket_reference_scope": "Definition socket references; separate resolved plug-set index supplies hashes and display names, but not obtainable rolls, enhanced eligibility or damage certification",
@@ -77,6 +80,7 @@ def main():
     (OUT / "weapon_socket_refs_index.json").write_text(json.dumps(weapon_refs, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     (OUT / "weapon_plug_set_refs_index.json").write_text(json.dumps(resolved_plug_refs, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     (OUT / "weapon_plug_coverage.json").write_text(json.dumps(plug_coverage, indent=2) + "\n", encoding="utf-8")
+    (OUT / "weapon_unique_plug_coverage.json").write_text(json.dumps(unique_plug_coverage, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(metadata, indent=2))
 
 if __name__ == "__main__":
