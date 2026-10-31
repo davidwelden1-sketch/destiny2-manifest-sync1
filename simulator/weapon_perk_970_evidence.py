@@ -122,3 +122,43 @@ def attrition_orbs_patch_hit_count(weapon_family, *, activity,
     return {**base, "status": "historical_pve_patch_hit_threshold_only",
             "hits_to_activate": now, "prior_hits_to_activate": prior,
             "limitations": "Hit counts do not certify actual hits, orbs, ownership, cooldown, weapon rolls or Artifact effects."}
+
+
+def advance_all_star_timer(remaining_seconds, elapsed_seconds, *,
+                           weapon_equipped, activity,
+                           source_patch_version=PATCH_VERSION):
+    """9.7.0 All-Star rule: stowing PAUSES the damage timer, not the buff proof.
+
+    Caller-supplied timer is hypothetical; initial duration, trigger, buff
+    ownership, activity-specific damage and live uptime remain unverified.
+    """
+    from math import isfinite
+
+    for value in (remaining_seconds, elapsed_seconds):
+        if (isinstance(value, bool) or not isinstance(value, (int, float))
+                or not isfinite(value) or value < 0):
+            raise ValueError("timer values must be finite nonnegative numbers")
+    if type(weapon_equipped) is not bool:
+        raise ValueError("weapon_equipped must be boolean")
+    if activity not in ("pve", "pvp", "competitive", "trials"):
+        raise ValueError("activity must be explicit")
+    if not isinstance(source_patch_version, str) or not source_patch_version.strip():
+        raise ValueError("source_patch_version must be nonempty")
+    base = {
+        "perk": "all_star", "activity": activity,
+        "source_url": SOURCE_URL, "source_date": SOURCE_DATE,
+        "source_patch_version": PATCH_VERSION,
+        "remaining_seconds": None, "damage_multiplier": None,
+        "initial_duration_verified": False,
+        "activation_verified": False, "gameplay_measured": False,
+        "current_game_verified": False, "roll_legality_verified": False,
+        "artifact_legality_verified": False,
+    }
+    if source_patch_version.strip() != PATCH_VERSION:
+        return {**base, "status": "source_patch_version_mismatch"}
+    return {**base, "status": "official_timer_pause_rule_hypothetical_input",
+            "remaining_seconds": (max(0.0, remaining_seconds - elapsed_seconds)
+                                  if weapon_equipped else float(remaining_seconds)),
+            "timer_paused": not weapon_equipped,
+            "interpretation": ("Only timer progression while equipped is modeled; "
+                               "stowing does not establish damage while stowed.")}
