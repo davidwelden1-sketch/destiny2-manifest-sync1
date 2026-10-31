@@ -21,7 +21,10 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
                               "sockets": {"socketEntries": [
                                   {"randomizedPlugSetHash": 900}]}},
                       "102": {"itemType": 2},
-                      "777": {"itemType": 19, "displayProperties": {"name": "Synthetic Trait"}}}
+                      "777": {"itemType": 19, "displayProperties": {"name": "Synthetic Trait"},
+                              "plug": {"plugCategoryHash": 321,
+                                       "plugCategoryIdentifier": "weapon.perks"},
+                              "redacted": False}}
         self.plugsets = {"900": {"reusablePlugItems": [
             {"plugItemHash": 777, "currentlyCanRoll": True},
             {"plugItemHash": 778, "currentlyCanRoll": False}]}}
@@ -47,8 +50,17 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
             self.assertFalse(rows[0]["certifiedEnhancedPerks"])
             self.assertEqual(plugs[0]["plugName"], "Synthetic Trait")
             self.assertTrue(plugs[0]["plugDefinitionFound"])
+            self.assertEqual(plugs[0]["plugCategoryHash"], 321)
+            self.assertEqual(plugs[0]["plugCategoryIdentifier"], "weapon.perks")
+            self.assertIs(plugs[0]["plugRedacted"], False)
             self.assertIsNone(plugs[1]["plugName"])
             self.assertFalse(plugs[1]["plugDefinitionFound"])
+            self.assertIsNone(plugs[1]["plugCategoryHash"])
+            category = json.loads((path / "weapon_plug_category_coverage.json").read_text())
+            self.assertEqual(category["counts"]["randomizedKnownCategoryOccurrences"], 1)
+            self.assertEqual(category["counts"]["randomizedUnknownCategoryOccurrences"], 1)
+            self.assertEqual(category["counts"]["uniqueRandomizedPlugHashes"], 2)
+            self.assertIsNone(category["certifiedTraitCount"])
             unique = json.loads((path / "weapon_unique_plug_coverage.json").read_text())
             self.assertEqual(unique["counts"]["plugOccurrences"], 2)
             self.assertEqual(unique["counts"]["uniquePlugHashesAllSources"], 2)
@@ -59,6 +71,7 @@ class ManifestPlugSetIntegrationTests(unittest.TestCase):
             self.assertEqual(meta["manifest_version"], "synthetic-v1")
             self.assertEqual(meta["plug_set_definition_count"], 1)
             self.assertEqual(meta["resolved_weapon_definition_count"], 1)
+            self.assertEqual(meta["plug_category_coverage_counts"]["uniqueRandomizedCategoryIdentifiers"], 1)
             self.assertEqual(meta["plug_set_definition_sha256"],
                              hashlib.sha256(self.urls["https://www.bungie.net/fixture/plugsets.json"]).hexdigest())
 
