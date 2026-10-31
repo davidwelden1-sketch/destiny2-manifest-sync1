@@ -73,10 +73,65 @@ class LootPool970FreshnessTests(unittest.TestCase):
         self.assertEqual(r["official_source_level_changes"], [])
         self.assertFalse(r["perk_pool_revalidation_required"])
 
-    def test_destination_does_not_inherit_raid_rules(self):
+    def test_destination_has_own_new_perk_source_gate_not_raid_gate(self):
         r = self.classify(source_kind="destination")
-        self.assertEqual(r["official_source_level_changes"], [])
+        self.assertIn("pre_edge_destination_rewards_new_perks",
+                      r["official_source_level_changes"])
+        self.assertNotIn("craftable_raid_perk_pool_updated",
+                         r["official_source_level_changes"])
+        self.assertTrue(r["destination_perk_source_revalidation_required"])
+        self.assertTrue(r["perk_pool_revalidation_required"])
         self.assertFalse(r["tiered_reward_revalidation_required"])
+
+    def test_noncraftable_destination_tier_source_change(self):
+        r = self.classify(source_kind="destination", craftable=False)
+        self.assertIn("destination_noncraftable_tiered_weapon_rewards",
+                      r["official_source_level_changes"])
+        self.assertTrue(r["destination_noncraftable_tier_revalidation_required"])
+        self.assertTrue(r["tiered_reward_revalidation_required"])
+        self.assertFalse(r["current_acquisition_verified"])
+
+    def test_craftable_destination_does_not_inherit_tier_claim(self):
+        r = self.classify(source_kind="destination", craftable=True)
+        self.assertFalse(r["destination_noncraftable_tier_revalidation_required"])
+        self.assertFalse(r["tiered_reward_revalidation_required"])
+        self.assertTrue(r["destination_perk_source_revalidation_required"])
+
+    def test_unknown_destination_craftability_does_not_infer_tier(self):
+        r = self.classify(source_kind="destination", craftable=None)
+        self.assertTrue(r["destination_perk_source_revalidation_required"])
+        self.assertFalse(r["destination_noncraftable_tier_revalidation_required"])
+        self.assertFalse(r["tiered_reward_revalidation_required"])
+
+    def test_post_patch_destination_does_not_inherit_stale_date(self):
+        r = self.classify(source_kind="destination", craftable=False,
+                          observation_date="2026-06-09")
+        self.assertFalse(r["destination_perk_source_revalidation_required"])
+        self.assertFalse(r["destination_noncraftable_tier_revalidation_required"])
+        self.assertFalse(r["current_exact_perk_pair_verified"])
+
+    def test_newer_destination_not_classified_as_refreshed(self):
+        r = self.classify(source_kind="destination", pre_edge_of_fate=False,
+                          craftable=False)
+        self.assertEqual(r["official_source_level_changes"], [])
+        self.assertFalse(r["destination_perk_source_revalidation_required"])
+
+    def test_unknown_destination_age_not_certified(self):
+        r = self.classify(source_kind="destination", pre_edge_of_fate=None)
+        self.assertEqual(r["official_source_level_changes"], [])
+        self.assertFalse(r["perk_pool_revalidation_required"])
+
+    def test_destination_mode_independence(self):
+        for mode in ("pve", "pvp", "competitive", "trials"):
+            with self.subTest(mode=mode):
+                r = self.classify(source_kind="destination", craftable=False,
+                                  activity=mode)
+                self.assertTrue(r["destination_perk_source_revalidation_required"])
+                self.assertIsNone(r["pve_boss_dps"])
+                self.assertIsNone(r["pvp_ttk"])
+                self.assertFalse(r["gameplay_measured"])
+                self.assertIs(r["artifact_enabled"],
+                              False if mode in ("competitive", "trials") else None)
 
     def test_missing_item_hash_does_not_certify_any_roll(self):
         r = self.classify(item_hash=None)
