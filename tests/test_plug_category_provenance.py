@@ -89,5 +89,64 @@ class CategoryProvenanceTests(unittest.TestCase):
         self.assertFalse(result["certifiedPvEOrPvPPerformance"])
 
 
+    def test_missing_names_do_not_invent_examples(self):
+        result = audit_category_provenance(self.rows)
+        self.assertEqual(result["counts"]["categoriesWithNamedExplicitPlugExamples"], 0)
+        self.assertEqual(result["categories"][0]["sampleNamedDefinitionPlugs"], [])
+
+    def test_named_explicit_definition_example(self):
+        self.rows[0]["name"] = "Sample Weapon"
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Test Trait"
+        result = audit_category_provenance(self.rows)
+        category = result["categories"][0]
+        self.assertEqual(category["uniqueNamedExplicitPlugHashes"], 1)
+        self.assertEqual(category["sampleNamedDefinitionPlugs"], [{"plugHash": 8, "name": "Test Trait"}])
+        self.assertEqual(category["sampleWeaponDefinitions"], [{"itemHash": 101, "name": "Sample Weapon"}])
+        self.assertEqual(result["counts"]["categoriesWithNamedExplicitPlugExamples"], 1)
+
+    def test_excluded_definition_cannot_supply_example(self):
+        self.rows[1]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Excluded"
+        result = audit_category_provenance(self.rows)
+        self.assertEqual(result["categories"][0]["sampleNamedDefinitionPlugs"], [])
+
+    def test_unknown_roll_flag_cannot_supply_example(self):
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][1]["plugName"] = "Unknown"
+        self.assertEqual(audit_category_provenance(self.rows)["categories"][0]["sampleNamedDefinitionPlugs"], [])
+
+    def test_conflicting_names_for_same_explicit_hash_rejected(self):
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "First"
+        self.rows[1]["resolvedPlugSets"][0]["isFakePlugSet"] = False
+        self.rows[1]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Different"
+        with self.assertRaises(ValueError):
+            audit_category_provenance(self.rows)
+
+    def test_invalid_plug_name_rejected(self):
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = 123
+        with self.assertRaises(ValueError):
+            audit_category_provenance(self.rows)
+
+    def test_example_cap_and_stable_sort(self):
+        plugs = self.rows[0]["resolvedPlugSets"][0]["plugs"]
+        plugs[:] = [
+            {"plugItemHash": h, "plugCategoryHash": 55,
+             "plugCategoryIdentifier": "weapon.perks", "plugName": "Name %02d" % (20-h),
+             "currentlyCanRoll": True, "plugRedacted": False}
+            for h in range(1, 13)
+        ]
+        result = audit_category_provenance(self.rows)
+        category = result["categories"][0]
+        self.assertEqual(category["uniqueNamedExplicitPlugHashes"], 12)
+        self.assertEqual(len(category["sampleNamedDefinitionPlugs"]), 8)
+        self.assertEqual(category["sampleNamedDefinitionPlugs"][0]["name"], "Name 08")
+
+    def test_named_examples_do_not_certify_gameplay(self):
+        self.rows[0]["resolvedPlugSets"][0]["plugs"][0]["plugName"] = "Test Trait"
+        result = audit_category_provenance(self.rows)
+        self.assertIsNone(result["certifiedObtainableRollCount"])
+        self.assertIsNone(result["certifiedEnhancedPerkCount"])
+        self.assertFalse(result["certifiedPvEOrPvPPerformance"])
+
+
+
 if __name__ == "__main__":
     unittest.main()
