@@ -45,12 +45,14 @@ class ArtifactAllocationGuardTests(unittest.TestCase):
         for mode in ("competitive", "trials"):
             with self.subTest(mode=mode):
                 r = audit(activity=mode)
-                self.assertFalse(r["artifact_effects_enabled"])
+                self.assertFalse(r["artifact_mode_eligible"])
+                self.assertIs(r["artifact_effects_active"], False)
                 self.assertEqual(r["status"], "artifact_effects_disabled_in_activity")
 
     def test_ordinary_pvp_not_assumed_disabled(self):
         r = audit(activity="pvp")
-        self.assertTrue(r["artifact_effects_enabled"])
+        self.assertTrue(r["artifact_mode_eligible"])
+        self.assertIsNone(r["artifact_effects_active"])
         self.assertFalse(r["current_artifact_rotation_verified"])
 
     def test_supplied_pool_is_not_official_certification(self):
