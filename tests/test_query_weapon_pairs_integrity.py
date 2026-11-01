@@ -65,6 +65,29 @@ class GameWidePairIntegrityTests(unittest.TestCase):
                     self.item(plugs, [22]), 11, 22), [])
 
 
+    def test_duplicate_socket_index_fails_closed_for_entire_weapon(self):
+        rows = self.item([11], [22])
+        rows[0]["sockets"].append({
+            "socket_index": 2,
+            "randomized_candidate_plug_hashes": [99],
+            "currently_rollable_randomized_candidate_plug_hashes": [99],
+            "default_visible": True,
+            "plugset_references": [],
+        })
+        # A second definition for socket 2 cannot be merged into a legal roll.
+        for current, visible in ((False, False), (True, True)):
+            with self.subTest(current=current, visible=visible):
+                self.assertEqual(find_pair_candidates(
+                    rows, 11, 22, current_roll_only=current,
+                    default_visible_only=visible), [])
+
+    def test_distinct_socket_indices_still_produce_one_pair(self):
+        rows = self.item([11], [22], left_index=1, right_index=5)
+        result = find_pair_candidates(rows, 11, 22)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["socket_pairs"][0]["a_socket_index"], 1)
+        self.assertEqual(result[0]["socket_pairs"][0]["b_socket_index"], 5)
+
     def test_duplicate_item_hash_rejected_even_if_socket_data_disagree(self):
         rows = self.item([11], [22])
         duplicate = self.item([11], [99])[0]
