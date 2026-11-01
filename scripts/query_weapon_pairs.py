@@ -52,28 +52,30 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
         # masquerade as a valid exact plug hash in a game-wide pair query.
         # Reject the *whole* malformed socket, not just its bad element.
         sockets = []
-        for s in item.get("sockets", []):
-            if not isinstance(s, dict):
-                continue
+        malformed_socket = False
+        for s in item["sockets"]:
+            # Never silently discard a corrupt *dictionary* socket while
+            # accepting a pair from its siblings. That would misrepresent
+            # the integrity of the exact item definition.
             plugs = s.get(field, [])
-            if not isinstance(plugs, (list, tuple, set, frozenset)):
-                continue
-            if any(type(h) is not int or h <= 0 for h in plugs):
-                continue
-            if type(s.get("socket_index")) is not int or s["socket_index"] < 0:
-                continue
-            # Malformed source references cannot silently become roll evidence.
+            if (not isinstance(plugs, (list, tuple, set, frozenset))
+                    or any(type(h) is not int or h <= 0 for h in plugs)):
+                malformed_socket = True
+                break
             refs = s.get("plugset_references", [])
             if not isinstance(refs, (list, tuple)) or any(
-                not isinstance(r, dict)
-                or r.get("field") not in ("randomizedPlugSetHash", "reusablePlugSetHash", "singleInitialItemHash")
-                or type(r.get("hash")) is not int or r["hash"] <= 0
-                for r in refs
+                not isinstance(ref, dict)
+                or ref.get("field") not in ("randomizedPlugSetHash", "reusablePlugSetHash", "singleInitialItemHash")
+                or type(ref.get("hash")) is not int or ref["hash"] <= 0
+                for ref in refs
             ):
-                continue
+                malformed_socket = True
+                break
             if default_visible_only and s.get("default_visible") is not True:
                 continue
             sockets.append(s)
+        if malformed_socket:
+            continue
         a_sockets = [s for s in sockets if plug_a in s.get(field, [])]
         b_sockets = [s for s in sockets if plug_b in s.get(field, [])]
         pairs = []
