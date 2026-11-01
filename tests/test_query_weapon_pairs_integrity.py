@@ -65,5 +65,50 @@ class GameWidePairIntegrityTests(unittest.TestCase):
                     self.item(plugs, [22]), 11, 22), [])
 
 
+    def test_duplicate_item_hash_rejected_even_if_socket_data_disagree(self):
+        rows = self.item([11], [22])
+        duplicate = self.item([11], [99])[0]
+        self.assertEqual(find_pair_candidates(rows + [duplicate], 11, 22), [])
+
+    def test_invalid_item_identity_and_shape_cannot_create_matches(self):
+        for invalid in (True, 0, -1, "100", 100.0, None):
+            with self.subTest(identity=repr(invalid)):
+                rows = self.item([11], [22])
+                rows[0]["item_hash"] = invalid
+                self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+        self.assertEqual(find_pair_candidates([None, "invalid"], 11, 22), [])
+        with self.assertRaises(ValueError):
+            find_pair_candidates({"item_hash": 100}, 11, 22)
+
+    def test_bad_socket_container_is_not_a_roll(self):
+        for invalid in (None, {}, "socket", 12):
+            with self.subTest(container=repr(invalid)):
+                rows = self.item([11], [22])
+                rows[0]["sockets"] = invalid
+                self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+
+    def test_malformed_provenance_rejected_not_silently_ignored(self):
+        for invalid in (None, "randomized", {"field": "randomizedPlugSetHash"},
+                        [None], [{"field": "randomizedPlugSetHash", "hash": True}],
+                        [{"field": "randomizedPlugSetHash", "hash": -1}],
+                        [{"field": "fake", "hash": 123}]):
+            with self.subTest(provenance=repr(invalid)):
+                rows = self.item([11], [22])
+                rows[0]["sockets"][0]["plugset_references"] = invalid
+                self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+
+    def test_valid_randomized_source_hash_survives(self):
+        rows = self.item([11], [22])
+        rows[0]["sockets"][0]["plugset_references"] = [
+            {"field": "randomizedPlugSetHash", "hash": 10001}]
+        rows[0]["sockets"][1]["plugset_references"] = [
+            {"field": "randomizedPlugSetHash", "hash": 10002}]
+        matches = find_pair_candidates(rows, 11, 22)
+        self.assertEqual(len(matches), 1)
+        pair = matches[0]["socket_pairs"][0]
+        self.assertEqual(pair["a_randomized_set_hashes"], [10001])
+        self.assertEqual(pair["b_randomized_set_hashes"], [10002])
+
+
 if __name__ == "__main__":
     unittest.main()
