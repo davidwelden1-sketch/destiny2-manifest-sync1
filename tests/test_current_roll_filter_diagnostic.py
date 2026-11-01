@@ -70,5 +70,23 @@ class CurrentRollDiscriminationTests(unittest.TestCase):
                 current_roll_filter_diagnostic(value)
 
 
+    def test_duplicate_item_hash_invalidates_membership_evidence(self):
+        rows = index(current=(11,), retired=(22,))
+        rows.append(index(current=(22,), retired=(11,))[0])
+        result = current_roll_filter_diagnostic(rows)
+        self.assertEqual(result["status"], "invalid_membership_rows_require_review")
+        self.assertEqual(result["invalid_membership_rows"], 2)
+        self.assertFalse(result["current_roll_filter_discriminates_retired_memberships"])
+
+    def test_invalid_weapon_identity_cannot_be_counted(self):
+        for bad in (None, True, -1, 0, "100", 100.0):
+            with self.subTest(identity=repr(bad)):
+                rows = index(current=(11,), retired=(22,))
+                rows[0]["item_hash"] = bad
+                result = current_roll_filter_diagnostic(rows)
+                self.assertEqual(result["invalid_membership_rows"], 1)
+                self.assertFalse(result["current_roll_filter_discriminates_retired_memberships"])
+
+
 if __name__ == "__main__":
     unittest.main()
