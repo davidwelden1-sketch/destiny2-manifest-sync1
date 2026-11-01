@@ -9,8 +9,6 @@ https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2
 This is NOT a current Artifact manifest, an unlock check, or a legal build
 certificate. A caller-provided perk pool is not independent official evidence.
 """
-from collections.abc import Sequence
-
 MODES = frozenset(("pve", "pvp", "competitive", "trials"))
 MAX_SELECTED_PERKS = 7
 
@@ -20,7 +18,7 @@ def audit_artifact_allocation(*, artifact_id, perk_ids, activity,
     """Validate selection shape without inventing current perk availability."""
     if not isinstance(artifact_id, str) or not artifact_id.strip() or artifact_id != artifact_id.strip():
         raise ValueError("one nonempty, trimmed artifact ID is required")
-    if activity not in MODES or not isinstance(activity, str):
+    if not isinstance(activity, str) or activity not in MODES:
         raise ValueError("unsupported activity")
     if not isinstance(perk_ids, (list, tuple)):
         raise ValueError("perk_ids must be an ordered list or tuple")
