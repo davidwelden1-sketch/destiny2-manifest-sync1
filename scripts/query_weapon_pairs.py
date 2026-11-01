@@ -158,8 +158,20 @@ def current_roll_filter_diagnostic(index):
     if not isinstance(index, (list, tuple)):
         raise ValueError("weapon index must be a list")
     total = current = noncurrent = unknown = invalid = 0
+    # Duplicate item identities can inflate membership totals or combine
+    # conflicting historical/current definitions. Reject both copies.
+    item_hash_counts = {}
+    for item in index:
+        if isinstance(item, dict) and item.get("item_type") == 3:
+            h = item.get("item_hash")
+            if type(h) is int and h > 0:
+                item_hash_counts[h] = item_hash_counts.get(h, 0) + 1
     for item in index:
         if not isinstance(item, dict) or item.get("item_type") != 3:
+            continue
+        h = item.get("item_hash")
+        if type(h) is not int or h <= 0 or item_hash_counts[h] != 1:
+            invalid += 1
             continue
         sockets = item.get("sockets")
         if not isinstance(sockets, (list, tuple)):
