@@ -150,8 +150,11 @@ def current_roll_filter_diagnostic(index):
                 invalid += 1
                 continue
             base, active, retired, unresolved = map(set, values)
-            if (not active.issubset(base) or not retired.issubset(base)
-                    or not unresolved.issubset(base)
+            # The four columns must form an exact, disjoint partition.
+            # Missing classification and repeated hashes are corrupt evidence,
+            # not evidence that the omitted perks are current or retired.
+            if (any(len(raw) != len(set(raw)) for raw in values)
+                    or active | retired | unresolved != base
                     or active & retired or active & unresolved
                     or retired & unresolved):
                 invalid += 1
