@@ -133,5 +133,29 @@ class GameWidePairIntegrityTests(unittest.TestCase):
         self.assertEqual(pair["b_randomized_set_hashes"], [10002])
 
 
+    def test_nondictionary_socket_row_invalidates_entire_weapon(self):
+        # Do not silently ignore corrupt extraction rows and promote the
+        # two surviving sockets into a falsely trustworthy pair.
+        for invalid in (None, True, 3, "bad socket", [11, 22]):
+            with self.subTest(invalid=repr(invalid)):
+                rows = self.item([11], [22])
+                rows[0]["sockets"].append(invalid)
+                self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+                self.assertEqual(find_pair_candidates(
+                    rows, 11, 22, current_roll_only=True,
+                    default_visible_only=True), [])
+
+    def test_valid_extra_nonmatching_socket_remains_allowed(self):
+        rows = self.item([11], [22])
+        rows[0]["sockets"].append({
+            "socket_index": 4,
+            "randomized_candidate_plug_hashes": [33],
+            "currently_rollable_randomized_candidate_plug_hashes": [33],
+            "default_visible": True,
+            "plugset_references": [],
+        })
+        self.assertEqual(len(find_pair_candidates(rows, 11, 22)), 1)
+
+
 if __name__ == "__main__":
     unittest.main()
