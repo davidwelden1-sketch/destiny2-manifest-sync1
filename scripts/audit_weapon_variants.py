@@ -11,14 +11,36 @@ from pathlib import Path
 
 
 def randomized_signature(item):
-    """Hashable socket-index/type/plug-membership signature for a weapon."""
-    return tuple(sorted(
-        (socket["socket_index"], socket.get("socket_type_hash"),
-         tuple(sorted(set(socket.get("randomized_candidate_plug_hashes") or []))))
-        for socket in item.get("sockets", [])
-        if socket.get("randomized_candidate_plug_hashes")
-    ))
+    """Validate one exact weapon's socket identity before comparing variants.
 
+    A corrupt or duplicated socket index must not be silently collapsed into
+    an apparently identical signature. This is structural evidence only.
+    """
+    sockets = item.get("sockets", [])
+    if not isinstance(sockets, (list, tuple)):
+        raise ValueError("Weapon sockets must be a sequence")
+    seen_indices = set()
+    signature = []
+    for socket in sockets:
+        if not isinstance(socket, dict):
+            raise ValueError("Malformed socket row")
+        index = socket.get("socket_index")
+        if type(index) is not int or index < 0 or index in seen_indices:
+            raise ValueError("Invalid or duplicate socket index")
+        seen_indices.add(index)
+        plugs = socket.get("randomized_candidate_plug_hashes", [])
+        if not isinstance(plugs, (list, tuple)) or any(
+                type(h) is not int or h <= 0 for h in plugs):
+            raise ValueError("Malformed randomized plug membership")
+        if plugs:
+            socket_type = socket.get("socket_type_hash")
+            if socket_type is not None and (
+                    type(socket_type) is not int or socket_type <= 0):
+                raise ValueError("Invalid randomized socket type")
+            # Preserve legacy normalization of duplicate plugs within a
+            # socket; cross-socket duplication is always an identity error.
+            signature.append((index, socket_type, tuple(sorted(set(plugs)))))
+    return tuple(sorted(signature))
 
 def audit_variants(index, manifest_version):
     groups = defaultdict(list)
