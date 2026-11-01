@@ -67,9 +67,39 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
                    for values in (base_plugs, current_plugs)):
                 malformed_socket = True
                 break
-            if not set(current_plugs).issubset(set(base_plugs)):
+            # Repeated plug hashes are corrupt membership evidence, even
+            # when set conversion would hide the duplicate.
+            if (len(base_plugs) != len(set(base_plugs))
+                    or len(current_plugs) != len(set(current_plugs))
+                    or not set(current_plugs).issubset(set(base_plugs))):
                 malformed_socket = True
                 break
+            # Extended manifest exports carry a three-way current/retired/
+            # unknown partition. When present, require the COMPLETE disjoint
+            # partition before accepting any pair from this weapon. Legacy
+            # synthetic indexes with only base/current columns remain
+            # structural-only and never certify acquisition.
+            state_keys = (
+                "noncurrent_randomized_candidate_plug_hashes",
+                "unknown_current_roll_randomized_candidate_plug_hashes",
+            )
+            if any(key in s for key in state_keys):
+                if not all(key in s for key in state_keys):
+                    malformed_socket = True
+                    break
+                retired, unresolved = (s[key] for key in state_keys)
+                if (any(not isinstance(values, (list, tuple, set, frozenset))
+                        or any(type(h) is not int or h <= 0 for h in values)
+                        for values in (retired, unresolved))
+                        or any(len(values) != len(set(values))
+                               for values in (retired, unresolved))
+                        or set(current_plugs) & set(retired)
+                        or set(current_plugs) & set(unresolved)
+                        or set(retired) & set(unresolved)
+                        or (set(current_plugs) | set(retired) | set(unresolved))
+                           != set(base_plugs)):
+                    malformed_socket = True
+                    break
             plugs = s.get(field, [])
             refs = s.get("plugset_references", [])
             if not isinstance(refs, (list, tuple)) or any(
