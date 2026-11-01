@@ -191,5 +191,38 @@ class GameWidePairIntegrityTests(unittest.TestCase):
 
 
 
+    def test_current_roll_membership_cannot_exceed_randomized_source(self):
+        rows = self.item([11], [22])
+        rows[0]["sockets"][0]["currently_rollable_randomized_candidate_plug_hashes"] = [11, 99]
+        # A plug flagged current but absent from its randomized source is
+        # contradictory manifest evidence, not a legitimate extra roll.
+        self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+        self.assertEqual(find_pair_candidates(rows, 11, 22, current_roll_only=True), [])
+
+    def test_invalid_current_roll_column_fails_even_without_current_filter(self):
+        for bad in (None, "11", [11, True], [11, -1], {"hash": 11}):
+            with self.subTest(value=repr(bad)):
+                rows = self.item([11], [22])
+                rows[0]["sockets"][0]["currently_rollable_randomized_candidate_plug_hashes"] = bad
+                self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+
+    def test_corrupt_unrelated_current_roll_column_invalidates_weapon(self):
+        rows = self.item([11], [22])
+        rows[0]["sockets"].append({
+            "socket_index": 4,
+            "randomized_candidate_plug_hashes": [33],
+            "currently_rollable_randomized_candidate_plug_hashes": [44],
+            "plugset_references": [],
+        })
+        self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+
+    def test_missing_current_roll_field_is_not_false_current_evidence(self):
+        rows = self.item([11], [22])
+        for socket in rows[0]["sockets"]:
+            socket.pop("currently_rollable_randomized_candidate_plug_hashes")
+        self.assertEqual(len(find_pair_candidates(rows, 11, 22)), 1)
+        self.assertEqual(find_pair_candidates(rows, 11, 22, current_roll_only=True), [])
+
+
 if __name__ == "__main__":
     unittest.main()
