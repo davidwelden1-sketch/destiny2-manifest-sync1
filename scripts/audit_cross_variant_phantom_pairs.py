@@ -12,14 +12,32 @@ from pathlib import Path
 
 
 def socket_pools(item):
+    """Fail closed before computing a cross-variant structural pair union.
+
+    Missing sockets, missing membership fields and duplicate socket indices
+    cannot be interpreted as explicit empty pools. Otherwise the audit may
+    report invented phantom pairs or miss real structural contradictions.
+    """
+    if not isinstance(item, dict) or "sockets" not in item:
+        raise ValueError("Missing weapon socket evidence")
+    sockets = item["sockets"]
+    if not isinstance(sockets, (list, tuple)):
+        raise ValueError("Weapon sockets must be a sequence")
     pools = defaultdict(set)
-    for socket in item.get("sockets", []):
+    seen_indices = set()
+    for socket in sockets:
+        if not isinstance(socket, dict):
+            raise ValueError("Malformed weapon socket")
         index = socket.get("socket_index")
-        plugs = socket.get("randomized_candidate_plug_hashes") or []
-        if not isinstance(index, int) or isinstance(index, bool) or index < 0:
-            raise ValueError("Invalid socket index")
-        if any(not isinstance(h, int) or isinstance(h, bool) or h <= 0 for h in plugs):
-            raise ValueError("Invalid randomized plug hash")
+        if type(index) is not int or index < 0 or index in seen_indices:
+            raise ValueError("Invalid or duplicate socket index")
+        seen_indices.add(index)
+        if "randomized_candidate_plug_hashes" not in socket:
+            raise ValueError("Missing randomized socket membership evidence")
+        plugs = socket["randomized_candidate_plug_hashes"]
+        if not isinstance(plugs, (list, tuple)) or any(
+                type(h) is not int or h <= 0 for h in plugs):
+            raise ValueError("Invalid randomized plug membership")
         pools[index].update(plugs)
     return pools
 
@@ -37,9 +55,13 @@ def distinct_socket_pairs(pools):
 def audit_cross_variant_phantoms(index, manifest_version, sample_limit=5):
     if not isinstance(sample_limit, int) or isinstance(sample_limit, bool) or sample_limit < 0:
         raise ValueError("sample_limit must be nonnegative")
+    if not isinstance(index, (list, tuple)):
+        raise ValueError("Weapon index must be a sequence")
     groups = defaultdict(list)
     seen = set()
     for item in index:
+        if not isinstance(item, dict):
+            raise ValueError("Malformed weapon row")
         if item.get("item_type") != 3 or not isinstance(item.get("name"), str) or not item["name"].strip():
             continue
         h = item.get("item_hash")
