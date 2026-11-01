@@ -18,9 +18,21 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
         raise ValueError("Roll and visibility filters must be boolean")
     field = ("currently_rollable_randomized_candidate_plug_hashes" if current_roll_only
              else "randomized_candidate_plug_hashes")
+    if not isinstance(index, (list, tuple)):
+        raise ValueError("weapon index must be a list of item definitions")
+    # A repeated item hash is an integrity conflict, not an extra weapon.
+    # Reject ALL copies of conflicting identities rather than joining them.
+    counts = {}
+    for item in index:
+        if isinstance(item, dict) and type(item.get("item_hash")) is int and item["item_hash"] > 0:
+            counts[item["item_hash"]] = counts.get(item["item_hash"], 0) + 1
     matches = []
     for item in index:
-        if item.get("item_type") != 3:  # Destiny itemType 3 = Weapon
+        if not isinstance(item, dict) or item.get("item_type") != 3:
+            continue
+        if type(item.get("item_hash")) is not int or item["item_hash"] <= 0:
+            continue
+        if counts[item["item_hash"]] != 1 or not isinstance(item.get("sockets"), (list, tuple)):
             continue
         # Fail closed on malformed manifest-derived sockets. In Python,
         # True == 1 and False == 0: a boolean candidate could otherwise
@@ -36,6 +48,15 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
             if any(type(h) is not int or h <= 0 for h in plugs):
                 continue
             if type(s.get("socket_index")) is not int or s["socket_index"] < 0:
+                continue
+            # Malformed source references cannot silently become roll evidence.
+            refs = s.get("plugset_references", [])
+            if not isinstance(refs, (list, tuple)) or any(
+                not isinstance(r, dict)
+                or r.get("field") not in ("randomizedPlugSetHash", "reusablePlugSetHash", "singleInitialItemHash")
+                or type(r.get("hash")) is not int or r["hash"] <= 0
+                for r in refs
+            ):
                 continue
             if default_visible_only and s.get("default_visible") is not True:
                 continue
