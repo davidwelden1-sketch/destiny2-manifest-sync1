@@ -108,6 +108,22 @@ class TestWeaponVariantCatalogAudit(unittest.TestCase):
         self.assertEqual(report["indexed_weapon_definitions"], 1)
         self.assertEqual(report["same_name_variant_groups"], 0)
 
+    def test_missing_socket_field_is_not_a_valid_empty_signature(self):
+        # Missing evidence must not be conflated with an explicit empty list.
+        row = {"item_hash": 1, "name": "Unique", "item_type": 3}
+        with self.assertRaisesRegex(ValueError, "Missing weapon socket evidence"):
+            audit_variants([row], "v")
+
+    def test_missing_randomized_membership_is_not_nonrandomized(self):
+        row = weapon(1, "Unique", [{"socket_index": 3, "socket_type_hash": 7}])
+        with self.assertRaisesRegex(ValueError, "Missing randomized socket membership"):
+            audit_variants([row], "v")
+
+    def test_explicit_empty_socket_membership_still_supported(self):
+        report = audit_variants([weapon(1, "Unique", [socket(3, [])])], "v")
+        self.assertEqual(report["indexed_weapon_definitions"], 1)
+        self.assertEqual(report["same_name_variant_groups"], 0)
+
     def test_malformed_item_row_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "Malformed item row"):
             audit_variants([None, weapon(1, "Unique", [socket(3, [10])])], "v")
