@@ -57,11 +57,20 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
             # Never silently discard a corrupt *dictionary* socket while
             # accepting a pair from its siblings. That would misrepresent
             # the integrity of the exact item definition.
-            plugs = s.get(field, [])
-            if (not isinstance(plugs, (list, tuple, set, frozenset))
-                    or any(type(h) is not int or h <= 0 for h in plugs)):
+            # Both source and current-roll columns must be well-formed.
+            # A current-roll plug cannot exist outside its randomized source
+            # membership; otherwise the extraction has conflicting evidence.
+            base_plugs = s.get("randomized_candidate_plug_hashes", [])
+            current_plugs = s.get("currently_rollable_randomized_candidate_plug_hashes", [])
+            if any(not isinstance(values, (list, tuple, set, frozenset))
+                   or any(type(h) is not int or h <= 0 for h in values)
+                   for values in (base_plugs, current_plugs)):
                 malformed_socket = True
                 break
+            if not set(current_plugs).issubset(set(base_plugs)):
+                malformed_socket = True
+                break
+            plugs = s.get(field, [])
             refs = s.get("plugset_references", [])
             if not isinstance(refs, (list, tuple)) or any(
                 not isinstance(ref, dict)
