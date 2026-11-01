@@ -27,6 +27,8 @@ jobs:
         run: python scripts/audit_plugset_integrity.py
       - name: Build searchable socket candidate index
         run: python scripts/build_socket_candidates.py
+      - name: Export exact-hash weapon evidence for VAELTRION with provenance gates
+        run: python scripts/export_weapon_legality_evidence.py
       - name: Audit candidate index
         run: python scripts/audit_candidates.py
       - name: Report exact weapon hashes with hidden or unknown randomized sockets
