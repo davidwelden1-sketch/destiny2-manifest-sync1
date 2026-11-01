@@ -22,8 +22,24 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
     for item in index:
         if item.get("item_type") != 3:  # Destiny itemType 3 = Weapon
             continue
-        sockets = [s for s in item.get("sockets", [])
-                   if not default_visible_only or s.get("default_visible") is True]
+        # Fail closed on malformed manifest-derived sockets. In Python,
+        # True == 1 and False == 0: a boolean candidate could otherwise
+        # masquerade as a valid exact plug hash in a game-wide pair query.
+        # Reject the *whole* malformed socket, not just its bad element.
+        sockets = []
+        for s in item.get("sockets", []):
+            if not isinstance(s, dict):
+                continue
+            plugs = s.get(field, [])
+            if not isinstance(plugs, (list, tuple, set, frozenset)):
+                continue
+            if any(type(h) is not int or h <= 0 for h in plugs):
+                continue
+            if type(s.get("socket_index")) is not int or s["socket_index"] < 0:
+                continue
+            if default_visible_only and s.get("default_visible") is not True:
+                continue
+            sockets.append(s)
         a_sockets = [s for s in sockets if plug_a in s.get(field, [])]
         b_sockets = [s for s in sockets if plug_b in s.get(field, [])]
         pairs = []
