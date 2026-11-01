@@ -42,6 +42,49 @@ class TestWeaponVariantCatalogAudit(unittest.TestCase):
         self.assertEqual(randomized_signature(weapon(1, "A", [socket(3, [2, 1, 1])])),
                          randomized_signature(weapon(2, "A", [socket(3, [1, 2])])))
 
+    def test_duplicate_socket_index_fails_even_when_second_is_not_randomized(self):
+        with self.assertRaisesRegex(ValueError, "duplicate socket index"):
+            audit_variants([weapon(1, "A", [socket(3, [10]), socket(3, [])]),
+                            weapon(2, "A", [socket(3, [20])])], "v")
+
+    def test_duplicate_socket_index_with_distinct_plugs_fails(self):
+        with self.assertRaises(ValueError):
+            randomized_signature(weapon(1, "A", [socket(3, [10]),
+                                                  socket(3, [20])]))
+
+    def test_non_dictionary_socket_row_fails_whole_variant_audit(self):
+        with self.assertRaisesRegex(ValueError, "Malformed socket"):
+            audit_variants([weapon(1, "A", [socket(3, [10]), None]),
+                            weapon(2, "A", [socket(3, [20])])], "v")
+
+    def test_malformed_plug_containers_fail_closed(self):
+        for bad in (None, "10", {"10": True}, 10):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                randomized_signature(weapon(1, "A", [socket(3, bad)]))
+
+    def test_nonpositive_and_boolean_plug_hashes_fail_closed(self):
+        for bad in (True, False, 0, -1, "10", 1.5):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                randomized_signature(weapon(1, "A", [socket(3, [10, bad])]))
+
+    def test_invalid_socket_index_fails_closed(self):
+        for bad in (True, -1, None, "3", 1.5):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                randomized_signature(weapon(1, "A", [socket(bad, [10])]))
+
+    def test_invalid_randomized_socket_type_fails_closed(self):
+        for bad in (True, -1, 0, "7", 1.5):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                randomized_signature(weapon(1, "A", [socket(3, [10], bad)]))
+
+    def test_valid_nonrandomized_sockets_remain_supported(self):
+        result = audit_variants([
+            weapon(1, "A", [socket(1, []), socket(3, [10, 20])]),
+            weapon(2, "A", [socket(1, []), socket(3, [20, 10])]),
+        ], "v")
+        self.assertEqual(result["identical_signature_variant_groups"], 1)
+        self.assertEqual(result["divergent_variant_groups"], 0)
+
     def test_duplicate_or_invalid_hash_fails_closed(self):
         for invalid in [0, True, -1]:
             with self.assertRaises(ValueError):
