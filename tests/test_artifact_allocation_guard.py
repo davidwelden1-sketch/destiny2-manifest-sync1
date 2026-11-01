@@ -79,6 +79,11 @@ class ArtifactAllocationGuardTests(unittest.TestCase):
             with self.subTest(invalid=invalid), self.assertRaises(ValueError):
                 audit(candidate_perk_pool=invalid)
 
+    def test_reject_invalid_activity_without_typeerror(self):
+        for invalid in ([], {}, None, True, "gambit"):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                audit(activity=invalid)
+
     def test_no_damage_or_roll_claims(self):
         r = audit()
         self.assertFalse(r["enhanced_weapon_roll_verified"])
