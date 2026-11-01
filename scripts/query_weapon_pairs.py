@@ -117,6 +117,77 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
     return sorted(matches, key=lambda x: x["item_hash"])
 
 
+
+def current_roll_filter_diagnostic(index):
+    """Grade whether manifest current-roll flags distinguish any retired plugs.
+
+    The extraction may mark every randomized membership current. A query
+    filtered by those flags then adds no discrimination over a structural
+    query, and MUST NOT be presented as an obtainable-roll certificate.
+    """
+    if not isinstance(index, (list, tuple)):
+        raise ValueError("weapon index must be a list")
+    total = current = noncurrent = unknown = invalid = 0
+    for item in index:
+        if not isinstance(item, dict) or item.get("item_type") != 3:
+            continue
+        sockets = item.get("sockets")
+        if not isinstance(sockets, (list, tuple)):
+            invalid += 1
+            continue
+        for socket in sockets:
+            if not isinstance(socket, dict):
+                invalid += 1
+                continue
+            keys = ("randomized_candidate_plug_hashes",
+                    "currently_rollable_randomized_candidate_plug_hashes",
+                    "noncurrent_randomized_candidate_plug_hashes",
+                    "unknown_current_roll_randomized_candidate_plug_hashes")
+            values = [socket.get(k, []) for k in keys]
+            if any(not isinstance(v, (list, tuple))
+                   or any(type(h) is not int or h <= 0 for h in v)
+                   for v in values):
+                invalid += 1
+                continue
+            base, active, retired, unresolved = map(set, values)
+            if (not active.issubset(base) or not retired.issubset(base)
+                    or not unresolved.issubset(base)
+                    or active & retired or active & unresolved
+                    or retired & unresolved):
+                invalid += 1
+                continue
+            total += len(base)
+            current += len(active)
+            noncurrent += len(retired)
+            unknown += len(unresolved)
+    if invalid:
+        status = "invalid_membership_rows_require_review"
+    elif not total:
+        status = "no_randomized_membership_evidence"
+    elif noncurrent == 0:
+        status = "no_explicit_noncurrent_memberships_in_snapshot"
+    else:
+        status = "explicit_noncurrent_memberships_present"
+    return {
+        "status": status,
+        "randomized_memberships": total,
+        "current_memberships": current,
+        "explicit_noncurrent_memberships": noncurrent,
+        "unknown_memberships": unknown,
+        "invalid_membership_rows": invalid,
+        "current_roll_filter_discriminates_retired_memberships":
+            True if not invalid and noncurrent > 0 else False,
+        "current_obtainability_certified": False,
+        "enhanced_perk_legality_certified": False,
+        "interpretation": (
+            "Manifest current-roll membership is structural versioned metadata. "
+            "If no explicit noncurrent memberships exist, a current-only query "
+            "cannot distinguish historical retired plugs. Even a discriminating "
+            "flag cannot establish current drops, crafting or enhanced legality."
+        ),
+    }
+
+
 def summarize(index, version):
     weapons = [x for x in index if x.get("item_type") == 3]
     randomized_sockets = [s for x in weapons for s in x.get("sockets", [])
@@ -175,6 +246,7 @@ def main():
                                                   current_roll_only=args.currently_rollable_only,
                                                   default_visible_only=args.default_visible_only),
                   "current_roll_only": args.currently_rollable_only,
+                  "current_roll_filter_diagnostic": current_roll_filter_diagnostic(index),
                   "default_visible_only": args.default_visible_only,
                   "interpretation": "Distinct randomized sockets only; not proof of a legal obtainable or enhanced roll."}
         suffix = ("_currently_rollable" if args.currently_rollable_only else "")
