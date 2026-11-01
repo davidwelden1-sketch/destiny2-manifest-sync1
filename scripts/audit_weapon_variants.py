@@ -16,7 +16,9 @@ def randomized_signature(item):
     A corrupt or duplicated socket index must not be silently collapsed into
     an apparently identical signature. This is structural evidence only.
     """
-    sockets = item.get("sockets", [])
+    if "sockets" not in item:
+        raise ValueError("Missing weapon socket evidence")
+    sockets = item["sockets"]
     if not isinstance(sockets, (list, tuple)):
         raise ValueError("Weapon sockets must be a sequence")
     seen_indices = set()
@@ -28,7 +30,9 @@ def randomized_signature(item):
         if type(index) is not int or index < 0 or index in seen_indices:
             raise ValueError("Invalid or duplicate socket index")
         seen_indices.add(index)
-        plugs = socket.get("randomized_candidate_plug_hashes", [])
+        if "randomized_candidate_plug_hashes" not in socket:
+            raise ValueError("Missing randomized socket membership evidence")
+        plugs = socket["randomized_candidate_plug_hashes"]
         if not isinstance(plugs, (list, tuple)) or any(
                 type(h) is not int or h <= 0 for h in plugs):
             raise ValueError("Malformed randomized plug membership")
