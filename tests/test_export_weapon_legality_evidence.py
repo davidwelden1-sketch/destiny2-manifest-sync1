@@ -116,6 +116,13 @@ class TestWeaponLegalityEvidenceExport(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "SHA-256"):
             export_weapon_evidence([weapon()], meta)
 
+    def test_untrusted_manifest_host_rejected(self):
+        meta = metadata()
+        meta["sources"]["DestinyInventoryItemDefinition"]["url"] = (
+            "https://example.org/pretend-bungie-manifest.json")
+        with self.assertRaisesRegex(ValueError, "Untrusted manifest"):
+            export_weapon_evidence([weapon()], meta)
+
     def test_non_weapon_entries_do_not_leak(self):
         armor = weapon(200)
         armor["item_type"] = 2
