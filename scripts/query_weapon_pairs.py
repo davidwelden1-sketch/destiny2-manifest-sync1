@@ -34,6 +34,16 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
             continue
         if counts[item["item_hash"]] != 1 or not isinstance(item.get("sockets"), (list, tuple)):
             continue
+        # Each Bungie socket index identifies one socket on this exact item.
+        # Duplicate indices in a malformed extraction can mix incompatible
+        # definitions and fabricate cross-column combinations. Fail closed
+        # for the whole weapon, not merely the duplicate entry.
+        raw_indices = [s.get("socket_index") for s in item["sockets"]
+                       if isinstance(s, dict)]
+        if any(type(i) is not int or i < 0 for i in raw_indices):
+            continue
+        if len(raw_indices) != len(set(raw_indices)):
+            continue
         # Fail closed on malformed manifest-derived sockets. In Python,
         # True == 1 and False == 0: a boolean candidate could otherwise
         # masquerade as a valid exact plug hash in a game-wide pair query.
