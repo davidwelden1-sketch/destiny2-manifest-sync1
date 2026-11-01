@@ -63,9 +63,9 @@ def audit_crown_tempests(*, observation_date, activity, class_name,
         "condition_verified_in_game": False,
         "tines_stacks_supplied_not_measured": tines_stacks,
         "pve_conduction_tines_duration_seconds_official_historical":
-            10 if activity == "pve" and observed > date.fromisoformat(PATCH_DATE)
+            10 if activity == "pve" and class_name == "warlock" and observed > date.fromisoformat(PATCH_DATE)
             and source_patch_version == PATCH_VERSION else None,
-        "pve_previous_duration_seconds_official": 7 if activity == "pve" else None,
+        "pve_previous_duration_seconds_official": 7 if activity == "pve" and class_name == "warlock" else None,
         "pvp_conduction_tines_duration_seconds": None,
         "storm_grenade_damage_measured": False,
         "weapon_perk_trigger_from_grenade": None,
