@@ -30,6 +30,14 @@ class RocketRollPatchTests(unittest.TestCase):
                 self.assertFalse(r["current_acquisition_verified"])
                 self.assertFalse(r["enhanced_perk_verified"])
 
+    def test_replacement_not_falsely_assigned_to_unrelated_perks(self):
+        for perk in ("Impromptu Ammunition", "Explosive Light", "Bait and Switch"):
+            with self.subTest(perk=perk):
+                r = assess(perk_name=perk)
+                self.assertIsNone(r["reported_replacement_perk"])
+                self.assertIsNone(r["lead_from_gold_current_legality_supported"])
+                self.assertFalse(r["replacement_on_this_exact_hash_verified"])
+
     def test_boundary_date(self):
         self.assertIsNone(assess(observation_date="2026-06-22")["lead_from_gold_current_legality_supported"])
         self.assertIs(assess(observation_date="2026-06-23")["lead_from_gold_current_legality_supported"], False)
