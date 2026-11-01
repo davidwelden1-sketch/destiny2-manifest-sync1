@@ -156,6 +156,40 @@ class GameWidePairIntegrityTests(unittest.TestCase):
         })
         self.assertEqual(len(find_pair_candidates(rows, 11, 22)), 1)
 
+    def test_corrupt_unrelated_socket_invalidates_whole_item(self):
+        # A malformed third socket cannot be ignored while reporting the
+        # first two as a trustworthy structural weapon pair.
+        for bad_field, bad_value in (
+            ("randomized_candidate_plug_hashes", [33, True]),
+            ("randomized_candidate_plug_hashes", "33"),
+            ("plugset_references", [{"field": "randomizedPlugSetHash", "hash": False}]),
+            ("plugset_references", None),
+        ):
+            with self.subTest(field=bad_field, value=repr(bad_value)):
+                rows = self.item([11], [22])
+                rows[0]["sockets"].append({
+                    "socket_index": 4,
+                    "randomized_candidate_plug_hashes": [33],
+                    "currently_rollable_randomized_candidate_plug_hashes": [33],
+                    "default_visible": True,
+                    "plugset_references": [],
+                    bad_field: bad_value,
+                })
+                self.assertEqual(find_pair_candidates(rows, 11, 22), [])
+
+    def test_corrupt_unrelated_socket_fails_closed_with_current_filters(self):
+        rows = self.item([11], [22])
+        rows[0]["sockets"].append({
+            "socket_index": 4,
+            "randomized_candidate_plug_hashes": [33],
+            "currently_rollable_randomized_candidate_plug_hashes": [33, False],
+            "default_visible": False,
+            "plugset_references": [],
+        })
+        self.assertEqual(find_pair_candidates(
+            rows, 11, 22, current_roll_only=True, default_visible_only=True), [])
+
+
 
 if __name__ == "__main__":
     unittest.main()
