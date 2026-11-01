@@ -21,6 +21,11 @@ def check_socket_membership(item_hash, socket_index, plug_hash, inventory):
     plugs = sockets.get(socket_index, ())
     if not isinstance(plugs, (list, tuple, set, frozenset)):
         return {"possible": False, "reason": "malformed_socket_plugs", "certified_roll": False}
+    # A boolean equals 0/1 in Python, so a malformed True/False plug can
+    # otherwise masquerade as an exact integer hash in a manifest join.
+    # Reject the entire supplied socket rather than certifying partial data.
+    if any(type(plug) is not int or plug < 0 for plug in plugs):
+        return {"possible": False, "reason": "malformed_socket_plug_hash", "certified_roll": False}
     present = plug_hash in plugs
     return {"possible": present, "reason": "manifest_membership_only" if present else "plug_not_in_socket",
             "certified_roll": False}
