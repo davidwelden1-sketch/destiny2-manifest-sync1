@@ -38,8 +38,11 @@ def find_pair_candidates(index, plug_a, plug_b, current_roll_only=False,
         # Duplicate indices in a malformed extraction can mix incompatible
         # definitions and fabricate cross-column combinations. Fail closed
         # for the whole weapon, not merely the duplicate entry.
-        raw_indices = [s.get("socket_index") for s in item["sockets"]
-                       if isinstance(s, dict)]
+        # A non-dict socket row is corrupt evidence, even if other rows
+        # appear to form a valid pair. Do not silently omit the bad row.
+        if any(not isinstance(s, dict) for s in item["sockets"]):
+            continue
+        raw_indices = [s.get("socket_index") for s in item["sockets"]]
         if any(type(i) is not int or i < 0 for i in raw_indices):
             continue
         if len(raw_indices) != len(set(raw_indices)):
