@@ -7,6 +7,7 @@ a legal live roll, enhanced trait, crafted variant, or damage value.
 import json
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 import argparse
 
 
@@ -40,8 +41,11 @@ def export_weapon_evidence(index, metadata):
     item_source = sources.get("DestinyInventoryItemDefinition") if isinstance(sources, dict) else None
     plug_source = sources.get("DestinyPlugSetDefinition") if isinstance(sources, dict) else None
     for source in (item_source, plug_source):
-        if not isinstance(source, dict) or not isinstance(source.get("url"), str) or not source["url"].startswith("https://"):
+        if not isinstance(source, dict) or not isinstance(source.get("url"), str):
             raise ValueError("Missing official component source URL")
+        parsed = urlsplit(source["url"])
+        if parsed.scheme != "https" or parsed.hostname not in {"bungie.net", "www.bungie.net"}:
+            raise ValueError("Untrusted manifest component source host")
         digest = source.get("sha256")
         if not isinstance(digest, str) or len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
             raise ValueError("Missing official component SHA-256")
