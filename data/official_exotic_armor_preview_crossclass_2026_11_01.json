@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:official-preview-exotic-armor:2025-11-19",
+  "reviewed_at_utc": "2026-11-01T20:22:00Z",
+  "manifest_baseline_version": "245114.26.10.13.2000-1-bnet.66137",
+  "source": {
+    "publisher": "Bungie",
+    "published_on": "2025-11-19",
+    "url": "https://www.bungie.net/7/en/News/Article/dev_insight_renegades_armor",
+    "evidence_type": "official_pre_release_preview",
+    "current_runtime_revalidated": false
+  },
+  "certification": {
+    "tier": "official_announcement_only",
+    "current_patch_implementation": "unverified",
+    "measured_pve_dps": false,
+    "measured_pvp_ttk": false,
+    "measured_dr": false,
+    "artifact_legality": "requires_exact_one_active_artifact_and_at_most_seven_selected_perks",
+    "competitive_and_trials_artifact_effects": "disabled_per_9_7_0"
+  },
+  "records": [
+    {
+      "id": "d2:exotic-armor:arbor-warden:orb-enhanced-barrinade",
+      "class": "Titan",
+      "exotic": "Arbor Warden",
+      "facts": [
+        {
+          "event": "orb_pickup",
+          "count": 3,
+          "effect": "enhance_next_barri_nade"
+        },
+        {
+          "event": "enhanced_barri_nade_detonation",
+          "barricade_count": 3,
+          "pattern": "Y"
+        },
+        {
+          "event": "barricade_modification",
+          "named_examples": [
+            "Drengr's Lash",
+            "Storm's Keep"
+          ],
+          "announced_compatible": true
+        }
+      ],
+      "pve_hypothesis": "Test whether three barricade effects apply independently to separate combatants and whether multiple control effects share an internal cooldown.",
+      "pvp_hypothesis": "Test barrier placement and each effect independently; no assumed triple damage or one-hit-kill.",
+      "measurement_blockers": [
+        "current_live_functionality",
+        "individual_barricade_damage_ownership",
+        "orb_pickup_progress_persistence",
+        "activation_and_cooldown"
+      ]
+    },
+    {
+      "id": "d2:exotic-armor:briarbinds:void-soul-ramp",
+      "class": "Warlock",
+      "exotic": "Briarbinds",
+      "facts": [
+        {
+          "event": "void_soul_kill_ramp",
+          "new_kills_to_cap": 4,
+          "old_kills_to_cap": 6
+        },
+        {
+          "event": "void_soul_time_on_target",
+          "max_relative_damage_bonus_percent": 30,
+          "seconds_to_max": 10
+        }
+      ],
+      "pve_hypothesis": "Compare four-kill ramp against ten-second target attachment in a boss phase; do not multiply bonuses without checking stacking category and base damage.",
+      "pvp_hypothesis": "Test if target uptime and kill-ramp survive Guardian transitions; no Guardian damage estimate from PvE preview.",
+      "measurement_blockers": [
+        "current_live_functionality",
+        "pve_damage_per_tick",
+        "ramp_stack_order",
+        "pvp_damage_scaling",
+        "cooldown_and_recollection"
+      ]
+    },
+    {
+      "id": "d2:exotic-armor:graviton-forfeit:invisibility-stacks",
+      "class": "Hunter",
+      "exotic": "Graviton Forfeit",
+      "facts": [
+        {
+          "event": "become_invisible",
+          "effect": "increased_grenade_melee_class_ability_recharge",
+          "max_stacks": 3
+        },
+        {
+          "event": "while_invisible",
+          "effect": "effect_timer_does_not_deplete"
+        },
+        {
+          "event": "trigger_at_three_stacks",
+          "effect": "portion_of_void_overshield"
+        }
+      ],
+      "pve_hypothesis": "Measure recharge uptime, invisibility duration and overshield refresh in high-density combatants; no assumed permanent invisibility.",
+      "pvp_hypothesis": "Test whether stack persistence and overshield change survivability breakpoints, with Artifact-disabled Competitive/Trials control.",
+      "measurement_blockers": [
+        "current_live_functionality",
+        "stack_duration",
+        "overshield_amount",
+        "pve_and_pvp_regen_rates",
+        "damage_resistance_and_ttk"
+      ]
+    }
+  ]
+}
