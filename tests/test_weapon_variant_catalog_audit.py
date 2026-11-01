@@ -93,5 +93,30 @@ class TestWeaponVariantCatalogAudit(unittest.TestCase):
             audit_variants([weapon(1, "A", []), weapon(1, "B", [])], "x")
 
 
+    def test_singleton_weapon_malformed_socket_fails_game_wide_audit(self):
+        # A singleton has no same-name variants but still needs valid sockets.
+        with self.assertRaisesRegex(ValueError, "duplicate socket index"):
+            audit_variants([weapon(1, "Unique", [socket(3, [10]),
+                                                 socket(3, [20])])], "v")
+
+    def test_singleton_weapon_invalid_plug_fails_game_wide_audit(self):
+        with self.assertRaisesRegex(ValueError, "Malformed randomized plug"):
+            audit_variants([weapon(1, "Unique", [socket(3, [10, True])])], "v")
+
+    def test_singleton_weapon_valid_socket_stays_counted(self):
+        report = audit_variants([weapon(1, "Unique", [socket(3, [10])])], "v")
+        self.assertEqual(report["indexed_weapon_definitions"], 1)
+        self.assertEqual(report["same_name_variant_groups"], 0)
+
+    def test_malformed_item_row_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, "Malformed item row"):
+            audit_variants([None, weapon(1, "Unique", [socket(3, [10])])], "v")
+
+    def test_invalid_index_container_fails_closed(self):
+        for invalid in (None, {"item": 1}, "not an index"):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                audit_variants(invalid, "v")
+
+
 if __name__ == "__main__":
     unittest.main()
