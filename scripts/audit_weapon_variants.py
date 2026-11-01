@@ -43,11 +43,19 @@ def randomized_signature(item):
     return tuple(sorted(signature))
 
 def audit_variants(index, manifest_version):
+    if not isinstance(index, (list, tuple)):
+        raise ValueError("Weapon index must be a sequence")
     groups = defaultdict(list)
     seen_hashes = set()
     for item in index:
+        if not isinstance(item, dict):
+            raise ValueError("Malformed item row")
         if item.get("item_type") != 3 or not isinstance(item.get("name"), str) or not item["name"].strip():
             continue
+        # Validate every named weapon, including singleton names. Previously
+        # only multi-hash name groups were checked, allowing malformed
+        # singleton socket definitions to evade the game-wide audit.
+        randomized_signature(item)
         h = item.get("item_hash")
         if not isinstance(h, int) or isinstance(h, bool) or h <= 0 or h in seen_hashes:
             raise ValueError("Invalid or duplicate weapon item hash")
