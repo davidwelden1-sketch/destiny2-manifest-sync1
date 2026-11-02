@@ -1,0 +1,617 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "player:frost-armor",
+      "title": "Frost Armor: keeping your stacks is the survival plan",
+      "summary": "Frost Armor reduces the damage you take. Bungie’s June update listed roughly 35% protection at five stacks in PvE, rising to 50% at seven stacks with Whisper of Rime.",
+      "text": "Frost Armor reduces the damage you take. Bungie’s June update listed roughly 35% protection at five stacks in PvE, rising to 50% at seven stacks with Whisper of Rime.\n\nWhy it matters\nFor a tank build, uptime matters as much as the highest number. Under those published values, a hit that would deal 100 damage would deal about 65 at five stacks, or 50 at seven, before any other effects. That example is arithmetic from the patch values, not a new gameplay measurement. Bungie also described stacks wearing off one at a time, giving you a chance to refresh the buff before losing all its protection.\n\nHow to use it\n1. Choose a setup with a reliable way to gain Frost Armor, and watch its stack counter during a fight.\n2. If your subclass offers Whisper of Rime, compare its higher stack cap with the fragment you would give up.\n3. Build and refresh your stacks before exposing yourself to sustained enemy fire; retreat when the protection starts dropping.\n\nWhat to watch for\nThese are published PvE values. They do not establish PvP protection, and adding a second defensive effect does not mean you can simply add its percentage to Frost Armor.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Frost Armor",
+        "Whisper of Rime"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Survival",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Frost Armor reduces the damage you take. Bungie’s June update listed roughly 35% protection at five stacks in PvE, rising to 50% at seven stacks with Whisper of Rime.",
+        "explanation": "For a tank build, uptime matters as much as the highest number. Under those published values, a hit that would deal 100 damage would deal about 65 at five stacks, or 50 at seven, before any other effects. That example is arithmetic from the patch values, not a new gameplay measurement. Bungie also described stacks wearing off one at a time, giving you a chance to refresh the buff before losing all its protection.",
+        "steps": [
+          "Choose a setup with a reliable way to gain Frost Armor, and watch its stack counter during a fight.",
+          "If your subclass offers Whisper of Rime, compare its higher stack cap with the fragment you would give up.",
+          "Build and refresh your stacks before exposing yourself to sustained enemy fire; retreat when the protection starts dropping."
+        ],
+        "watch_out": "These are published PvE values. They do not establish PvP protection, and adding a second defensive effect does not mean you can simply add its percentage to Frost Armor.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:no-backup-plans",
+      "title": "No Backup Plans: use kills to keep defensive buffs going",
+      "summary": "Bungie changed No Backup Plans so shotgun or melee final blows extend defensive buffs you already have and start health regeneration.",
+      "text": "Bungie changed No Backup Plans so shotgun or melee final blows extend defensive buffs you already have and start health regeneration.\n\nWhy it matters\nThe interesting part is maintaining a buff that normally expires. The patch names Void Overshield, Restoration, Amplified, Frost Armor and Woven Mail. That makes this a Titan build idea centred on creating protection first, then sustaining it through close-range kills. It is especially relevant if you enjoy staying in the fight rather than stopping to rebuild your defences.\n\nHow to use it\n1. Choose a separate, reliable source of the defensive buff you want to maintain.\n2. Activate that buff before engaging a group.\n3. Use shotgun or melee final blows to test how long you can keep it active, while watching the timer and your health.\n\nWhat to watch for\nNo Backup Plans no longer grants a fresh Void Overshield by itself under this change. Do not build the loop around receiving an overshield from nothing. Extension duration and endgame uptime still need a live check.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "No Backup Plans"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Survival",
+        "activity": "PvE",
+        "guardian": "Titan",
+        "takeaway": "Bungie changed No Backup Plans so shotgun or melee final blows extend defensive buffs you already have and start health regeneration.",
+        "explanation": "The interesting part is maintaining a buff that normally expires. The patch names Void Overshield, Restoration, Amplified, Frost Armor and Woven Mail. That makes this a Titan build idea centred on creating protection first, then sustaining it through close-range kills. It is especially relevant if you enjoy staying in the fight rather than stopping to rebuild your defences.",
+        "steps": [
+          "Choose a separate, reliable source of the defensive buff you want to maintain.",
+          "Activate that buff before engaging a group.",
+          "Use shotgun or melee final blows to test how long you can keep it active, while watching the timer and your health."
+        ],
+        "watch_out": "No Backup Plans no longer grants a fresh Void Overshield by itself under this change. Do not build the loop around receiving an overshield from nothing. Extension duration and endgame uptime still need a live check.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:smoke-jumper",
+      "title": "Smoke Jumper: check the bonus before calling it a tank build",
+      "summary": "Bungie’s June update reduced the maximum protection from the two-piece Smoke Jumper bonus from 50% to 40% in PvE.",
+      "text": "Bungie’s June update reduced the maximum protection from the two-piece Smoke Jumper bonus from 50% to 40% in PvE.\n\nWhy it matters\nThis matters when an old build guide promises a level of protection the set no longer provides under that patch. The word “maximum” also matters: wearing two pieces does not prove that the full bonus is active throughout a fight. Your build needs to satisfy the set’s trigger and maintain it.\n\nHow to use it\n1. Read the set bonus on the two armor pieces you intend to wear.\n2. Check when its protection activates and when it falls away.\n3. Compare that real uptime with the stats and other armor bonuses you give up.\n\nWhat to watch for\nThe patch’s maximum is not an always-on 40% reduction. This record does not establish a PvP value or how the bonus combines with other protection.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Smoke Jumper"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Survival",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie’s June update reduced the maximum protection from the two-piece Smoke Jumper bonus from 50% to 40% in PvE.",
+        "explanation": "This matters when an old build guide promises a level of protection the set no longer provides under that patch. The word “maximum” also matters: wearing two pieces does not prove that the full bonus is active throughout a fight. Your build needs to satisfy the set’s trigger and maintain it.",
+        "steps": [
+          "Read the set bonus on the two armor pieces you intend to wear.",
+          "Check when its protection activates and when it falls away.",
+          "Compare that real uptime with the stats and other armor bonuses you give up."
+        ],
+        "watch_out": "The patch’s maximum is not an always-on 40% reduction. This record does not establish a PvP value or how the bonus combines with other protection.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:controlled-burst",
+      "title": "Controlled Burst + Charge Time masterwork: check the perk is working",
+      "summary": "Bungie’s known-issues record reports that Controlled Burst can fail on fusion rifles with a Charge Time masterwork.",
+      "text": "Bungie’s known-issues record reports that Controlled Burst can fail on fusion rifles with a Charge Time masterwork.\n\nWhy it matters\nA roll can look excellent on paper and still fail to deliver its advertised perk. If your fusion has this combination, test whether Controlled Burst actually activates before relying on it for a boss phase. A rating based on perk names cannot detect the practical loss of a perk that is not working.\n\nHow to use it\n1. Open your fusion and check both its selected trait and masterwork.\n2. If it has this combination, test a full burst against a suitable target and watch for the perk activating.\n3. Compare it with another copy or another fusion before committing it to your damage loadout.\n\nWhat to watch for\nThis is an acknowledged issue in the source we reviewed, not a fresh test of your weapon. Check Bungie’s latest issue status before assuming your copy is affected or fixed.\n\nSource & status\nBungie known-issues page reviewed 2 November 2026. Your individual weapon has not been retested.",
+      "source_url": "https://help.bungie.net/hc/en-us/articles/39007140765204-Destiny-2-Known-Issues-and-Vital-Information",
+      "source_published_at": null,
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Controlled Burst"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Gear warning",
+        "activity": "PvE / PvP",
+        "guardian": "All classes",
+        "takeaway": "Bungie’s known-issues record reports that Controlled Burst can fail on fusion rifles with a Charge Time masterwork.",
+        "explanation": "A roll can look excellent on paper and still fail to deliver its advertised perk. If your fusion has this combination, test whether Controlled Burst actually activates before relying on it for a boss phase. A rating based on perk names cannot detect the practical loss of a perk that is not working.",
+        "steps": [
+          "Open your fusion and check both its selected trait and masterwork.",
+          "If it has this combination, test a full burst against a suitable target and watch for the perk activating.",
+          "Compare it with another copy or another fusion before committing it to your damage loadout."
+        ],
+        "watch_out": "This is an acknowledged issue in the source we reviewed, not a fresh test of your weapon. Check Bungie’s latest issue status before assuming your copy is affected or fixed.",
+        "status": "Bungie known-issues page reviewed 2 November 2026. Your individual weapon has not been retested."
+      }
+    },
+    {
+      "id": "player:duplicate-traits",
+      "title": "The same perk twice does not automatically mean double the benefit",
+      "summary": "Bungie has acknowledged weapons dropping with duplicate perks in both trait columns. The drop can be real without proving the perk stacks twice.",
+      "text": "Bungie has acknowledged weapons dropping with duplicate perks in both trait columns. The drop can be real without proving the perk stacks twice.\n\nWhy it matters\nThis is worth investigating if you own an unusual roll, but the useful question is whether both copies actually affect the weapon. Two identical icons are not enough to promise twice the damage, ability energy or duration. Keep an unusual copy for comparison rather than judging it only from its appearance.\n\nHow to use it\n1. Inspect the selected perks in both trait columns.\n2. Compare the weapon’s actual buff, damage or refund with a normal copy under the same conditions.\n3. Keep the unusual roll while you establish what it does; do not treat it as a confirmed exploit build.\n\nWhat to watch for\nBungie acknowledged the duplicate drops. Functional double-stacking remains a separate question for each perk.\n\nSource & status\nBungie known-issues page reviewed 2 November 2026. Duplicate drops are acknowledged; extra perk benefits are not established.",
+      "source_url": "https://help.bungie.net/hc/en-us/articles/39007140765204-Destiny-2-Known-Issues-and-Vital-Information",
+      "source_published_at": null,
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [],
+      "player": {
+        "version": 1,
+        "category": "Unusual interaction",
+        "activity": "PvE / PvP",
+        "guardian": "All classes",
+        "takeaway": "Bungie has acknowledged weapons dropping with duplicate perks in both trait columns. The drop can be real without proving the perk stacks twice.",
+        "explanation": "This is worth investigating if you own an unusual roll, but the useful question is whether both copies actually affect the weapon. Two identical icons are not enough to promise twice the damage, ability energy or duration. Keep an unusual copy for comparison rather than judging it only from its appearance.",
+        "steps": [
+          "Inspect the selected perks in both trait columns.",
+          "Compare the weapon’s actual buff, damage or refund with a normal copy under the same conditions.",
+          "Keep the unusual roll while you establish what it does; do not treat it as a confirmed exploit build."
+        ],
+        "watch_out": "Bungie acknowledged the duplicate drops. Functional double-stacking remains a separate question for each perk.",
+        "status": "Bungie known-issues page reviewed 2 November 2026. Duplicate drops are acknowledged; extra perk benefits are not established."
+      }
+    },
+    {
+      "id": "player:mantle-solar",
+      "title": "Mantle of Battle Harmony: check your surge with a Solar Super",
+      "summary": "Bungie’s known-issues record says Mantle of Battle Harmony’s weapon surge can stop applying when a Solar Super is equipped.",
+      "text": "Bungie’s known-issues record says Mantle of Battle Harmony’s weapon surge can stop applying when a Solar Super is equipped.\n\nWhy it matters\nIf a Warlock build depends on the Exotic’s weapon bonus, this can break the central reason for using it. A useful check is whether the expected surge appears with your actual Super selection, rather than assuming every elemental setup behaves the same way.\n\nHow to use it\n1. Equip the Super and weapon you intend to use.\n2. Trigger the Exotic’s normal weapon-bonus condition and check the displayed buff.\n3. If the bonus is absent, compare another setup before using that loadout for a difficult encounter.\n\nWhat to watch for\nThe issue status needs checking against the current game. No replacement damage multiplier or PvP time-to-kill is established here.\n\nSource & status\nBungie known-issues page reviewed 2 November 2026. Forge has not reproduced the issue on your loadout.",
+      "source_url": "https://help.bungie.net/hc/en-us/articles/39007140765204-Destiny-2-Known-Issues-and-Vital-Information",
+      "source_published_at": null,
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Mantle of Battle Harmony"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Gear warning",
+        "activity": "PvE / PvP",
+        "guardian": "Warlock",
+        "takeaway": "Bungie’s known-issues record says Mantle of Battle Harmony’s weapon surge can stop applying when a Solar Super is equipped.",
+        "explanation": "If a Warlock build depends on the Exotic’s weapon bonus, this can break the central reason for using it. A useful check is whether the expected surge appears with your actual Super selection, rather than assuming every elemental setup behaves the same way.",
+        "steps": [
+          "Equip the Super and weapon you intend to use.",
+          "Trigger the Exotic’s normal weapon-bonus condition and check the displayed buff.",
+          "If the bonus is absent, compare another setup before using that loadout for a difficult encounter."
+        ],
+        "watch_out": "The issue status needs checking against the current game. No replacement damage multiplier or PvP time-to-kill is established here.",
+        "status": "Bungie known-issues page reviewed 2 November 2026. Forge has not reproduced the issue on your loadout."
+      }
+    },
+    {
+      "id": "player:argent-blade",
+      "title": "Argent Blade: make sure Armor Charge is actually arriving",
+      "summary": "Bungie’s issue list reports that Argent Blade can fail to grant Armor Charge when it is your only equipped charge-generating perk.",
+      "text": "Bungie’s issue list reports that Argent Blade can fail to grant Armor Charge when it is your only equipped charge-generating perk.\n\nWhy it matters\nA sword loop can feel weaker than expected if the Armor Charge it depends on never appears. Before assuming your damage or ability mods are being fed, watch the Armor Charge indicator after the trigger that should generate it.\n\nHow to use it\n1. Check that Argent Blade is available and legal in the activity you are entering.\n2. Trigger it and watch whether Armor Charge is added.\n3. If it is not, test a separate, legal Armor Charge source so you can identify which part of the loop is failing.\n\nWhat to watch for\nThis does not promise that adding any second perk fixes it. Confirm the source and resulting charge in-game. Artifact effects cannot be assumed active in every PvP playlist.\n\nSource & status\nBungie known-issues page reviewed 2 November 2026. Current activity and Artifact availability need checking.",
+      "source_url": "https://help.bungie.net/hc/en-us/articles/39007140765204-Destiny-2-Known-Issues-and-Vital-Information",
+      "source_published_at": null,
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Argent Blade"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Build warning",
+        "activity": "PvE / eligible PvP",
+        "guardian": "All classes",
+        "takeaway": "Bungie’s issue list reports that Argent Blade can fail to grant Armor Charge when it is your only equipped charge-generating perk.",
+        "explanation": "A sword loop can feel weaker than expected if the Armor Charge it depends on never appears. Before assuming your damage or ability mods are being fed, watch the Armor Charge indicator after the trigger that should generate it.",
+        "steps": [
+          "Check that Argent Blade is available and legal in the activity you are entering.",
+          "Trigger it and watch whether Armor Charge is added.",
+          "If it is not, test a separate, legal Armor Charge source so you can identify which part of the loop is failing."
+        ],
+        "watch_out": "This does not promise that adding any second perk fixes it. Confirm the source and resulting charge in-game. Artifact effects cannot be assumed active in every PvP playlist.",
+        "status": "Bungie known-issues page reviewed 2 November 2026. Current activity and Artifact availability need checking."
+      }
+    },
+    {
+      "id": "player:free-grapple",
+      "title": "A free Grapple is not a free Grenade Kickstart refund",
+      "summary": "Bungie fixed Grenade Kickstart activating from free Grapples supplied by a Grapple Tangle or the Grappler modifier.",
+      "text": "Bungie fixed Grenade Kickstart activating from free Grapples supplied by a Grapple Tangle or the Grappler modifier.\n\nWhy it matters\nThis is an important limit on an “unlimited abilities” loop. A Grapple that costs no grenade energy should not be counted as spending a grenade and earning a Kickstart refund under this correction. Otherwise a build planner can promise more grenade energy than the game actually gives you.\n\nHow to use it\n1. Separate your paid Grapples from free Grapples when testing the loop.\n2. Watch grenade energy after each type rather than combining them into one average.\n3. Choose another supported refund source if the build relies on getting energy from every free Grapple.\n\nWhat to watch for\nThe patch establishes the free-Grapple exception. It does not establish your exact grenade recharge time or every other refund interaction.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Grenade Kickstart",
+        "Grapple"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ability loop",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie fixed Grenade Kickstart activating from free Grapples supplied by a Grapple Tangle or the Grappler modifier.",
+        "explanation": "This is an important limit on an “unlimited abilities” loop. A Grapple that costs no grenade energy should not be counted as spending a grenade and earning a Kickstart refund under this correction. Otherwise a build planner can promise more grenade energy than the game actually gives you.",
+        "steps": [
+          "Separate your paid Grapples from free Grapples when testing the loop.",
+          "Watch grenade energy after each type rather than combining them into one average.",
+          "Choose another supported refund source if the build relies on getting energy from every free Grapple."
+        ],
+        "watch_out": "The patch establishes the free-Grapple exception. It does not establish your exact grenade recharge time or every other refund interaction.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:lament-stronghold",
+      "title": "Lament + Stronghold: a Heavy-sword survival idea to test",
+      "summary": "The research points to Lament for a Titan sword setup because it is a Heavy sword. Bungie limited Stronghold’s infinite guard to Heavy swords.",
+      "text": "The research points to Lament for a Titan sword setup because it is a Heavy sword. Bungie limited Stronghold’s infinite guard to Heavy swords.\n\nWhy it matters\nThat distinction matters if you are copying a sword build: you cannot assume a Special-ammo sword receives the same guard behaviour. The source also records Lament’s charged light attacks being fixed to trigger sword-based Artifact perks, with later changes partly restoring its final-combo damage and self-healing. Together these are reasons to investigate the combination, not proof of an invincible loadout.\n\nHow to use it\n1. Use the Heavy sword Lament with Stronghold when testing this particular guard interaction.\n2. Test guarding and Lament’s attack/healing sequence separately, then combine them.\n3. Add an available sword Artifact perk only after checking that Lament’s charged attacks actually trigger it in your activity.\n\nWhat to watch for\nExact protection, healing uptime and current Artifact choices are not established by these patch notes. This is a build direction, not a completed “unkillable” build.\n\nSource & status\nBased on Bungie’s 24 February and 9 June 2026 changes. The combined loop has not been retested in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_5_5_3",
+      "source_published_at": "2026-02-24",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "The Lament",
+        "Stronghold"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Survival",
+        "activity": "PvE",
+        "guardian": "Titan",
+        "takeaway": "The research points to Lament for a Titan sword setup because it is a Heavy sword. Bungie limited Stronghold’s infinite guard to Heavy swords.",
+        "explanation": "That distinction matters if you are copying a sword build: you cannot assume a Special-ammo sword receives the same guard behaviour. The source also records Lament’s charged light attacks being fixed to trigger sword-based Artifact perks, with later changes partly restoring its final-combo damage and self-healing. Together these are reasons to investigate the combination, not proof of an invincible loadout.",
+        "steps": [
+          "Use the Heavy sword Lament with Stronghold when testing this particular guard interaction.",
+          "Test guarding and Lament’s attack/healing sequence separately, then combine them.",
+          "Add an available sword Artifact perk only after checking that Lament’s charged attacks actually trigger it in your activity."
+        ],
+        "watch_out": "Exact protection, healing uptime and current Artifact choices are not established by these patch notes. This is a build direction, not a completed “unkillable” build.",
+        "status": "Based on Bungie’s 24 February and 9 June 2026 changes. The combined loop has not been retested in the current patch."
+      }
+    },
+    {
+      "id": "player:trinity-ammo",
+      "title": "Trinity Ghoul: chain kills can matter for your next ammo drop",
+      "summary": "Bungie fixed Lightning Rod chain kills failing to grant ammo progress.",
+      "text": "Bungie fixed Lightning Rod chain kills failing to grant ammo progress.\n\nWhy it matters\nTrinity Ghoul’s value is not only how quickly it clears a group. If those chain kills contribute to ammo progress as described, that clear can also help prepare your Special or Heavy economy for what comes next. This is a reason to compare the whole encounter, not just one arrow’s damage.\n\nHow to use it\n1. Use Lightning Rod to clear a comparable group of enemies.\n2. Track ammo progress or subsequent ammo availability across several repeatable groups.\n3. Compare that result with ordinary bow kills before deciding whether the weapon improves your loadout’s ammo economy.\n\nWhat to watch for\nThe patch does not give an exact amount of ammo progress or promise the same kill credit for every Exotic, Artifact perk or PvP mode.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Trinity Ghoul",
+        "Lightning Rod"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ammo economy",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie fixed Lightning Rod chain kills failing to grant ammo progress.",
+        "explanation": "Trinity Ghoul’s value is not only how quickly it clears a group. If those chain kills contribute to ammo progress as described, that clear can also help prepare your Special or Heavy economy for what comes next. This is a reason to compare the whole encounter, not just one arrow’s damage.",
+        "steps": [
+          "Use Lightning Rod to clear a comparable group of enemies.",
+          "Track ammo progress or subsequent ammo availability across several repeatable groups.",
+          "Compare that result with ordinary bow kills before deciding whether the weapon improves your loadout’s ammo economy."
+        ],
+        "watch_out": "The patch does not give an exact amount of ammo progress or promise the same kill credit for every Exotic, Artifact perk or PvP mode.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:ergo-vortex",
+      "title": "Vortex Ergo Sum: old six-ammo heavy-attack advice can mislead you",
+      "summary": "Bungie corrected Ergo Sum’s Vortex heavy attack spending six ammo instead of four.",
+      "text": "Bungie corrected Ergo Sum’s Vortex heavy attack spending six ammo instead of four.\n\nWhy it matters\nAn old rotation built around the bug can understate how many heavy attacks your reserve supports after the fix. The practical benefit is ammo efficiency for that particular attack, not an automatic increase to every hit’s damage. It also does not turn a Special sword into a Heavy sword for armor interactions.\n\nHow to use it\n1. Confirm your Ergo Sum uses the Vortex frame.\n2. Watch the ammo counter before and after its heavy attack.\n3. Plan your attack sequence around the cost your copy actually spends, rather than an old clip showing the six-ammo bug.\n\nWhat to watch for\nThis correction concerns Vortex heavy-attack cost. It does not establish boss damage per second or a way to generate sword ammo in PvP.\n\nSource & status\nBungie published this change on 2026-06-23. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_published_at": "2026-06-23",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Ergo Sum"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ammo economy",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie corrected Ergo Sum’s Vortex heavy attack spending six ammo instead of four.",
+        "explanation": "An old rotation built around the bug can understate how many heavy attacks your reserve supports after the fix. The practical benefit is ammo efficiency for that particular attack, not an automatic increase to every hit’s damage. It also does not turn a Special sword into a Heavy sword for armor interactions.",
+        "steps": [
+          "Confirm your Ergo Sum uses the Vortex frame.",
+          "Watch the ammo counter before and after its heavy attack.",
+          "Plan your attack sequence around the cost your copy actually spends, rather than an old clip showing the six-ammo bug."
+        ],
+        "watch_out": "This correction concerns Vortex heavy-attack cost. It does not establish boss damage per second or a way to generate sword ammo in PvP.",
+        "status": "Bungie published this change on 2026-06-23. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:forges-kin",
+      "title": "Forge’s Kin: test the Black Armory combination, not just one weapon",
+      "summary": "Bungie fixed the non-enhanced version of Forge’s Kin failing to receive its increased benefits when multiple Black Armory weapons were equipped.",
+      "text": "Bungie fixed the non-enhanced version of Forge’s Kin failing to receive its increased benefits when multiple Black Armory weapons were equipped.\n\nWhy it matters\nThe interaction to investigate is the equipment combination. If you are evaluating the trait with only one relevant weapon equipped, you are not testing the extra benefit described in the correction. This is a potential reason to compare a matching set of weapons with your usual mixed loadout.\n\nHow to use it\n1. Check whether your selected weapon has the non-enhanced Forge’s Kin trait.\n2. Compare its behaviour with one relevant Black Armory weapon equipped, then with multiple relevant weapons.\n3. Decide whether the observed benefit is worth changing the rest of your loadout.\n\nWhat to watch for\nThe source does not give an exact bonus and does not establish the enhanced version’s behaviour. Specific current weapon versions and available rolls still need checking.\n\nSource & status\nBungie published this change on 2026-06-23. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_published_at": "2026-06-23",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Forge's Kin"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon synergy",
+        "activity": "PvE / PvP research",
+        "guardian": "All classes",
+        "takeaway": "Bungie fixed the non-enhanced version of Forge’s Kin failing to receive its increased benefits when multiple Black Armory weapons were equipped.",
+        "explanation": "The interaction to investigate is the equipment combination. If you are evaluating the trait with only one relevant weapon equipped, you are not testing the extra benefit described in the correction. This is a potential reason to compare a matching set of weapons with your usual mixed loadout.",
+        "steps": [
+          "Check whether your selected weapon has the non-enhanced Forge’s Kin trait.",
+          "Compare its behaviour with one relevant Black Armory weapon equipped, then with multiple relevant weapons.",
+          "Decide whether the observed benefit is worth changing the rest of your loadout."
+        ],
+        "watch_out": "The source does not give an exact bonus and does not establish the enhanced version’s behaviour. Specific current weapon versions and available rolls still need checking.",
+        "status": "Bungie published this change on 2026-06-23. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:lingering-discord",
+      "title": "Lingering Dread + Discord: a perk interaction worth revisiting",
+      "summary": "Bungie fixed Lingering Dread not benefiting from Discord.",
+      "text": "Bungie fixed Lingering Dread not benefiting from Discord.\n\nWhy it matters\nIf an older guide dismissed this interaction because the perk did nothing, that conclusion may be based on the bug. The useful next step is to check Discord’s actual trigger and benefit on your copy, then judge whether it fits the way you swap weapons.\n\nHow to use it\n1. Check whether you own a Lingering Dread with Discord.\n2. Read the perk on that copy and trigger it using the required weapon sequence.\n3. Compare the resulting perk behaviour with the same weapon while Discord is inactive.\n\nWhat to watch for\nThe fix does not prove that every current Lingering Dread version can roll Discord, and this record does not establish an ammo refund amount, damage increase or PvP kill time.\n\nSource & status\nBungie published this change on 2026-06-23. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_published_at": "2026-06-23",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Lingering Dread",
+        "Discord"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon synergy",
+        "activity": "PvE / PvP research",
+        "guardian": "All classes",
+        "takeaway": "Bungie fixed Lingering Dread not benefiting from Discord.",
+        "explanation": "If an older guide dismissed this interaction because the perk did nothing, that conclusion may be based on the bug. The useful next step is to check Discord’s actual trigger and benefit on your copy, then judge whether it fits the way you swap weapons.",
+        "steps": [
+          "Check whether you own a Lingering Dread with Discord.",
+          "Read the perk on that copy and trigger it using the required weapon sequence.",
+          "Compare the resulting perk behaviour with the same weapon while Discord is inactive."
+        ],
+        "watch_out": "The fix does not prove that every current Lingering Dread version can roll Discord, and this record does not establish an ammo refund amount, damage increase or PvP kill time.",
+        "status": "Bungie published this change on 2026-06-23. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:astrocyte",
+      "title": "Astrocyte Verse: Blink can become a weapon setup step",
+      "summary": "Bungie’s June patch described Blink granting Volatile Rounds with Astrocyte Verse, alongside a horizontal Dark Blink air move.",
+      "text": "Bungie’s June patch described Blink granting Volatile Rounds with Astrocyte Verse, alongside a horizontal Dark Blink air move.\n\nWhy it matters\nThat creates a Warlock build idea where movement prepares a weapon effect. The practical question is whether you can use the Blink you already want for positioning to start your next attack, rather than treating movement and weapon damage as unrelated parts of the build.\n\nHow to use it\n1. Equip Astrocyte Verse and a setup that can use the described Blink interaction.\n2. Blink into a useful position and check whether Volatile Rounds appears.\n3. Test the subsequent weapon attack and the buff’s duration before building a full rotation around it.\n\nWhat to watch for\nThe patch note does not supply a duration, a boss damage gain or a PvP kill-time improvement. Confirm the effect and eligible weapon on your current setup.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Astrocyte Verse"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ability and weapon loop",
+        "activity": "PvE",
+        "guardian": "Warlock",
+        "takeaway": "Bungie’s June patch described Blink granting Volatile Rounds with Astrocyte Verse, alongside a horizontal Dark Blink air move.",
+        "explanation": "That creates a Warlock build idea where movement prepares a weapon effect. The practical question is whether you can use the Blink you already want for positioning to start your next attack, rather than treating movement and weapon damage as unrelated parts of the build.",
+        "steps": [
+          "Equip Astrocyte Verse and a setup that can use the described Blink interaction.",
+          "Blink into a useful position and check whether Volatile Rounds appears.",
+          "Test the subsequent weapon attack and the buff’s duration before building a full rotation around it."
+        ],
+        "watch_out": "The patch note does not supply a duration, a boss damage gain or a PvP kill-time improvement. Confirm the effect and eligible weapon on your current setup.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:pyrogale",
+      "title": "Pyrogale: the explosion buff is not 10% more damage to the whole Super",
+      "summary": "Bungie described a 10% increase to the Super Cyclone’s explosion component and roughly 40% better tracking for Pyrogale Gauntlets.",
+      "text": "Bungie described a 10% increase to the Super Cyclone’s explosion component and roughly 40% better tracking for Pyrogale Gauntlets.\n\nWhy it matters\nThe distinction matters when comparing boss damage. Better tracking may help the effect connect, but the published 10% change applies to its explosion component. Applying that increase to all ticks, Scorch and every other part of the Super would exaggerate the benefit.\n\nHow to use it\n1. Compare the explosion hit separately from the rest of the Super’s damage.\n2. Use a repeatable target so missed hits do not masquerade as a damage change.\n3. For a moving target, judge how reliably the cyclone connects as well as its largest damage number.\n\nWhat to watch for\nThe patch numbers do not establish a total boss damage increase or the same effects against Guardians.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Pyrogale Gauntlets"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Damage explanation",
+        "activity": "PvE",
+        "guardian": "Titan",
+        "takeaway": "Bungie described a 10% increase to the Super Cyclone’s explosion component and roughly 40% better tracking for Pyrogale Gauntlets.",
+        "explanation": "The distinction matters when comparing boss damage. Better tracking may help the effect connect, but the published 10% change applies to its explosion component. Applying that increase to all ticks, Scorch and every other part of the Super would exaggerate the benefit.",
+        "steps": [
+          "Compare the explosion hit separately from the rest of the Super’s damage.",
+          "Use a repeatable target so missed hits do not masquerade as a damage change.",
+          "For a moving target, judge how reliably the cyclone connects as well as its largest damage number."
+        ],
+        "watch_out": "The patch numbers do not establish a total boss damage increase or the same effects against Guardians.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:shards",
+      "title": "Shards of Galanor: landing your knives is part of the payoff",
+      "summary": "Bungie described a delayed Solar explosion and Solar shrapnel when most Blade Barrage knives land while using Shards of Galanor.",
+      "text": "Bungie described a delayed Solar explosion and Solar shrapnel when most Blade Barrage knives land while using Shards of Galanor.\n\nWhy it matters\nThat makes hit consistency important to the Exotic’s payoff. A throw that scatters knives away from the target may not be comparable with one that lands the required hits. Look at the delayed follow-up as well as the first wave of knife damage.\n\nHow to use it\n1. Choose a target and position where your Blade Barrage knives can connect consistently.\n2. Watch for the delayed explosion and shrapnel after the knives land.\n3. Compare complete damage sequences rather than judging only the first damage numbers.\n\nWhat to watch for\nThe source does not give the exact knife threshold or a verified boss damage total. PvP behaviour must be checked separately.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Shards of Galanor"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Super interaction",
+        "activity": "PvE",
+        "guardian": "Hunter",
+        "takeaway": "Bungie described a delayed Solar explosion and Solar shrapnel when most Blade Barrage knives land while using Shards of Galanor.",
+        "explanation": "That makes hit consistency important to the Exotic’s payoff. A throw that scatters knives away from the target may not be comparable with one that lands the required hits. Look at the delayed follow-up as well as the first wave of knife damage.",
+        "steps": [
+          "Choose a target and position where your Blade Barrage knives can connect consistently.",
+          "Watch for the delayed explosion and shrapnel after the knives land.",
+          "Compare complete damage sequences rather than judging only the first damage numbers."
+        ],
+        "watch_out": "The source does not give the exact knife threshold or a verified boss damage total. PvP behaviour must be checked separately.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:storm-grenade",
+      "title": "Touch of Thunder: tracking can matter more than a paper damage number",
+      "summary": "Bungie increased the Storm Grenade’s duration by half a second and its maximum tracking speed against PvE enemies by 38%, while increasing the time it takes to reach that speed by 25%.",
+      "text": "Bungie increased the Storm Grenade’s duration by half a second and its maximum tracking speed against PvE enemies by 38%, while increasing the time it takes to reach that speed by 25%.\n\nWhy it matters\nThe trade-off is that a higher eventual tracking speed does not mean instant acceleration. For moving enemies, what matters is how many damage ticks actually connect during the grenade’s lifetime. The extra duration and tracking changes are reasons to compare real hit consistency rather than assume a flat damage multiplier.\n\nHow to use it\n1. Use Storm Grenade with Touch of Thunder for this comparison.\n2. Test it against a repeatably moving PvE target.\n3. Count connected ticks and the complete damage sequence, keeping your other build choices fixed.\n\nWhat to watch for\nThe tracking figures are stated for combatants. They do not establish faster tracking against Guardians or a PvP kill time.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Touch of Thunder",
+        "Storm Grenade"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ability explanation",
+        "activity": "PvE",
+        "guardian": "Titan",
+        "takeaway": "Bungie increased the Storm Grenade’s duration by half a second and its maximum tracking speed against PvE enemies by 38%, while increasing the time it takes to reach that speed by 25%.",
+        "explanation": "The trade-off is that a higher eventual tracking speed does not mean instant acceleration. For moving enemies, what matters is how many damage ticks actually connect during the grenade’s lifetime. The extra duration and tracking changes are reasons to compare real hit consistency rather than assume a flat damage multiplier.",
+        "steps": [
+          "Use Storm Grenade with Touch of Thunder for this comparison.",
+          "Test it against a repeatably moving PvE target.",
+          "Count connected ticks and the complete damage sequence, keeping your other build choices fixed."
+        ],
+        "watch_out": "The tracking figures are stated for combatants. They do not establish faster tracking against Guardians or a PvP kill time.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:deadshot",
+      "title": "Deadshot’s energy nerf does not mean 40% less shot damage",
+      "summary": "Bungie reduced the Super energy gained from player kills during Golden Gun: Deadshot by 40%.",
+      "text": "Bungie reduced the Super energy gained from player kills during Golden Gun: Deadshot by 40%.\n\nWhy it matters\nThis changes the energy return from a kill, not the damage of a Golden Gun shot. If you are comparing old Crucible clips, a chain of kills may sustain the Super differently after this change even when an individual shot still behaves as expected.\n\nHow to use it\n1. Keep the same Super variant when comparing clips or tests.\n2. Watch the Super meter after a player kill rather than treating shot damage as the changed value.\n3. Plan follow-up engagements around the energy that remains, not an older kill-chain demonstration.\n\nWhat to watch for\nThis is not a 40% reduction to the entire Super duration, all recharge sources or every shot’s damage.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Golden Gun: Deadshot"
+      ],
+      "player": {
+        "version": 1,
+        "category": "PvP explanation",
+        "activity": "PvP",
+        "guardian": "Hunter",
+        "takeaway": "Bungie reduced the Super energy gained from player kills during Golden Gun: Deadshot by 40%.",
+        "explanation": "This changes the energy return from a kill, not the damage of a Golden Gun shot. If you are comparing old Crucible clips, a chain of kills may sustain the Super differently after this change even when an individual shot still behaves as expected.",
+        "steps": [
+          "Keep the same Super variant when comparing clips or tests.",
+          "Watch the Super meter after a player kill rather than treating shot damage as the changed value.",
+          "Plan follow-up engagements around the energy that remains, not an older kill-chain demonstration."
+        ],
+        "watch_out": "This is not a 40% reduction to the entire Super duration, all recharge sources or every shot’s damage.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:skull-nova",
+      "title": "Skull of Dire Ahamkara: watch for the Nova Lance follow-up",
+      "summary": "Bungie described a short Nova Lance opportunity after casting Nova Bomb with Skull of Dire Ahamkara. Destroying a Cataclysm Nova Bomb with Nova Lance creates a Nova Vortex alongside the seekers.",
+      "text": "Bungie described a short Nova Lance opportunity after casting Nova Bomb with Skull of Dire Ahamkara. Destroying a Cataclysm Nova Bomb with Nova Lance creates a Nova Vortex alongside the seekers.\n\nWhy it matters\nThis is an interaction to test as a sequence, not just a passive damage bonus. Its value depends on landing the follow-up within the window and on what the Vortex and seekers actually hit. Time spent on that follow-up also needs comparing with returning to your weapons.\n\nHow to use it\n1. Use Skull of Dire Ahamkara with the relevant Nova Bomb setup.\n2. After casting, check for the Nova Lance follow-up window and test the described Cataclysm interaction.\n3. Compare the full sequence with a normal cast followed immediately by weapon fire.\n\nWhat to watch for\nThe source does not give the window length or Nova Lance damage. This is a testing idea, not a verified highest-damage boss rotation.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Skull of Dire Ahamkara"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Super interaction",
+        "activity": "PvE",
+        "guardian": "Warlock",
+        "takeaway": "Bungie described a short Nova Lance opportunity after casting Nova Bomb with Skull of Dire Ahamkara. Destroying a Cataclysm Nova Bomb with Nova Lance creates a Nova Vortex alongside the seekers.",
+        "explanation": "This is an interaction to test as a sequence, not just a passive damage bonus. Its value depends on landing the follow-up within the window and on what the Vortex and seekers actually hit. Time spent on that follow-up also needs comparing with returning to your weapons.",
+        "steps": [
+          "Use Skull of Dire Ahamkara with the relevant Nova Bomb setup.",
+          "After casting, check for the Nova Lance follow-up window and test the described Cataclysm interaction.",
+          "Compare the full sequence with a normal cast followed immediately by weapon fire."
+        ],
+        "watch_out": "The source does not give the window length or Nova Lance damage. This is a testing idea, not a verified highest-damage boss rotation.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:pvp-opening-charges",
+      "title": "Multiple ability charges: check what you actually start a match with",
+      "summary": "Bungie’s June patch states that multi-charge abilities start a PvP match with one charge.",
+      "text": "Bungie’s June patch states that multi-charge abilities start a PvP match with one charge.\n\nWhy it matters\nA build can have room for multiple charges without giving you all of them at the opening spawn. This matters if your first engagement assumes two immediate uses. Build the opening plan around the charge that is actually available, then assess later recharges separately.\n\nHow to use it\n1. Enter the intended PvP mode and check the ability counter at match start.\n2. Plan the opening engagement around that starting count.\n3. Measure later recharge behaviour separately from the opening restriction.\n\nWhat to watch for\nThe starting-charge rule does not give a recharge time or remove the ability’s later capacity for more charges. Check mode-specific rules before relying on Artifact effects.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [],
+      "player": {
+        "version": 1,
+        "category": "Opening strategy",
+        "activity": "PvP",
+        "guardian": "All classes",
+        "takeaway": "Bungie’s June patch states that multi-charge abilities start a PvP match with one charge.",
+        "explanation": "A build can have room for multiple charges without giving you all of them at the opening spawn. This matters if your first engagement assumes two immediate uses. Build the opening plan around the charge that is actually available, then assess later recharges separately.",
+        "steps": [
+          "Enter the intended PvP mode and check the ability counter at match start.",
+          "Plan the opening engagement around that starting count.",
+          "Measure later recharge behaviour separately from the opening restriction."
+        ],
+        "watch_out": "The starting-charge rule does not give a recharge time or remove the ability’s later capacity for more charges. Check mode-specific rules before relying on Artifact effects.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    },
+    {
+      "id": "player:cusp-gaze",
+      "title": "Cusp Sempiternal: an old Withering Gaze aiming bug was fixed",
+      "summary": "Bungie fixed Cusp Sempiternal’s Withering Gaze failing to weaken unless you were still aiming when the projectile reached its target.",
+      "text": "Bungie fixed Cusp Sempiternal’s Withering Gaze failing to weaken unless you were still aiming when the projectile reached its target.\n\nWhy it matters\nThat distinction matters for a shoot-then-swap playstyle. The old impact-time aiming requirement was a bug, so it should not be copied into a guide as the intended trigger. You still need to satisfy the perk’s actual activation condition before firing.\n\nHow to use it\n1. Read Withering Gaze’s activation requirement on your copy.\n2. Activate it, fire, then compare staying aimed with your normal weapon swap.\n3. Watch for weakening on the same PvE target before adopting the swap sequence.\n\nWhat to watch for\nThe correction does not remove the perk’s normal trigger. It also does not establish a damage increase or time-to-kill against Guardians.\n\nSource & status\nBungie published this change on 2026-06-09. Forge has not retested it in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Cusp Sempiternal",
+        "Withering Gaze"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon interaction",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie fixed Cusp Sempiternal’s Withering Gaze failing to weaken unless you were still aiming when the projectile reached its target.",
+        "explanation": "That distinction matters for a shoot-then-swap playstyle. The old impact-time aiming requirement was a bug, so it should not be copied into a guide as the intended trigger. You still need to satisfy the perk’s actual activation condition before firing.",
+        "steps": [
+          "Read Withering Gaze’s activation requirement on your copy.",
+          "Activate it, fire, then compare staying aimed with your normal weapon swap.",
+          "Watch for weakening on the same PvE target before adopting the swap sequence."
+        ],
+        "watch_out": "The correction does not remove the perk’s normal trigger. It also does not establish a damage increase or time-to-kill against Guardians.",
+        "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
+      }
+    }
+  ]
+}

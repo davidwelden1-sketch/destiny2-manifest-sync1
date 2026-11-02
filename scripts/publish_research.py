@@ -3,24 +3,23 @@ import datetime,hashlib,json,os,re,urllib.request,urllib.parse
 from pathlib import Path
 BASE='https://prometheus-bungie-auth.davidwelden1.workers.dev'
 def build(root):
- records=[]
- for p in sorted((root/'data').glob('*.json')):
-  data=json.loads(p.read_text());raw=p.read_bytes();entries=data.get('records',data.get('findings',data.get('leads',[data])))
-  if isinstance(entries,dict):entries=[{'id':k,**v} if isinstance(v,dict) else {'id':k,'value':v} for k,v in entries.items()]
-  if not isinstance(entries,list):entries=[data]
-  for n,v in enumerate(entries):
-   if not isinstance(v,dict):continue
-   source=v.get('source_url') or v.get('source') or data.get('source_url') or 'https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/blob/main/'+p.as_posix()
-   if not isinstance(source,str) or not source.startswith('https://'):source='https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/blob/main/'+p.as_posix()
-   title=v.get('title') or v.get('weapon') or v.get('name') or str(v.get('id') or p.stem).split(':')[-1].replace('_',' ').replace('-',' ').title()
-   terms=[str(v[k]) for k in ('weapon','name','exotic','perk') if isinstance(v.get(k),str) and len(v[k])>=6]
-   grade=str(v.get('confidence_grade',v.get('confidence',data.get('confidence_grade','research'))))
-   evidence='software' if any(s in grade.lower() for s in ['synthetic','software']) else 'official_historical' if 'official' in grade.lower() or 'bungie_known_issue'==v.get('status') else 'research'
-   if v.get('evidence') in ('archive','official_historical','research','software'):evidence=v['evidence']
-   date=v.get('reviewed_at') or v.get('source_checked_on_utc') or data.get('reviewed_at_utc') or data.get('source_checked_at') or data.get('indexed_at_utc') or data.get('generated_at_utc') or data.get('reviewed_on') or '2026-10-29'
-   summary=v.get('mechanism') or v.get('condition') or v.get('limits') or v.get('summary') or data.get('notes') or data.get('policy') or 'Source-indexed research. Open details for conditions, provenance and unresolved measurements.'
-   records.append({'id':str(v.get('id') or p.stem+':'+str(n)),'title':str(title)[:180],'summary':str(summary)[:1200],'text':json.dumps(v,ensure_ascii=False,indent=2),'source_url':source,'evidence':evidence,'reviewed_at':str(date),'patch_status':str(v.get('bungie_status') or v.get('status') or 'Historical or research evidence; current gameplay not retested.'),'activities':v.get('activities',['pve','pvp']),'runtime_verified':False,'match_terms':terms,'provenance':{'dataset':p.name,'sha256':hashlib.sha256(raw).hexdigest(),'commit':os.environ.get('GITHUB_SHA','local-import')}})
+ # Internal datasets stay in the research repository. Only edited player guides
+ # may enter the player feed; never fall back to raw JSON or code-test reports.
+ p=root/'data/player_discoveries.json';raw=p.read_bytes();data=json.loads(raw);records=[];ids=set()
+ for v in data['records']:
+  player=v.get('player',{})
+  if player.get('version')!=1 or not all(isinstance(player.get(k),str) and len(player[k])>=20 for k in ('takeaway','explanation','watch_out','status')):
+   raise ValueError('Player guide needs a written explanation, practical advice and honest status')
+  if not isinstance(player.get('steps'),list) or not 1<=len(player['steps'])<=8 or not all(isinstance(x,str) and len(x)>=12 for x in player['steps']):
+   raise ValueError('Player guide needs readable steps')
+  if v['id'] in ids or v.get('evidence') not in ('official_historical','research') or v.get('runtime_verified') is not False:
+   raise ValueError('Duplicate or invalid player guide')
+  if not v.get('source_url','').startswith('https://') or not v.get('reviewed_at'):
+   raise ValueError('Player guide needs source and review date')
+  ids.add(v['id']);text=player['takeaway']+'\n\nWhy it matters\n'+player['explanation']+'\n\nHow to use it\n'+'\n'.join(str(i+1)+'. '+x for i,x in enumerate(player['steps']))+'\n\nWhat to watch for\n'+player['watch_out']+'\n\nSource & status\n'+player['status']
+  records.append({**v,'summary':player['takeaway'],'text':text,'provenance':{'dataset':p.name,'sha256':hashlib.sha256(raw).hexdigest(),'commit':os.environ.get('GITHUB_SHA','local-import')}})
  return {'schema_version':1,'generated_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'revision':os.environ.get('GITHUB_SHA','initial-import'),'records':records}
+
 def main():
  feed=build(Path('.'));Path('research-feed.json').write_text(json.dumps(feed,ensure_ascii=False,separators=(',',':')))
  if '--local' in __import__('sys').argv:return
