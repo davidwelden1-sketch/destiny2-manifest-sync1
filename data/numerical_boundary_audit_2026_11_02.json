@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:numerical-boundary-audit:2026-11-02",
+  "reviewed_on_utc": "2026-11-02",
+  "manifest_version_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+  "manifest_usage": "version_context_only_no_damage_or_dr_from_manifest",
+  "last_official_numbered_patch_checked": {
+    "version": "9.7.0.6",
+    "published_on": "2026-10-20",
+    "url": "https://www.bungie.net/7/en-us/News/Article/destiny_2_update_9_7_0_6",
+    "role": "freshness_context_not_numerical_input"
+  },
+  "evidence_scope": "software_boundary_audit_not_in_game_measurement",
+  "records": [
+    {
+      "id": "d2:software-audit:2026-11-02:pvp:ttk-subthreshold",
+      "activity": "pvp",
+      "classes": [
+        "hunter",
+        "titan",
+        "warlock"
+      ],
+      "code_path": "simulator/ttk.py",
+      "test_path": "tests/test_numerical_boundary_safety.py",
+      "defect": "A 1e-9 health epsilon previously allowed below-threshold damage to count as lethal.",
+      "synthetic_reproduction": {
+        "guardian_health": 230,
+        "precision_damage_per_hit": 114.9999999997,
+        "shots_fired": 2,
+        "total_damage": 229.9999999994,
+        "old_reported_shots_to_kill": 2,
+        "correct_shots_to_kill": 3
+      },
+      "repair": "Exact rational comparisons of caller-supplied decimal strings, including pre-multiplier factors and precision/body splits.",
+      "repair_commit": "0df7443281feaa252e71dc969ce18052f2dd25e7",
+      "confidence_grade": "software_reproduction_not_gameplay_measurement",
+      "patch_version_of_measurement": null,
+      "source_measurement_url": null,
+      "measured_guardian_health": null,
+      "measured_weapon_damage": null,
+      "measured_ttk_seconds": null,
+      "current_exact_hash_perk_legality_verified": false,
+      "certified_current_pvp_build": false
+    },
+    {
+      "id": "d2:software-audit:2026-11-02:pve:dr-nonfinite-input",
+      "activity": "pve",
+      "classes": [
+        "hunter",
+        "titan",
+        "warlock"
+      ],
+      "code_path": "simulator/forge_damage_resistance.py",
+      "test_path": "tests/test_numerical_boundary_safety.py",
+      "defect": "Nonfinite and boolean raw damage, boolean DR fractions and boolean Gifted Conviction stack counts were accepted.",
+      "synthetic_reproduction": {
+        "raw_damage": "Infinity",
+        "resistance_fraction": 0.5,
+        "previous_output": "Infinity",
+        "correct_output": "ValueError"
+      },
+      "repair": "Reject nonfinite, negative and boolean damage inputs; reject nonfinite/boolean DR fractions and stack counts.",
+      "repair_commit": "eb37e096c1ccbcd7a5256178c9c9c552019ae449",
+      "confidence_grade": "software_reproduction_not_gameplay_measurement",
+      "stacking_policy": "hypothetical_independent_multiplicative_only",
+      "patch_version_of_measurement": null,
+      "source_measurement_url": null,
+      "measured_pve_damage_resistance": null,
+      "measured_boss_dps": null,
+      "measured_healing_uptime": null,
+      "certified_current_pve_build": false
+    }
+  ],
+  "test_suite": {
+    "path": "tests/test_numerical_boundary_safety.py",
+    "new_test_methods": 13,
+    "execution_status": "verify_final_commit_ci",
+    "all_values_are_synthetic": true
+  },
+  "deployment_gate": "No build or damage numbers may be promoted to verified gameplay based on this dataset."
+}
