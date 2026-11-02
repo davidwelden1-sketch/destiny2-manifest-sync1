@@ -14,4 +14,12 @@ def effective_resistance(resistances, policy="multiplicative"):
 def effective_health(health, shields=0, resistances=(), policy="multiplicative"):
     if not all(type(v) in (int, float) and isfinite(v) for v in (health, shields)) or health <= 0 or shields < 0:
         raise ValueError("Invalid health or shields")
-    # Many individually valid resistance factors can underflow the surviving\n    # damage fraction to zero. Never emit a fictitious infinite EHP.\n    remaining = 1 - effective_resistance(resistances, policy)\n    if remaining <= 0:\n        raise ValueError("Combined resistance is numerically indistinguishable from 100%")\n    ehp = (health + shields) / remaining\n    if not isfinite(ehp):\n        raise ValueError("Effective health is nonfinite")\n    return ehp
+    # Many individually valid resistance factors can underflow the surviving
+    # damage fraction to zero. Never emit a fictitious infinite EHP.
+    remaining = 1 - effective_resistance(resistances, policy)
+    if remaining <= 0:
+        raise ValueError("Combined resistance is numerically indistinguishable from 100%")
+    ehp = (health + shields) / remaining
+    if not isfinite(ehp):
+        raise ValueError("Effective health is nonfinite")
+    return ehp
