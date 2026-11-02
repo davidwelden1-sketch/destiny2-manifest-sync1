@@ -612,6 +612,85 @@
         "watch_out": "The correction does not remove the perk’s normal trigger. It also does not establish a damage increase or time-to-kill against Guardians.",
         "status": "Bungie published this change on 2026-06-09. Forge has not retested it in the current patch."
       }
+    },
+    {
+      "id": "player:attrition-orbs-frame-hits",
+      "title": "Attrition Orbs: wave launchers and rockets need fewer hits",
+      "summary": "Bungie reduced Attrition Orbs activation to four hits for wave-frame grenade launchers and three hits for rocket launchers in Update 9.7.0.",
+      "text": "Bungie reduced Attrition Orbs activation to four hits for wave-frame grenade launchers and three hits for rocket launchers in Update 9.7.0.\n\nWhy it matters\nAttrition Orbs can help supply Orbs of Power for armor-charge and ability loops. The June patch reduced the stated hit thresholds from ten to four for wave-frame launchers and from six to three for rockets. These are hits, not guaranteed numbers of shots or kills, and the change does not automatically apply to other grenade-launcher frames.\n\nHow to use it\n1. Check that your exact weapon and selected perk socket actually contain Attrition Orbs.\n2. If it is a wave-frame grenade launcher, count registered hits toward the four-hit condition; if it is a rocket launcher, compare against the three-hit condition.\n3. Observe Orb creation and the resulting Armor Charge or ability effects separately, rather than assuming every explosion feeds the loop.\n\nWhat to watch for\nArea Denial, Adaptive and Rapid-Fire grenade launchers are not wave frames. Do not apply the four-hit wave-frame rule to them without separate evidence. The patch does not give an Orb-per-second rate, a boss-DPS gain, or a guaranteed orb from one shot.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026. Historical activation thresholds are sourced; current weapon eligibility, enhanced differences and practical uptime have not been retested.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Attrition Orbs",
+        "Wave Frame",
+        "Rocket Launcher"
+      ],
+      "unknown_measurements": [
+        "current weapon-hash and socket legality",
+        "enhanced-perk differences",
+        "in-game activation timing and uptime",
+        "PvE boss DPS",
+        "PvP Guardian TTK",
+        "current Artifact selection and stacking"
+      ],
+      "player": {
+        "version": 1,
+        "category": "PvE weapon loop",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie reduced Attrition Orbs activation to four hits for wave-frame grenade launchers and three hits for rocket launchers in Update 9.7.0.",
+        "explanation": "Attrition Orbs can help supply Orbs of Power for armor-charge and ability loops. The June patch reduced the stated hit thresholds from ten to four for wave-frame launchers and from six to three for rockets. These are hits, not guaranteed numbers of shots or kills, and the change does not automatically apply to other grenade-launcher frames.",
+        "steps": [
+          "Check that your exact weapon and selected perk socket actually contain Attrition Orbs.",
+          "If it is a wave-frame grenade launcher, count registered hits toward the four-hit condition; if it is a rocket launcher, compare against the three-hit condition.",
+          "Observe Orb creation and the resulting Armor Charge or ability effects separately, rather than assuming every explosion feeds the loop."
+        ],
+        "watch_out": "Area Denial, Adaptive and Rapid-Fire grenade launchers are not wave frames. Do not apply the four-hit wave-frame rule to them without separate evidence. The patch does not give an Orb-per-second rate, a boss-DPS gain, or a guaranteed orb from one shot.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026. Historical activation thresholds are sourced; current weapon eligibility, enhanced differences and practical uptime have not been retested."
+      }
+    },
+    {
+      "id": "player:desperado-three-rapid-kills",
+      "title": "Desperado: a second reload trigger beyond precision kills",
+      "summary": "Desperado can now activate after reloading following three rapid kills, as well as its existing precision-kill reload trigger.",
+      "text": "Desperado can now activate after reloading following three rapid kills, as well as its existing precision-kill reload trigger.\n\nWhy it matters\nThe June 2026 change offers a second route to the perk when a fight produces several quick final blows without a precision finish. In Crucible, the original precision-kill reload remains the more straightforward condition to test; the three-rapid-kill route is situational, not an automatic faster time to kill.\n\nHow to use it\n1. Inspect a weapon that actually has Desperado in its selected perk socket; do not assume every pulse rifle can roll it.\n2. Test a precision final blow followed by a reload and check the perk indicator or firing behaviour.\n3. Separately test three rapid final blows followed by a reload, and compare the activation result without assuming the same window in every activity.\n\nWhat to watch for\nBungie's patch does not specify the rapid-kill time window, enhanced-perk differences, firing-rate change or Guardian TTK here. The trigger requires a reload, and three rapid kills may be unrealistic in many PvP duels. Artifact bonuses must be assessed separately and are disabled in Competitive and Trials.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026. Both activation routes are historical official rules; no current gameplay timing or PvP TTK has been measured in this guide.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Desperado",
+        "Pulse Rifle"
+      ],
+      "unknown_measurements": [
+        "current weapon-hash and socket legality",
+        "enhanced-perk differences",
+        "in-game activation timing and uptime",
+        "PvE boss DPS",
+        "PvP Guardian TTK",
+        "current Artifact selection and stacking"
+      ],
+      "player": {
+        "version": 1,
+        "category": "PvP weapon perk",
+        "activity": "PvP / PvE",
+        "guardian": "All classes",
+        "takeaway": "Desperado can now activate after reloading following three rapid kills, as well as its existing precision-kill reload trigger.",
+        "explanation": "The June 2026 change offers a second route to the perk when a fight produces several quick final blows without a precision finish. In Crucible, the original precision-kill reload remains the more straightforward condition to test; the three-rapid-kill route is situational, not an automatic faster time to kill.",
+        "steps": [
+          "Inspect a weapon that actually has Desperado in its selected perk socket; do not assume every pulse rifle can roll it.",
+          "Test a precision final blow followed by a reload and check the perk indicator or firing behaviour.",
+          "Separately test three rapid final blows followed by a reload, and compare the activation result without assuming the same window in every activity."
+        ],
+        "watch_out": "Bungie's patch does not specify the rapid-kill time window, enhanced-perk differences, firing-rate change or Guardian TTK here. The trigger requires a reload, and three rapid kills may be unrealistic in many PvP duels. Artifact bonuses must be assessed separately and are disabled in Competitive and Trials.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026. Both activation routes are historical official rules; no current gameplay timing or PvP TTK has been measured in this guide."
+      }
     }
   ]
 }
