@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:patch970:unmeasured-pve-pvp-leads:2026-11-02",
+  "indexed_at_utc": "2026-11-02T10:23:00Z",
+  "source_scope": "Bungie June 9 2026 official patch; component deltas only, no live gameplay measurements",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:hunter:mobius-quiver-crossbow-buff-cap",
+      "guardian_class": "hunter",
+      "mechanic": "Mobius Quiver Crossbow damage buff",
+      "source_quote_scope": "maximum Moebius Quiver buff to Crossbow weapons reduced by 50%",
+      "published_change": {
+        "max_buff_relative_to_prepatch": 0.5,
+        "prepatch_max_buff": null,
+        "postpatch_max_buff": null
+      },
+      "pve_research": "Compare identical Crossbow precision/boss phases with and without Moebius Quiver; isolate buff cap and uptime.",
+      "pvp_research": "Do not transfer PvE buff-cap observation into Guardian damage or TTK without controlled test.",
+      "confidence_grade": "official_historical_patch_component_only",
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+      "exact_hash_legality_verified": false,
+      "current_artifact_verified": false,
+      "mode_applicability_measured": false,
+      "pve_boss_dps_measured": null,
+      "pve_dr_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:hunter:proximity-knife-detonation",
+      "guardian_class": "hunter",
+      "mechanic": "Proximity Explosive Knife detonation",
+      "source_quote_scope": "detonation size increased from 5 to 6 meters; detonation damage increased from 90 to 100",
+      "published_change": {
+        "radius_meters_before": 5,
+        "radius_meters_after": 6,
+        "detonation_damage_before": 90,
+        "detonation_damage_after": 100
+      },
+      "pve_research": "Measure blast consistency and boss/minor damage with matched subclass, resilience and buffs.",
+      "pvp_research": "Test controlled Guardian hit damage, falloff and knife+weapon cleanup; do not infer 100 Guardian HP or TTK from patch.",
+      "confidence_grade": "official_historical_patch_component_only",
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+      "exact_hash_legality_verified": false,
+      "current_artifact_verified": false,
+      "mode_applicability_measured": false,
+      "pve_boss_dps_measured": null,
+      "pve_dr_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:titan:storm-grenade-tracking-duration",
+      "guardian_class": "titan",
+      "mechanic": "Touch of Thunder Storm Grenade",
+      "source_quote_scope": "storm duration increased 0.5 seconds, maximum tracking speed versus combatants increased 38%, time to max speed increased 25%",
+      "published_change": {
+        "duration_delta_seconds": 0.5,
+        "max_tracking_speed_vs_combatants_relative": 1.38,
+        "time_to_max_speed_relative": 1.25
+      },
+      "pve_research": "Compare hits on moving PvE targets, total boss-phase ticks and uptime with fixed Grenade stat.",
+      "pvp_research": "Combatant tracking figures cannot be applied to Guardian tracking or TTK.",
+      "confidence_grade": "official_historical_patch_component_only",
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+      "exact_hash_legality_verified": false,
+      "current_artifact_verified": false,
+      "mode_applicability_measured": false,
+      "pve_boss_dps_measured": null,
+      "pve_dr_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    }
+  ],
+  "release_policy": "Do not treat official component deltas as verified Guardian TTK, boss DPS, DR, obtainable weapon roll or legal current Artifact build."
+}
