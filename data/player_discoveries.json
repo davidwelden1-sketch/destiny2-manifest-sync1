@@ -887,6 +887,68 @@
         "watch_out": "The 25% published bonus does not establish an exact DPS increase, an enhanced-perk bonus or a PvP two-tap. Missing shots, damage falloff, reload time and magazine rounding can change real results.",
         "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Historical perk tuning, with current weapon legality and measured boss DPS still requiring verification."
       }
+    },
+    {
+      "id": "player:hierarchy-seeker-precision-970",
+      "title": "Hierarchy of Needs: precision marks help its seekers find targets",
+      "summary": "Bungie's June update gave Hierarchy of Needs seekers hidden guidance toward targets you have hit with precision damage and added Scorch on seeker hits.",
+      "text": "Bungie's June update gave Hierarchy of Needs seekers hidden guidance toward targets you have hit with precision damage and added Scorch on seeker hits.\n\nWhy it matters\nThis is a target-selection and Solar follow-up mechanic, not a blanket boss-damage multiplier. The published seeker Scorch notation is +15 (+5), and the catalyst also improves hip-fire accuracy. Precision tagging may help seekers connect during PvE add-clearing or boss phases, but the number of seekers that hit, ignition timing, and damage ownership need a controlled check.\n\nHow to use it\n1. Equip Hierarchy of Needs and verify the catalyst state before comparing runs.\n2. Mark a target with precision damage, then observe whether the seekers preferentially track that target.\n3. Compare Scorch buildup and seeker hits on stationary and moving PvE targets without changing other buffs.\n\nWhat to watch for\nDo not treat the published +15 (+5) Scorch notation as direct Guardian damage, a measured ignition threshold, or proof of PvP tracking. Artifact interactions and damage-phase DPS are not certified.\n\nSource & status\nOfficial Bungie Update 9.7.0, published 9 June 2026; source reviewed 2 November 2026. This is historical patch evidence, not a fresh gameplay measurement.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Hierarchy of Needs",
+        "seeker tracking",
+        "scorch"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon synergy",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie's June update gave Hierarchy of Needs seekers hidden guidance toward targets you have hit with precision damage and added Scorch on seeker hits.",
+        "explanation": "This is a target-selection and Solar follow-up mechanic, not a blanket boss-damage multiplier. The published seeker Scorch notation is +15 (+5), and the catalyst also improves hip-fire accuracy. Precision tagging may help seekers connect during PvE add-clearing or boss phases, but the number of seekers that hit, ignition timing, and damage ownership need a controlled check.",
+        "steps": [
+          "Equip Hierarchy of Needs and verify the catalyst state before comparing runs.",
+          "Mark a target with precision damage, then observe whether the seekers preferentially track that target.",
+          "Compare Scorch buildup and seeker hits on stationary and moving PvE targets without changing other buffs."
+        ],
+        "watch_out": "Do not treat the published +15 (+5) Scorch notation as direct Guardian damage, a measured ignition threshold, or proof of PvP tracking. Artifact interactions and damage-phase DPS are not certified.",
+        "status": "Official Bungie Update 9.7.0, published 9 June 2026; source reviewed 2 November 2026. This is historical patch evidence, not a fresh gameplay measurement."
+      }
+    },
+    {
+      "id": "player:mida-radar-stow-970",
+      "title": "MIDA Multi-Tool: catalyst radar clarity briefly persists after a swap",
+      "summary": "Bungie's June update says MIDA Multi-Tool's improved catalyst radar resolution persists for a few seconds after stowing the weapon.",
+      "text": "Bungie's June update says MIDA Multi-Tool's improved catalyst radar resolution persists for a few seconds after stowing the weapon.\n\nWhy it matters\nIn Crucible, the interesting interaction is information continuity when you switch weapons. Bungie distinguishes the catalyst's activation, which still requires MIDA in your hands, from its improved radar-resolution effect briefly remaining after a swap. This is a timing and awareness advantage to test, not a weapon damage buff.\n\nHow to use it\n1. Equip MIDA Multi-Tool with its catalyst and establish the improved radar display while holding it.\n2. Swap to a second weapon and observe how long the improved radar resolution remains.\n3. Compare the same swap without the catalyst effect, keeping the activity and HUD conditions consistent.\n\nWhat to watch for\nBungie only says a few seconds; no exact duration or guaranteed radar visibility while aiming down sights is established here. Do not infer faster Guardian TTK, Artifact activation or an always-on radar effect.\n\nSource & status\nOfficial Bungie Update 9.7.0, published 9 June 2026; source reviewed 2 November 2026. PvP behavior has not been independently measured in the current patch.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "MIDA Multi-Tool",
+        "radar",
+        "catalyst"
+      ],
+      "player": {
+        "version": 1,
+        "category": "PvP utility",
+        "activity": "PvP",
+        "guardian": "All classes",
+        "takeaway": "Bungie's June update says MIDA Multi-Tool's improved catalyst radar resolution persists for a few seconds after stowing the weapon.",
+        "explanation": "In Crucible, the interesting interaction is information continuity when you switch weapons. Bungie distinguishes the catalyst's activation, which still requires MIDA in your hands, from its improved radar-resolution effect briefly remaining after a swap. This is a timing and awareness advantage to test, not a weapon damage buff.",
+        "steps": [
+          "Equip MIDA Multi-Tool with its catalyst and establish the improved radar display while holding it.",
+          "Swap to a second weapon and observe how long the improved radar resolution remains.",
+          "Compare the same swap without the catalyst effect, keeping the activity and HUD conditions consistent."
+        ],
+        "watch_out": "Bungie only says a few seconds; no exact duration or guaranteed radar visibility while aiming down sights is established here. Do not infer faster Guardian TTK, Artifact activation or an always-on radar effect.",
+        "status": "Official Bungie Update 9.7.0, published 9 June 2026; source reviewed 2 November 2026. PvP behavior has not been independently measured in the current patch."
+      }
     }
   ]
 }
