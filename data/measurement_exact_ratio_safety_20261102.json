@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:numerical-integrity:2026-11-02:exact-observation-ratios",
+  "reviewed_at_utc": "2026-11-02T13:28:00Z",
+  "integration_status": "research_only_not_deployed",
+  "source_code": "simulator/measurement_evidence_gate.py",
+  "test_module": "tests/test_measurement_evidence_gate.py",
+  "confidence_grade": "software_regression_synthetic",
+  "manifest_context": {
+    "version": "245114.26.10.13.2000-1-bnet.66137",
+    "source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41444277070",
+    "note": "Last verified successful version probe, not a new full extraction"
+  },
+  "patch_context": {
+    "version": "9.7.0.6",
+    "date": "2026-10-20",
+    "source": "https://www.bungie.net/7/en-us/News/Article/destiny_2_update_9_7_0_6",
+    "note": "Latest numbered official update located, cosmetic-only; not a measurement"
+  },
+  "findings": [
+    {
+      "id": "d2:software:measurement:pvp-precision-rounding",
+      "mode": "pvp_ttk",
+      "reproduction": {
+        "precision_damage": "114.9999999999999999999999999999999999999999999",
+        "target_health": "230",
+        "hit_sequence": "PP",
+        "old_behavior": "Decimal context rounds sum to 230, falsely lethal",
+        "new_behavior": "Fraction exact comparison rejects nonlethal sequence"
+      },
+      "confidence": "reproducible_synthetic",
+      "pvp_ttk_measured": null
+    },
+    {
+      "id": "d2:software:measurement:pve-dr-rounding",
+      "mode": "pve_dr",
+      "reproduction": {
+        "baseline_hit": "1000000000000000000000000000000000000000000000",
+        "mitigated_hit": "1",
+        "old_behavior": "Default 28-digit Decimal arithmetic renders DR=1",
+        "new_behavior": "Exact rational DR and precision-aware decimal display below 1"
+      },
+      "confidence": "reproducible_synthetic",
+      "pve_dr_measured": null
+    },
+    {
+      "id": "d2:software:measurement:pve-dps-exact-ratio",
+      "mode": "pve_dps",
+      "reproduction": {
+        "total_damage": "1",
+        "duration_seconds": "3",
+        "new_behavior": "Exact 1/3 ratio alongside approximate display"
+      },
+      "confidence": "reproducible_synthetic",
+      "pve_dps_measured": null
+    }
+  ],
+  "safety": {
+    "all_outputs_uncertified": true,
+    "artifact_legality_verified": false,
+    "exact_weapon_roll_legality_verified": false,
+    "community_measurement_ingested": false,
+    "guardian_ttk_measured": false,
+    "defensive_stacking_measured": false,
+    "not_for_build_recommendation": true
+  },
+  "verification": {
+    "new_regression_tests": 5,
+    "github_ci_status": "pending",
+    "commit_sha": "6e52419ac0b921795204b765c42615d176b800e3"
+  }
+}
