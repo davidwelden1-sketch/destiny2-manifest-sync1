@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:exotic-weapon-activation:970:2026-11-02",
+  "reviewed_at_utc": "2026-11-02T21:16:00Z",
+  "source": {
+    "publisher": "Bungie",
+    "patch_version": "9.7.0",
+    "published_at": "2026-06-09",
+    "url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0"
+  },
+  "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:pve:tarrabah-scorched-combatant-ravenous-beast",
+      "weapon": "Tarrabah",
+      "activity": "PvE",
+      "published_mechanic": {
+        "damage_to_scorched_combatants_progress_increase_percent": 33,
+        "final_blow_meter_progress_percent": 10,
+        "all_magazine_hits_scorched_enemy_can_fill_meter": true
+      },
+      "pve_research": "Test a separately sourced Scorch effect against the same combatant, with identical Tarrabah damage sequences and no-kill control. Record meter movement, hit attribution and Scorch ownership.",
+      "pvp_research": "Published target is combatants; Guardian proc rate and PvP damage remain unknown. Do not apply the 33% to PvP.",
+      "player_guide_id": "player:tarrabah-scorched-ravenous-beast-970",
+      "evidence": "official_historical",
+      "exact_weapon_hash_verified": false,
+      "scorch_source_perk_pool_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pvp_guardian_ttk_measured": null,
+      "runtime_activation_verified": false,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:pvp:jade-rabbit-fate-firefly-catalyst",
+      "weapon": "Jade Rabbit",
+      "activity": "PvP research; PvE also applicable pending testing",
+      "published_mechanic": {
+        "magazine_size": 15,
+        "precision_kill_adds_stack": true,
+        "stack_cap": 15,
+        "stack_gain_refills_magazine": true,
+        "reload_preserves_stacks": true,
+        "direct_body_damage_removes_one_stack": true,
+        "firefly_splash_does_not_remove_stack": true,
+        "firefly_damage_scales_with_stacks": true,
+        "catalyst_special_reload_consumes_stacks_for_one_micro_missile": true
+      },
+      "pvp_research": "Compare precision kill, direct body damage, reload, Firefly splash and catalyst special reload in separate controlled Guardian scenarios; measure stack change, missile damage and TTK independently.",
+      "pve_research": "Test whether Firefly splash preserves stacks and how many can be maintained against combatants; no boss DPS inferred.",
+      "player_guide_id": "player:jade-rabbit-fate-firefly-970",
+      "evidence": "official_historical",
+      "exact_weapon_hash_verified": false,
+      "catalyst_ownership_verified": false,
+      "current_artifact_verified": false,
+      "measured_firefly_damage": null,
+      "measured_micro_missile_damage": null,
+      "pvp_guardian_ttk_measured": null,
+      "pve_boss_dps_measured": null,
+      "runtime_activation_verified": false,
+      "certified_for_app_build_recommendation": false
+    }
+  ],
+  "limitations": "Published 9.7.0 historical rules only. Software state transitions below are synthetic, not gameplay. No current Artifact, weapon sockets, kill attribution, enhanced rolls, boss DPS, Guardian TTK, DR, or cooldown certified."
+}
