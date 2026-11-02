@@ -4,7 +4,7 @@ Exact decimal-rational comparisons prevent a tiny below-threshold damage value
 from being rounded into an impossible two-tap or three-tap. This is a model,
 not a claim of measured damage, legal rolls, or live-game TTK.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass\nfrom decimal import Decimal
 from fractions import Fraction
 from math import ceil, isfinite
 
@@ -58,7 +58,7 @@ def optimal_ttk(profile: WeaponProfile, health: float, multiplier: float = 1.0) 
     mult = _positive_fraction(multiplier, "multiplier")
     shots = max(1, ceil(h / (precision * mult)))
     return {"shots": shots, "ttk_seconds": ttk_seconds(profile.rpm, shots, profile.first_shot_delay),
-            "precision_damage_after_multiplier": profile.precision_damage * multiplier,
+            "precision_damage_after_multiplier": profile.precision_damage * multiplier,\n            "precision_damage_after_multiplier_exact": format(\n                Decimal(str(profile.precision_damage)) * Decimal(str(multiplier)), "f"),\n            "shot_breakpoint_uses_exact_decimal_fractions": True,
             "model": "constant-rate, instant-hit, first-shot-at-t0; no burst cadence or travel time",
             "verified_in_game": False}
 
