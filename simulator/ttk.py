@@ -4,7 +4,8 @@ Exact decimal-rational comparisons prevent a tiny below-threshold damage value
 from being rounded into an impossible two-tap or three-tap. This is a model,
 not a claim of measured damage, legal rolls, or live-game TTK.
 """
-from dataclasses import dataclass\nfrom decimal import Decimal, localcontext
+from dataclasses import dataclass
+from decimal import Decimal, localcontext
 from fractions import Fraction
 from math import ceil, isfinite
 
@@ -57,8 +58,16 @@ def optimal_ttk(profile: WeaponProfile, health: float, multiplier: float = 1.0) 
     precision = _positive_fraction(profile.precision_damage, "precision_damage")
     mult = _positive_fraction(multiplier, "multiplier")
     shots = max(1, ceil(h / (precision * mult)))
-    # Each input is a Python float or integer rendered as a finite decimal.\n    # Fifty decimal digits exceed the product precision of two float reprs.\n    with localcontext() as ctx:\n        ctx.prec = 50\n        exact_display = format(Decimal(str(profile.precision_damage)) *\n                               Decimal(str(multiplier)), "f")\n    return {"shots": shots, "ttk_seconds": ttk_seconds(profile.rpm, shots, profile.first_shot_delay),
-            "precision_damage_after_multiplier": profile.precision_damage * multiplier,\n            "precision_damage_after_multiplier_exact": exact_display,\n            "shot_breakpoint_uses_exact_decimal_fractions": True,
+    # Each input is a Python float or integer rendered as a finite decimal.
+    # Fifty decimal digits exceed the product precision of two float reprs.
+    with localcontext() as ctx:
+        ctx.prec = 50
+        exact_display = format(Decimal(str(profile.precision_damage)) *
+                               Decimal(str(multiplier)), "f")
+    return {"shots": shots, "ttk_seconds": ttk_seconds(profile.rpm, shots, profile.first_shot_delay),
+            "precision_damage_after_multiplier": profile.precision_damage * multiplier,
+            "precision_damage_after_multiplier_exact": exact_display,
+            "shot_breakpoint_uses_exact_decimal_fractions": True,
             "model": "constant-rate, instant-hit, first-shot-at-t0; no burst cadence or travel time",
             "verified_in_game": False}
 
