@@ -57,6 +57,10 @@ class WeaponPairEvidenceTests(unittest.TestCase):
         self.assertFalse(result["certified_for_app_build_recommendation"])
         self.assertIsNone(result["current_obtainable_roll"])
         self.assertIsNone(result["enhanced_perk_legal"])
+        self.assertIsNone(result["patch_version"])
+        self.assertFalse(result["patch_version_verified"])
+        self.assertEqual(result["provenance"]["publisher"], "Bungie")
+        self.assertEqual(result["provenance"]["inventory_definition"]["sha256"], "a" * 64)
         self.assertIsNone(result["pve_boss_dps_measured"])
         self.assertIsNone(result["pvp_guardian_ttk_measured"])
 
