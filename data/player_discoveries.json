@@ -785,6 +785,108 @@
         "watch_out": "These are the June patch conditions, not a guarantee of uninterrupted healing. Do not add Cure and Restoration as damage-resistance percentages, and do not assume the same healing on a hit that is not a final blow.",
         "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. Exact current uptime, PvP scaling and Artifact interactions are unmeasured."
       }
+    },
+    {
+      "id": "player:collective-action-pve-pvp-970",
+      "title": "Collective Action: the PvP bonus is smaller than the PvE bonus",
+      "summary": "Bungie lists Collective Action at 30% extra damage against combatants but only 10% against players; enhanced is 33% and 11%, respectively.",
+      "text": "Bungie lists Collective Action at 30% extra damage against combatants but only 10% against players; enhanced is 33% and 11%, respectively.\n\nWhy it matters\nThat difference matters when planning a Crucible hand-cannon two-tap or a PvE damage loop. A Firesprite or Void Breach grants eight seconds, while an Ionic Trace, Stasis Shard, or Tangle activation grants four. Repeated activations can extend the effect up to sixteen seconds. Bungie also standardized Tangle activation around destroying it, including the impact of a thrown Tangle.\n\nHow to use it\n1. Use a weapon with Collective Action and create a matching elemental pickup through your subclass or another legitimate source.\n2. Collect a Firesprite or Void Breach for the published eight-second duration, or an Ionic Trace or Stasis Shard for four seconds; test the timer on your HUD.\n3. For Strand, destroy a Tangle by shooting it or throwing it so that it impacts; check the weapon buff before engaging.\n4. In Crucible, test the 10% base or 11% enhanced player-damage bonus separately from any other boosts before claiming a two-tap.\n\nWhat to watch for\nThe 30% and 33% PvE bonuses are not Guardian damage. These numbers do not by themselves prove a two-shot kill, which also depends on weapon archetype, precision damage, target health, falloff and any other legal modifiers. Artifact elemental orbs only apply when that Artifact mechanic is available.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Historical published bonuses and durations, not newly measured Crucible TTK or present-season Artifact availability.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Collective Action",
+        "Tangle",
+        "Firesprite",
+        "Void Breach",
+        "Ionic Trace",
+        "Stasis Shard"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon damage",
+        "activity": "PvE / PvP",
+        "guardian": "All classes",
+        "takeaway": "Bungie lists Collective Action at 30% extra damage against combatants but only 10% against players; enhanced is 33% and 11%, respectively.",
+        "explanation": "That difference matters when planning a Crucible hand-cannon two-tap or a PvE damage loop. A Firesprite or Void Breach grants eight seconds, while an Ionic Trace, Stasis Shard, or Tangle activation grants four. Repeated activations can extend the effect up to sixteen seconds. Bungie also standardized Tangle activation around destroying it, including the impact of a thrown Tangle.",
+        "steps": [
+          "Use a weapon with Collective Action and create a matching elemental pickup through your subclass or another legitimate source.",
+          "Collect a Firesprite or Void Breach for the published eight-second duration, or an Ionic Trace or Stasis Shard for four seconds; test the timer on your HUD.",
+          "For Strand, destroy a Tangle by shooting it or throwing it so that it impacts; check the weapon buff before engaging.",
+          "In Crucible, test the 10% base or 11% enhanced player-damage bonus separately from any other boosts before claiming a two-tap."
+        ],
+        "watch_out": "The 30% and 33% PvE bonuses are not Guardian damage. These numbers do not by themselves prove a two-shot kill, which also depends on weapon archetype, precision damage, target health, falloff and any other legal modifiers. Artifact elemental orbs only apply when that Artifact mechanic is available.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Historical published bonuses and durations, not newly measured Crucible TTK or present-season Artifact availability."
+      }
+    },
+    {
+      "id": "player:corruption-potent-corruption-970",
+      "title": "Thorn + Necrotic Grip: two corruption effects can coexist",
+      "summary": "Bungie fixed corruption interactions so ordinary Corruption and Potent Corruption can both remain on the same enemy.",
+      "text": "Bungie fixed corruption interactions so ordinary Corruption and Potent Corruption can both remain on the same enemy.\n\nWhy it matters\nThorn, Touch of Malice and Necrochasm apply the shorter stacking Corruption effect. Necrotic Grip, Spirit of the Necrotic and Osteo Striga apply longer Potent Corruption, which does not stack with itself. The June fix prevents one type from incorrectly erasing or extending the other, opening a practical Warlock damage-over-time test without assuming that either effect has infinite uptime.\n\nHow to use it\n1. On Warlock, equip Necrotic Grip and Thorn if both are available, then apply Thorn's corruption to a durable enemy.\n2. Apply the Necrotic Grip effect through a valid melee trigger and observe whether both damage-over-time effects persist on that enemy.\n3. Compare the timing with a single-effect baseline; keep the two effect types separate when recording ticks and duration.\n4. If you instead use Osteo Striga, treat its Potent Corruption as the same category as Necrotic Grip rather than another independent Potent Corruption stack.\n\nWhat to watch for\nTwo coexisting debuffs are not a verified total DPS multiplier. The patch explicitly removed unintended cross-extension and removal; it does not publish tick damage, PvP lethality, or proof that two Potent Corruption sources stack. Freezing no longer removes Weapon of Sorrow corruption according to the same patch.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Published interaction fix; current damage ticks, duration and Guardian breakpoints remain unmeasured.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Thorn",
+        "Necrotic Grip",
+        "Spirit of the Necrotic",
+        "Osteo Striga",
+        "Corruption",
+        "Potent Corruption"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Damage over time",
+        "activity": "PvE / PvP",
+        "guardian": "Warlock / all classes",
+        "takeaway": "Bungie fixed corruption interactions so ordinary Corruption and Potent Corruption can both remain on the same enemy.",
+        "explanation": "Thorn, Touch of Malice and Necrochasm apply the shorter stacking Corruption effect. Necrotic Grip, Spirit of the Necrotic and Osteo Striga apply longer Potent Corruption, which does not stack with itself. The June fix prevents one type from incorrectly erasing or extending the other, opening a practical Warlock damage-over-time test without assuming that either effect has infinite uptime.",
+        "steps": [
+          "On Warlock, equip Necrotic Grip and Thorn if both are available, then apply Thorn's corruption to a durable enemy.",
+          "Apply the Necrotic Grip effect through a valid melee trigger and observe whether both damage-over-time effects persist on that enemy.",
+          "Compare the timing with a single-effect baseline; keep the two effect types separate when recording ticks and duration.",
+          "If you instead use Osteo Striga, treat its Potent Corruption as the same category as Necrotic Grip rather than another independent Potent Corruption stack."
+        ],
+        "watch_out": "Two coexisting debuffs are not a verified total DPS multiplier. The patch explicitly removed unintended cross-extension and removal; it does not publish tick damage, PvP lethality, or proof that two Potent Corruption sources stack. Freezing no longer removes Weapon of Sorrow corruption according to the same patch.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Published interaction fix; current damage ticks, duration and Guardian breakpoints remain unmeasured."
+      }
+    },
+    {
+      "id": "player:focused-fury-970",
+      "title": "Focused Fury: a stronger precision reward with a lower trigger threshold",
+      "summary": "Bungie raised Focused Fury's listed damage bonus from 20% to 25% and reduced its precision-hit activation requirement from half the magazine to 35%.",
+      "text": "Bungie raised Focused Fury's listed damage bonus from 20% to 25% and reduced its precision-hit activation requirement from half the magazine to 35%.\n\nWhy it matters\nThis changes the setup cost of a precision-damage rotation. Weapons with Focused Fury can potentially spend fewer hits building the perk before using its damage window, but the exact number of shots depends on magazine size and the game's activation rounding. It is a promising sustained-damage candidate, not proof of a best-in-slot boss DPS result.\n\nHow to use it\n1. Choose an owned weapon with Focused Fury and note its actual magazine size and current perk selection.\n2. On a durable PvE target, land uninterrupted precision hits while observing the perk's activation rather than assuming an exact rounded shot count.\n3. Record time to activate, shots remaining, reload interruptions and total damage for a fair comparison with another damage perk.\n4. Check whether an enhanced version is actually available on that specific weapon before including it in a build.\n\nWhat to watch for\nThe 25% published bonus does not establish an exact DPS increase, an enhanced-perk bonus or a PvP two-tap. Missing shots, damage falloff, reload time and magazine rounding can change real results.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Historical perk tuning, with current weapon legality and measured boss DPS still requiring verification.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Focused Fury",
+        "Precision damage",
+        "Boss DPS"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Boss damage",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie raised Focused Fury's listed damage bonus from 20% to 25% and reduced its precision-hit activation requirement from half the magazine to 35%.",
+        "explanation": "This changes the setup cost of a precision-damage rotation. Weapons with Focused Fury can potentially spend fewer hits building the perk before using its damage window, but the exact number of shots depends on magazine size and the game's activation rounding. It is a promising sustained-damage candidate, not proof of a best-in-slot boss DPS result.",
+        "steps": [
+          "Choose an owned weapon with Focused Fury and note its actual magazine size and current perk selection.",
+          "On a durable PvE target, land uninterrupted precision hits while observing the perk's activation rather than assuming an exact rounded shot count.",
+          "Record time to activate, shots remaining, reload interruptions and total damage for a fair comparison with another damage perk.",
+          "Check whether an enhanced version is actually available on that specific weapon before including it in a build."
+        ],
+        "watch_out": "The 25% published bonus does not establish an exact DPS increase, an enhanced-perk bonus or a PvP two-tap. Missing shots, damage falloff, reload time and magazine rounding can change real results.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November. Historical perk tuning, with current weapon legality and measured boss DPS still requiring verification."
+      }
     }
   ]
 }
