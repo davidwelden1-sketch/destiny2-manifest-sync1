@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:mothkeeper-exdiris:970-9702:2026-11-02",
+  "reviewed_at_utc": "2026-11-02T20:07:00Z",
+  "sources": [
+    {
+      "publisher": "Bungie",
+      "patch_version": "9.7.0",
+      "published_at": "2026-06-09",
+      "url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0"
+    },
+    {
+      "publisher": "Bungie",
+      "patch_version": "9.7.0.2",
+      "published_at": "2026-06-23",
+      "url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2"
+    }
+  ],
+  "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:hunter:mothkeeper-rank-charge",
+      "guardian": "Hunter",
+      "weapon_synergy": "Any player-final-blow source; specific weapon rolls not certified",
+      "pve": {
+        "red_bar_charge_units": 1,
+        "orange_bar_charge_units": 2,
+        "miniboss_or_boss_charge_units": 3,
+        "threshold_units": 6,
+        "grenade_override_charges": 2,
+        "arc_moth_grenade_tag": "Arc grenade",
+        "void_moth_overshield_allies": true
+      },
+      "pvp": {
+        "guardian_charge_units": 3,
+        "threshold_units": 6,
+        "artifact_disabled_in_competitive_trials": true,
+        "guardian_damage_and_ttk_measured": null
+      },
+      "activation": "Player kills of any source contribute; charge progress modeled only until first override; assists and team kills not established",
+      "evidence": "official_historical",
+      "current_artifact_legality_verified": false,
+      "exact_weapon_perk_legality_verified": false,
+      "damage_cooldown_uptime_measured": false
+    },
+    {
+      "id": "d2:patch-fix:9702:hunter:exdiris-mothkeeper-charge-gate",
+      "guardian": "Hunter",
+      "weapon": "Ex Diris",
+      "exotic_armor": "Mothkeeper's Wraps",
+      "published_fix": "Ex Diris and Mothkeeper's Wraps interaction no longer requires active moth grenade charges",
+      "pve_research": "Compare Ex Diris interaction with zero versus active moth grenade charges; control target and kill attribution.",
+      "pvp_research": "Test whether the interaction occurs without charges in supported playlists; no Guardian TTK inferred.",
+      "evidence": "official_historical",
+      "measured_proc_rate": null,
+      "measured_dps": null,
+      "measured_ttk": null,
+      "exact_weapon_hash_verified": false,
+      "current_artifact_legality_verified": false,
+      "certified_for_app_build_recommendation": false,
+      "player_guide_id": "player:mothkeeper-exdiris-charge-gate-9702"
+    }
+  ],
+  "limitations": "Historical patch mechanics and synthetic threshold arithmetic only. Do not infer proc ownership, current exact weapon legality, damage, defensive uptime, PvP TTK, boss DPS or enhanced perk eligibility."
+}
