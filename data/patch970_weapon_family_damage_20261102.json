@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:patch970:weapon-family-damage:2026-11-02",
+  "reviewed_at_utc": "2026-11-02T22:11:00Z",
+  "source": {
+    "publisher": "Bungie",
+    "patch_version": "9.7.0",
+    "published_at": "2026-06-09",
+    "url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0"
+  },
+  "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:pve:rocket-pulse-boss-two-stage-damage",
+      "family": "Rocket Pulse",
+      "activity": "PvE",
+      "evidence": "official_historical",
+      "published_rules": {
+        "general_pve_damage_change_percent": -10,
+        "boss_additional_change_percent": -25,
+        "general_special_elite_bonus_excluded": true
+      },
+      "derived_arithmetic": {
+        "boss_relative_multiplier": "0.90 * 0.75 = 0.675",
+        "boss_relative_change_percent": "-32.5",
+        "is_gameplay_measurement": false
+      },
+      "unknown": {
+        "exact_current_weapon_hashes": null,
+        "weapon_perk_pool": null,
+        "artifact_selections": null,
+        "actual_boss_dps": null,
+        "guardian_ttk": null
+      },
+      "player_guide_id": "player:rocket-pulse-boss-damage-970",
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:pvp:adagio-weapon-family-damage-bonus",
+      "perk": "Adagio",
+      "activity": "PvP / PvE research",
+      "evidence": "official_historical",
+      "published_rules": {
+        "hand_cannon_damage_bonus_percent": 27,
+        "shotgun_damage_bonus_percent": 30,
+        "bow_damage_bonus_percent": 30
+      },
+      "unknown": {
+        "legal_rolls": null,
+        "enhanced_legality": null,
+        "rate_of_fire_change": null,
+        "damage_falloff": null,
+        "guardian_hp": null,
+        "guardian_ttk": null,
+        "boss_dps": null
+      },
+      "player_guide_id": "player:adagio-family-damage-970",
+      "certified_for_app_build_recommendation": false
+    }
+  ],
+  "limitations": "Patch-relative synthetic arithmetic only; not measured DPS or TTK, current roll legality or Artifact verification. Artifact effects disabled in Competitive and Trials."
+}
