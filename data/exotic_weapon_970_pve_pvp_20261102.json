@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:exotic-weapon-970:2026-11-02",
+  "reviewed_at_utc": "2026-11-02",
+  "source": {
+    "publisher": "Bungie",
+    "patch_version": "9.7.0",
+    "published_at": "2026-06-09",
+    "url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0"
+  },
+  "manifest_version_context_last_probed": "245114.26.10.13.2000-1-bnet.66137",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:hierarchy-of-needs-seeker-precision-guidance",
+      "weapon": "Hierarchy of Needs",
+      "activity": "PvE research; PvP unmeasured",
+      "published_mechanic": {
+        "seekers_apply_scorch_published_notation": "+15 (+5)",
+        "seeker_hidden_tracking_to_precision_damaged_targets": true,
+        "catalyst_increased_hipfire_accuracy": true
+      },
+      "pve_research": "Tag a moving PvE target with precision damage; count seeker hits and Scorch application; control catalyst, buffs and enemy movement.",
+      "pvp_research": "Do not assume same seeker tracking or scorch values against Guardians; independently test if applicable.",
+      "player_guide_id": "player:hierarchy-seeker-precision-970",
+      "confidence": "official_historical_patch_only",
+      "exact_weapon_hash_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pvp_guardian_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:mida-catalyst-radar-stow",
+      "weapon": "MIDA Multi-Tool",
+      "activity": "PvP research; PvE utility possible",
+      "published_mechanic": {
+        "catalyst_improved_radar_resolution_persists_after_stow": true,
+        "stowed_persistence_duration_seconds": null,
+        "catalyst_activation_requires_weapon_in_hand": true
+      },
+      "pvp_research": "Activate catalyst with MIDA held; swap; time improved radar-resolution decay with repeatable HUD observations; avoid assuming ADS behavior.",
+      "pve_research": "Consider radar information only, not boss damage or damage resistance.",
+      "player_guide_id": "player:mida-radar-stow-970",
+      "confidence": "official_historical_patch_only",
+      "exact_weapon_hash_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pvp_guardian_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    }
+  ]
+}
