@@ -137,6 +137,13 @@ def query_pair(index, *, item_hash, plug_a, plug_b, expected_manifest_version):
         "manifest_version": version,
         "source_retrieved_at_utc": stamp,
         "confidence_grade": GRADE,
+        "patch_version": None,
+        "patch_version_verified": False,
+        "provenance": {
+            "publisher": "Bungie",
+            "inventory_definition": dict(index["provenance"]["inventory_definition"]),
+            "plug_set_definition": dict(index["provenance"]["plug_set_definition"]),
+        },
         "pve_boss_dps_measured": None,
         "pve_damage_resistance_measured": None,
         "pvp_guardian_damage_measured": None,
