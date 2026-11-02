@@ -12,11 +12,12 @@ def build(root):
    if not isinstance(v,dict):continue
    source=v.get('source_url') or v.get('source') or data.get('source_url') or 'https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/blob/main/'+p.as_posix()
    if not isinstance(source,str) or not source.startswith('https://'):source='https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/blob/main/'+p.as_posix()
-   title=v.get('weapon') or v.get('name') or str(v.get('id') or p.stem).split(':')[-1].replace('_',' ').replace('-',' ').title()
+   title=v.get('title') or v.get('weapon') or v.get('name') or str(v.get('id') or p.stem).split(':')[-1].replace('_',' ').replace('-',' ').title()
    terms=[str(v[k]) for k in ('weapon','name','exotic','perk') if isinstance(v.get(k),str) and len(v[k])>=6]
    grade=str(v.get('confidence_grade',v.get('confidence',data.get('confidence_grade','research'))))
    evidence='software' if any(s in grade.lower() for s in ['synthetic','software']) else 'official_historical' if 'official' in grade.lower() or 'bungie_known_issue'==v.get('status') else 'research'
-   date=v.get('source_checked_on_utc') or data.get('reviewed_at_utc') or data.get('source_checked_at') or data.get('indexed_at_utc') or data.get('generated_at_utc') or data.get('reviewed_on') or '2026-10-29'
+   if v.get('evidence') in ('archive','official_historical','research','software'):evidence=v['evidence']
+   date=v.get('reviewed_at') or v.get('source_checked_on_utc') or data.get('reviewed_at_utc') or data.get('source_checked_at') or data.get('indexed_at_utc') or data.get('generated_at_utc') or data.get('reviewed_on') or '2026-10-29'
    summary=v.get('mechanism') or v.get('condition') or v.get('limits') or v.get('summary') or data.get('notes') or data.get('policy') or 'Source-indexed research. Open details for conditions, provenance and unresolved measurements.'
    records.append({'id':str(v.get('id') or p.stem+':'+str(n)),'title':str(title)[:180],'summary':str(summary)[:1200],'text':json.dumps(v,ensure_ascii=False,indent=2),'source_url':source,'evidence':evidence,'reviewed_at':str(date),'patch_status':str(v.get('bungie_status') or v.get('status') or 'Historical or research evidence; current gameplay not retested.'),'activities':v.get('activities',['pve','pvp']),'runtime_verified':False,'match_terms':terms,'provenance':{'dataset':p.name,'sha256':hashlib.sha256(raw).hexdigest(),'commit':os.environ.get('GITHUB_SHA','local-import')}})
  return {'schema_version':1,'generated_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'revision':os.environ.get('GITHUB_SHA','initial-import'),'records':records}
