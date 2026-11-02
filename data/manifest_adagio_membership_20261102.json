@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:manifest:adagio-socket-membership:2026-11-02",
+  "reviewed_at_utc": "2026-11-02T22:15:00Z",
+  "source": {
+    "type": "official_bungie_manifest_derived_index",
+    "manifest_version": "245114.26.10.13.2000-1-bnet.66137",
+    "manifest_retrieved_at_utc": "2026-11-02T15:16:26.669393Z",
+    "source_artifact": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41469891959",
+    "source_file": "weapon_plug_set_refs_index.json",
+    "manifest_endpoint": "https://www.bungie.net/Platform/Destiny2/Manifest/"
+  },
+  "summary": {
+    "weapon_definitions_scanned": 2208,
+    "definitions_with_named_adagio_in_randomized_plug_set": 100,
+    "named_adagio_plug_hashes": [
+      3673922083,
+      2889515627
+    ],
+    "all_100_memberships_currently_obtainable": false,
+    "scope": "Same-version structural socket/plug-set memberships; currentlyCanRoll is not an acquisition guarantee"
+  },
+  "sample_memberships": [
+    {
+      "weapon_hash": 198854575,
+      "weapon_name": "Crimil's Dagger",
+      "socket_index": 4,
+      "plug_set_hash": 4250932829,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 1617917863,
+      "weapon_name": "Crimil's Dagger",
+      "socket_index": 4,
+      "plug_set_hash": 2316739541,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 2152350211,
+      "weapon_name": "Survivor's Epitaph",
+      "socket_index": 4,
+      "plug_set_hash": 1022895966,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 4059111040,
+      "weapon_name": "Survivor's Epitaph",
+      "socket_index": 4,
+      "plug_set_hash": 1022895966,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 1622998472,
+      "weapon_name": "Vulpecula",
+      "socket_index": 4,
+      "plug_set_hash": 1387342477,
+      "named_adagio_plug_hashes": [
+        3673922083
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 3245446311,
+      "weapon_name": "Vulpecula",
+      "socket_index": 4,
+      "plug_set_hash": 3508494549,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 2271714488,
+      "weapon_name": "Convened Recurve",
+      "socket_index": 4,
+      "plug_set_hash": 1330614773,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 3667861447,
+      "weapon_name": "Convened Recurve",
+      "socket_index": 4,
+      "plug_set_hash": 1330614773,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 233896077,
+      "weapon_name": "Compass Rose",
+      "socket_index": 4,
+      "plug_set_hash": 1126840980,
+      "named_adagio_plug_hashes": [
+        3673922083,
+        2889515627
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    },
+    {
+      "weapon_hash": 2591111628,
+      "weapon_name": "Compass Rose",
+      "socket_index": 4,
+      "plug_set_hash": 3998781771,
+      "named_adagio_plug_hashes": [
+        3673922083
+      ],
+      "currently_can_roll_flag_in_manifest": true,
+      "exact_current_acquisition_verified": false,
+      "enhanced_perk_eligibility_verified": false
+    }
+  ],
+  "evidence": "manifest_structural",
+  "gameplay_measured": false,
+  "limitations": "Sample of 10 out of 100 definition-level memberships, not 100 unique obtainable weapons or confirmed enhanced rolls. Some names have multiple item hashes. Does not certify current acquisition, dual-column combinations, TTK, boss DPS, or Artifact legality."
+}
