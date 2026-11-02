@@ -62,8 +62,8 @@ def optimal_ttk(profile: WeaponProfile, health: float, multiplier: float = 1.0) 
     # Fifty decimal digits exceed the product precision of two float reprs.
     with localcontext() as ctx:
         ctx.prec = 50
-        exact_display = format(Decimal(str(profile.precision_damage)) *
-                               Decimal(str(multiplier)), "f")
+        exact_display = format((Decimal(str(profile.precision_damage)) *
+                                Decimal(str(multiplier))).normalize(), "f")
     return {"shots": shots, "ttk_seconds": ttk_seconds(profile.rpm, shots, profile.first_shot_delay),
             "precision_damage_after_multiplier": profile.precision_damage * multiplier,
             "precision_damage_after_multiplier_exact": exact_display,
