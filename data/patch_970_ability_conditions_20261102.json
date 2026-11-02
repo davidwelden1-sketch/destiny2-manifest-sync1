@@ -1,0 +1,88 @@
+{
+  "dataset_id": "vaeltrion:patch970:sentinel-arcsoul-conditions",
+  "schema_version": "1.0.0",
+  "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+  "source_published_at": "2026-06-09",
+  "reviewed_at": "2026-11-02",
+  "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+  "source_scope": "Official historical ability rules; not current runtime measurements or item-hash legality",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:sentinel:offensive-bulwark-final-blow",
+      "title": "Sentinel Offensive Bulwark final-blow energy",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "evidence": "official_historical",
+      "confidence": "official_patch_description_not_live_measurement",
+      "summary": "While a Void Overshield is active, final blows grant melee and grenade ability energy. Grenade return was moved from passive recharge to final-blow triggers.",
+      "text": "While a Void Overshield is active, final blows grant melee and grenade ability energy. Grenade return was moved from passive recharge to final-blow triggers.",
+      "activities": [
+        "pve",
+        "pvp"
+      ],
+      "runtime_verified": false,
+      "certified_for_live_build": false,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "exact_weapon_hash": null,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pve_dr": null,
+        "pvp_ttk": null,
+        "cooldown_seconds": null,
+        "ability_energy_return_percent": null
+      },
+      "guardian_class": "Titan",
+      "subclass": "Sentinel",
+      "aspect": "Offensive Bulwark",
+      "condition": {
+        "void_overshield_active": true,
+        "final_blow": true
+      },
+      "effects": [
+        "melee_ability_energy",
+        "grenade_ability_energy"
+      ]
+    },
+    {
+      "id": "d2:patch-rule:970:warlock:arc-soul-acquisition-range",
+      "title": "Warlock Arc Soul target acquisition range",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "evidence": "official_historical",
+      "confidence": "official_patch_description_not_live_measurement",
+      "summary": "Arc Soul target-acquisition maximum changed from 30 metres to 24 metres, a 6 m (20%) reduction; this does not specify projectile range, tracking after acquisition or damage.",
+      "text": "Arc Soul target-acquisition maximum changed from 30 metres to 24 metres, a 6 m (20%) reduction; this does not specify projectile range, tracking after acquisition or damage.",
+      "activities": [
+        "pve",
+        "pvp"
+      ],
+      "runtime_verified": false,
+      "certified_for_live_build": false,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "exact_weapon_hash": null,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pve_dr": null,
+        "pvp_ttk": null,
+        "cooldown_seconds": null,
+        "ability_energy_return_percent": null
+      },
+      "guardian_class": "Warlock",
+      "subclass": "Stormcaller",
+      "aspect": "Arc Soul",
+      "old_max_acquisition_range_m": 30,
+      "new_max_acquisition_range_m": 24,
+      "range_change_m": -6,
+      "relative_range_change_percent": -20,
+      "exact_boundary_behavior_verified": false
+    }
+  ]
+}
