@@ -949,6 +949,38 @@
         "watch_out": "Bungie only says a few seconds; no exact duration or guaranteed radar visibility while aiming down sights is established here. Do not infer faster Guardian TTK, Artifact activation or an always-on radar effect.",
         "status": "Official Bungie Update 9.7.0, published 9 June 2026; source reviewed 2 November 2026. PvP behavior has not been independently measured in the current patch."
       }
+    },
+    {
+      "id": "player:mothkeeper-exdiris-charge-gate-9702",
+      "title": "Mothkeeper's + Ex Diris: the charge gate was fixed",
+      "summary": "Mothkeeper's Wraps builds moth grenades from kills, and Bungie's Ex Diris fix removed the need to hold moth grenade charges for their interaction.",
+      "text": "Mothkeeper's Wraps builds moth grenades from kills, and Bungie's Ex Diris fix removed the need to hold moth grenade charges for their interaction.\n\nWhy it matters\nThe June rework grants one charge unit per red-bar kill, two per orange bar, and three per miniboss, boss or opposing Guardian. Six units prepare two moth grenades while leaving your normal grenade available between overrides. Arc moths still count as Arc grenades and blind enemies; Void moths can give allies a Void Overshield. Bungie's 23 June fix separately removed a bug that made the Ex Diris interaction depend on having active moth grenade charges. This is a useful way to investigate both PvE add-clear protection and PvP setup without treating the weapon as a proven damage or TTK winner.\n\nHow to use it\n1. Equip Mothkeeper's Wraps and Ex Diris on your Hunter, then use your normal grenade before the conditional override is ready.\n2. Earn your own final blows and watch the moth charge progress; six red bars, three orange bars or two opposing Guardians are source-derived examples of reaching six units.\n3. Test the Ex Diris interaction both before earning moth charges and after the two-grenade override appears; observe Arc blind and ally Void Overshield separately.\n\nWhat to watch for\nThese are official historical patch rules, not current gameplay measurements. Teammate kills, assists, grenade charge overflow, exact Ex Diris proc ownership, boss DPS and Guardian TTK are not established. Artifact perks do not operate in Competitive or Trials.\n\nSource & status\nBungie 9.7.0 published 9 June 2026; Ex Diris interaction fix published in 9.7.0.2 on 23 June 2026. Reviewed 2 November 2026, not independently gameplay-tested.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_published_at": "2026-06-23",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Mothkeeper's Wraps",
+        "Ex Diris",
+        "Arc moth",
+        "Void moth"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon + Exotic synergy",
+        "activity": "PvE / PvP",
+        "guardian": "Hunter",
+        "takeaway": "Mothkeeper's Wraps builds moth grenades from kills, and Bungie's Ex Diris fix removed the need to hold moth grenade charges for their interaction.",
+        "explanation": "The June rework grants one charge unit per red-bar kill, two per orange bar, and three per miniboss, boss or opposing Guardian. Six units prepare two moth grenades while leaving your normal grenade available between overrides. Arc moths still count as Arc grenades and blind enemies; Void moths can give allies a Void Overshield. Bungie's 23 June fix separately removed a bug that made the Ex Diris interaction depend on having active moth grenade charges. This is a useful way to investigate both PvE add-clear protection and PvP setup without treating the weapon as a proven damage or TTK winner.",
+        "steps": [
+          "Equip Mothkeeper's Wraps and Ex Diris on your Hunter, then use your normal grenade before the conditional override is ready.",
+          "Earn your own final blows and watch the moth charge progress; six red bars, three orange bars or two opposing Guardians are source-derived examples of reaching six units.",
+          "Test the Ex Diris interaction both before earning moth charges and after the two-grenade override appears; observe Arc blind and ally Void Overshield separately."
+        ],
+        "watch_out": "These are official historical patch rules, not current gameplay measurements. Teammate kills, assists, grenade charge overflow, exact Ex Diris proc ownership, boss DPS and Guardian TTK are not established. Artifact perks do not operate in Competitive or Trials.",
+        "status": "Bungie 9.7.0 published 9 June 2026; Ex Diris interaction fix published in 9.7.0.2 on 23 June 2026. Reviewed 2 November 2026, not independently gameplay-tested."
+      }
     }
   ]
 }
