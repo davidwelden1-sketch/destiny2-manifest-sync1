@@ -8,12 +8,12 @@
     "tests": "tests/test_exotic_super_crossclass_970.py",
     "execution_status": "verified_on_code_and_test_commit",
     "expected_new_tests": 12,
-    "verified_code_test_commit_sha": "95885b4f0269ad118a54a3b6c269c47abcf06c5a",
+    "verified_code_test_commit_sha": "e7d6afa450a0f251245187571bf56410c7a61ff1",
     "verified_tests_passed": 1220,
-    "python_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41420878787",
-    "simulation_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41420878893",
-    "audit_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41420878842",
-    "note": "Synthetic regression checks, not gameplay measurement. Dataset-only commit CI checked separately."
+    "python_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421076228",
+    "simulation_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421076287",
+    "audit_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421076257",
+    "note": "Python and simulation completed success on code/test SHA; autonomous audit must be independently checked. Tests are synthetic, not gameplay measurements."
   },
   "records": [
     {
