@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:manifest-socket-flag-and-patch-invalidation:2026-11-02",
+  "indexed_on_utc": "2026-11-02",
+  "last_manifest_version_verified": "245114.26.10.13.2000-1-bnet.66137",
+  "manifest_snapshot": {
+    "id": "d2:manifest-snapshot:245114.26.10.13.2000-1-bnet.66137:roll-flag-diagnostic",
+    "source_type": "github_actions_live_official_manifest_export_log",
+    "source_run_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41409643989",
+    "source_job_id": 125159499885,
+    "source_commit_sha": "707f27620f65f856b584dc47331577235e6cd494",
+    "log_observed_at_utc": "2026-11-02T07:59:31Z",
+    "artifact_id": 13125031874,
+    "artifact_sha256": "eb8eda84251712ec3e7015ed17789dbc1334e58f70e5205d003114ac4fb97892",
+    "artifact_uploaded_at_utc": "2026-11-02T08:00:14Z",
+    "indexed_weapon_definitions": 2208,
+    "same_name_variant_groups": 580,
+    "divergent_variant_groups": 437,
+    "same_name_groups_with_phantom_structural_pairs": 326,
+    "phantom_structural_pair_occurrences_across_groups": 58756,
+    "randomized_memberships": 97283,
+    "explicit_current_flag_memberships": 97283,
+    "explicit_noncurrent_flag_memberships": 0,
+    "unknown_current_flag_memberships": 0,
+    "current_flag_filter_discriminates_retired_memberships": false,
+    "all_randomized_memberships_flagged_current": true,
+    "confidence_grade": "official_manifest_pipeline_log_observed",
+    "interpretation": "This snapshot's currentlyCanRoll flags do not discriminate retired from current randomized plugs. The 58,756 phantom pairs are cross-variant name-merge structural false positives, not unique perks or actual playable rolls.",
+    "current_obtainability_certified": false,
+    "enhanced_perk_legality_certified": false,
+    "pve_boss_dps_measured": null,
+    "pvp_guardian_ttk_measured": null,
+    "certified_for_app_build_recommendation": false
+  },
+  "structural_pair_leads": {
+    "id": "d2:manifest-pair-leads:explosive-payload-firefly:2026-11-02",
+    "source_run_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41409643989",
+    "manifest_version": "245114.26.10.13.2000-1-bnet.66137",
+    "perk_names": [
+      "Explosive Payload",
+      "Firefly"
+    ],
+    "resolved_plug_hashes": {
+      "explosive_payload": [
+        64866129,
+        3038247973
+      ],
+      "firefly": [
+        1183436451,
+        3824105627
+      ]
+    },
+    "candidate_weapon_variants": [
+      {
+        "item_hash": 291092617,
+        "name": "Zaouli's Bane (Harrowed)",
+        "structural_pair_count": 4
+      },
+      {
+        "item_hash": 431721920,
+        "name": "Zaouli's Bane",
+        "structural_pair_count": 4
+      },
+      {
+        "item_hash": 1216319404,
+        "name": "Fatebringer (Timelost)",
+        "structural_pair_count": 1
+      },
+      {
+        "item_hash": 2171478765,
+        "name": "Fatebringer",
+        "structural_pair_count": 1
+      },
+      {
+        "item_hash": 4184168210,
+        "name": "Fatebringer",
+        "structural_pair_count": 4
+      },
+      {
+        "item_hash": 4219826183,
+        "name": "Fatebringer (Timelost)",
+        "structural_pair_count": 4
+      }
+    ],
+    "total_structural_pair_combinations": 18,
+    "void_breach_pair_hashes": [
+      1767911158,
+      2562668800
+    ],
+    "void_breach_distinct_socket_candidates": 4,
+    "confidence_grade": "official_manifest_structural_only",
+    "trait_socket_role_certified": false,
+    "current_obtainability_certified": false,
+    "enhanced_perk_legality_certified": false,
+    "pve_boss_dps_measured": null,
+    "pvp_guardian_ttk_measured": null,
+    "certified_for_app_build_recommendation": false
+  },
+  "patch_invalidation_leads": [
+    {
+      "id": "d2:patch-invalidation:9702:pvp:hunter-lethal-current-multiproc",
+      "activity": "pvp",
+      "mechanic": "Hunter Lethal Current",
+      "official_historical_patch": "9.7.0.2",
+      "patch_date": "2026-06-23",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_checked_on_utc": "2026-11-02",
+      "claim": "Fixed repeated activation from a single attack that could cause PvP one-shots.",
+      "limitations": "Do not recommend a multi-proc one-shot as an active legal PvP synergy; verify any new reports against this fix.",
+      "confidence_grade": "official_historical_patch",
+      "exact_item_hash_mapping_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pve_damage_resistance_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-invalidation:9702:weapon:moon-europa-rockets-lead-from-gold",
+      "activity": "pve_and_pvp",
+      "mechanic": "Europa and Moon rocket launcher rolls",
+      "official_historical_patch": "9.7.0.2",
+      "patch_date": "2026-06-23",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_checked_on_utc": "2026-11-02",
+      "claim": "Unintended Lead from Gold drops were fixed; existing affected instances updated to Impromptu Ammunition.",
+      "limitations": "Exact rocket launcher item hashes and every variant are not yet mapped. Do not claim a current obtainable Lead from Gold rocket roll.",
+      "confidence_grade": "official_historical_patch",
+      "exact_item_hash_mapping_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pve_damage_resistance_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-invalidation:9702:weapon:raid-adept-perk-pools",
+      "activity": "pve_and_pvp",
+      "mechanic": "Raid Adept weapon trait corrections",
+      "official_historical_patch": "9.7.0.2",
+      "patch_date": "2026-06-23",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_checked_on_utc": "2026-11-02",
+      "claim": "Certain Adept raid weapon drops were out of sync with base versions; intended perk pools and existing inventories were corrected.",
+      "limitations": "Exact affected item hashes and socket mappings remain unknown. Do not assume old DIM exports remain valid.",
+      "confidence_grade": "official_historical_patch",
+      "exact_item_hash_mapping_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pve_damage_resistance_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-invalidation:9702:pve:ergo-sum-vortex-heavy-cost",
+      "activity": "pve",
+      "mechanic": "Ergo Sum Vortex heavy attack",
+      "official_historical_patch": "9.7.0.2",
+      "patch_date": "2026-06-23",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+      "source_checked_on_utc": "2026-11-02",
+      "claim": "Fixed Vortex heavy attack spending six ammo instead of four.",
+      "limitations": "Ammo efficiency changed; total DPS and any PvP special ammo interaction unmeasured.",
+      "confidence_grade": "official_historical_patch",
+      "exact_item_hash_mapping_verified": false,
+      "current_artifact_verified": false,
+      "pve_boss_dps_measured": null,
+      "pve_damage_resistance_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_ttk_measured": null,
+      "certified_for_app_build_recommendation": false
+    }
+  ],
+  "release_policy": "Patch invalidations can block stale recommendations, but do not infer item-hash legality, enhanced eligibility, live PvE DPS/DR or PvP TTK from historical patch notes or manifest current flags."
+}
