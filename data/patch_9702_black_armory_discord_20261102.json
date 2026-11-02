@@ -1,0 +1,34 @@
+{
+  "dataset_id": "vaeltrion:patch9702:named-weapon-interaction-leads",
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-02T14:12:00Z",
+  "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+  "source_published_at": "2026-06-23",
+  "source_checked_at": "2026-11-02",
+  "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+  "manifest_probe_receipt": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41453810737",
+  "confidence_grade": "official_historical_patch_note_not_measured",
+  "current_obtainability_certified": false,
+  "enhanced_perk_legality_certified": false,
+  "pve_dps_measured": null,
+  "pvp_ttk_measured": null,
+  "records": [
+    {
+      "id": "d2:patch-rule:9702:forge_kin_black_armory_non_enhanced",
+      "weapon": "Forge's Kin",
+      "condition": "non-enhanced version with multiple Black Armory weapons equipped",
+      "status": "historical_patch_candidate_only",
+      "exact_item_hash": null,
+      "exact_bonus": null
+    },
+    {
+      "id": "d2:patch-rule:9702:lingering_dread_discord",
+      "weapon": "Lingering Dread",
+      "perk": "Discord",
+      "status": "historical_patch_candidate_only",
+      "exact_item_hash": null,
+      "exact_activation": null
+    }
+  ],
+  "notes": "Source names mechanics only. No current roll, enhancement, Artifact, gameplay measurement or class build is certified."
+}
