@@ -119,6 +119,8 @@ def assess_exotic_super_970(*, mechanic, guardian_class, activity, event_kind,
         status = "class_not_supported"
     elif event_kind != rule["event"]:
         status = "trigger_not_established"
+    elif relocation_count == 0:
+        status = "no_ward_relocation_event_observed"
     elif relocation_count is not None and relocation_count > 2:
         status = "exceeds_official_ward_relocation_limit"
     else:
