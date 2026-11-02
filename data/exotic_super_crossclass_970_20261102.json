@@ -1,13 +1,19 @@
 {
   "schema_version": "1.0.0",
   "dataset_id": "vaeltrion:official-patch:970:exotic-super-crossclass:2026-11-02",
-  "indexed_at_utc": "2026-11-02T09:26:00Z",
+  "indexed_at_utc": "2026-11-02T09:29:00Z",
   "scope": "Historical Bungie mechanics, no in-game certification",
   "software_evidence": {
     "module": "simulator/exotic_super_crossclass_970.py",
     "tests": "tests/test_exotic_super_crossclass_970.py",
-    "execution_status": "pending_final_commit_ci",
-    "expected_new_tests": 12
+    "execution_status": "verified_on_code_and_test_commit",
+    "expected_new_tests": 12,
+    "verified_code_test_commit_sha": "95885b4f0269ad118a54a3b6c269c47abcf06c5a",
+    "verified_tests_passed": 1220,
+    "python_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41420878787",
+    "simulation_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41420878893",
+    "audit_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41420878842",
+    "note": "Synthetic regression checks, not gameplay measurement. Dataset-only commit CI checked separately."
   },
   "records": [
     {
