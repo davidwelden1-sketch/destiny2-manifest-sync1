@@ -27,7 +27,7 @@ def main():
  q=urllib.parse.urlencode({'audience':'vaeltrion-research-publish'});url=os.environ['ACTIONS_ID_TOKEN_REQUEST_URL']+'&'+q
  req=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['ACTIONS_ID_TOKEN_REQUEST_TOKEN']})
  with urllib.request.urlopen(req,timeout=20) as r:token=json.load(r)['value']
- req=urllib.request.Request(BASE+'/app/research/publish',data=json.dumps(feed).encode(),headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'},method='POST')
+ req=urllib.request.Request(BASE+'/app/research/publish',data=json.dumps(feed).encode(),headers={'Authorization':'Bearer '+token,'Content-Type':'application/json','User-Agent':'VAELTRION-Research-Publisher/1.0'},method='POST')
  with urllib.request.urlopen(req,timeout=45) as r:result=json.load(r)
  assert result.get('status')=='published' and result.get('records')==len(feed['records']);print('Research feed published:',len(feed['records']),'records; revision',feed['revision'])
 if __name__=='__main__':main()
