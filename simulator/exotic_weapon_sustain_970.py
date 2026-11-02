@@ -39,9 +39,9 @@ def assess_exotic_weapon_970(*, weapon, guardian_class, activity, event_kind,
     """Return official historical parameters and explicitly unknown runtime facts."""
     if type(weapon) is not str or weapon not in RULES:
         raise ValueError("Unknown exotic weapon")
-    if guardian_class not in CLASSES or activity not in ACTIVITIES:
+    if (type(guardian_class) is not str or guardian_class not in CLASSES or\n            type(activity) is not str or activity not in ACTIVITIES):
         raise ValueError("Unknown class or activity")
-    if event_kind not in EVENTS:
+    if type(event_kind) is not str or event_kind not in EVENTS:
         raise ValueError("Unknown event")
     if type(observation_date) is not str:
         raise ValueError("Canonical date required")
