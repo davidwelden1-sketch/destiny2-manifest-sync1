@@ -4,7 +4,8 @@ Outputs are derived from supplied observations, never independent gameplay
 verification. A source URL and repeated samples do not certify the source.
 """
 from datetime import datetime, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, localcontext
+from fractions import Fraction
 from urllib.parse import urlsplit
 import re
 
@@ -37,6 +38,23 @@ def _utc(value, name):
 
 def _decimal_string(value):
     return format(value.normalize(), "f")
+
+
+def _exact_ratio(value):
+    """Lossless rational output for thresholds and downstream app calculations."""
+    return {"numerator": str(value.numerator), "denominator": str(value.denominator)}
+
+
+def _ratio_decimal(value):
+    """Human-readable decimal; reject silent rounding to a false 0%/100%."""
+    with localcontext() as context:
+        context.prec = min(
+            512, max(50, len(str(abs(value.numerator))) + len(str(value.denominator)) + 10)
+        )
+        result = _decimal_string(Decimal(value.numerator) / Decimal(value.denominator))
+    if Fraction(Decimal(result)) != value and Decimal(result) in (Decimal(0), Decimal(1)):
+        raise ValueError("Derived ratio cannot safely be displayed at this precision")
+    return result
 
 
 def evaluate_observation(record):
@@ -81,13 +99,17 @@ def evaluate_observation(record):
     if mode == "pve_dps":
         damage = _positive(inputs.get("total_damage"), "total_damage")
         duration = _positive(inputs.get("duration_seconds"), "duration_seconds")
-        derived["conditional_dps"] = _decimal_string(damage / duration)
+        ratio = Fraction(damage) / Fraction(duration)
+        derived["conditional_dps"] = _ratio_decimal(ratio)
+        derived["conditional_dps_exact_ratio"] = _exact_ratio(ratio)
     elif mode == "pve_dr":
         baseline = _positive(inputs.get("baseline_hit"), "baseline_hit")
         reduced = _positive(inputs.get("mitigated_hit"), "mitigated_hit", zero=True)
         if reduced > baseline:
             raise ValueError("Mitigated hit cannot exceed control hit for DR")
-        derived["conditional_dr_fraction"] = _decimal_string(1 - reduced / baseline)
+        ratio = 1 - Fraction(reduced) / Fraction(baseline)
+        derived["conditional_dr_fraction"] = _ratio_decimal(ratio)
+        derived["conditional_dr_exact_ratio"] = _exact_ratio(ratio)
     else:
         precision = _positive(inputs.get("precision_damage"), "precision_damage")
         body = _positive(inputs.get("body_damage"), "body_damage")
@@ -96,15 +118,17 @@ def evaluate_observation(record):
         sequence = inputs.get("hit_sequence")
         if type(sequence) is not str or not re.fullmatch(r"[PB]+", sequence):
             raise ValueError("Hit sequence must be P/B")
-        total = Decimal(0)
+        total = Fraction(0)
+        target = Fraction(health)
         for i, hit in enumerate(sequence):
-            total += precision if hit == "P" else body
-            if total >= health and i != len(sequence) - 1:
+            total += Fraction(precision if hit == "P" else body)
+            if total >= target and i != len(sequence) - 1:
                 raise ValueError("Sequence includes shots after lethal hit")
-        if total < health:
+        if total < target:
             raise ValueError("Sequence is not lethal at supplied health")
-        derived["conditional_ttk_seconds"] = _decimal_string(
-            Decimal(len(sequence) - 1) * 60 / rpm)
+        ttk = Fraction(60 * (len(sequence) - 1)) / Fraction(rpm)
+        derived["conditional_ttk_seconds"] = _ratio_decimal(ttk)
+        derived["conditional_ttk_exact_ratio"] = _exact_ratio(ttk)
         derived["lethal_shots"] = len(sequence)
     return {
         "id": f"d2:observation:{mode}:{oid}",
