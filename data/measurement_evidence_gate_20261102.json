@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:measurement-evidence-gate:2026-11-02",
+  "created_at_utc": "2026-11-02T12:20:22Z",
+  "app_integration_status": "research_only_not_deployed",
+  "software_module": "simulator/measurement_evidence_gate.py",
+  "software_test_module": "tests/test_measurement_evidence_gate.py",
+  "confidence_grade": "software_validation_synthetic",
+  "modes": [
+    {
+      "id": "d2:measurement-mode:pve_dps",
+      "mode": "pve_dps",
+      "required_inputs": [
+        "total_damage",
+        "duration_seconds"
+      ],
+      "derived_field": "conditional_dps",
+      "not_certified": [
+        "boss DPS",
+        "target damage scaling",
+        "damage stacking",
+        "damage phase uptime"
+      ]
+    },
+    {
+      "id": "d2:measurement-mode:pve_dr",
+      "mode": "pve_dr",
+      "required_inputs": [
+        "baseline_hit",
+        "mitigated_hit"
+      ],
+      "derived_field": "conditional_dr_fraction",
+      "not_certified": [
+        "in-game DR",
+        "cross-buff stacking",
+        "effective health",
+        "duration and uptime"
+      ]
+    },
+    {
+      "id": "d2:measurement-mode:pvp_ttk",
+      "mode": "pvp_ttk",
+      "required_inputs": [
+        "precision_damage",
+        "body_damage",
+        "target_health",
+        "rpm",
+        "hit_sequence"
+      ],
+      "derived_field": "conditional_ttk_seconds",
+      "not_certified": [
+        "actual Guardian TTK",
+        "range falloff",
+        "latency",
+        "weapon perk legality",
+        "damage perk uptime"
+      ]
+    }
+  ],
+  "required_provenance": [
+    "observation_id",
+    "patch_version",
+    "manifest_version",
+    "recorded_at_utc",
+    "source.url",
+    "source.published_at_utc",
+    "sample_count",
+    "scenario"
+  ],
+  "safety_rules": [
+    "Stable ID d2:observation:{mode}:{observation_id}",
+    "Reject invalid, infinite, NaN, boolean, nonpositive inputs",
+    "Require public HTTPS source and UTC dates",
+    "Reject PvP nonlethal and post-lethal hit sequences",
+    "No synthetic test certifies live gameplay or app build recommendation"
+  ],
+  "new_historical_patch_lead": {
+    "id": "d2:patch-rule:9702:exotic-truth-max-ammo-reserves",
+    "class_scope": "all",
+    "activity_scope": "pve_and_pvp",
+    "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0_2",
+    "patch_version": "9.7.0.2",
+    "patch_date": "2026-06-23",
+    "source_checked_on_utc": "2026-11-02",
+    "mechanic": "Truth Exotic Rocket Launcher maximum ammo reserves",
+    "previous_max_reserves": 14,
+    "updated_max_reserves": 10,
+    "relative_max_reserves_change_fraction": "-0.2857142857142857",
+    "claim_limit": "This is a maximum reserves change, not proof of ammo brick count, weapon DPS or PvP heavy-ammo availability.",
+    "confidence_grade": "official_historical_patch",
+    "exact_item_hash_verified": false,
+    "pve_dps_measured": null,
+    "pvp_guardian_ttk_measured": null,
+    "certified_for_app_build_recommendation": false
+  },
+  "manifest_version_context": {
+    "last_successfully_confirmed": "245114.26.10.13.2000-1-bnet.66137",
+    "last_success_at_utc": "2026-11-02T11:25:00Z",
+    "latest_probe_caveat": "Previous final audit reported HTTP 500 after two attempts; do not claim fresh manifest version until next successful probe."
+  },
+  "source_verification_policy": "All hypothetical numeric tests are marked synthetic; no new measured DPS/DR/TTK values ingested."
+}
