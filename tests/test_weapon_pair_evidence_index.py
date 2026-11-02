@@ -180,5 +180,60 @@ class WeaponPairEvidenceTests(unittest.TestCase):
         )
 
 
+    def test_full_snapshot_flag_counts_are_exposed(self):
+        result = run()
+        diagnostic = result["current_flag_filter_diagnostic"]
+        self.assertEqual(diagnostic["randomized_memberships"], 6)
+        self.assertEqual(diagnostic["explicit_current_flag_memberships"], 4)
+        self.assertEqual(diagnostic["explicit_noncurrent_flag_memberships"], 1)
+        self.assertEqual(diagnostic["unknown_current_flag_memberships"], 1)
+        self.assertTrue(diagnostic["current_flag_filter_discriminates_retired_memberships"])
+        self.assertFalse(diagnostic["current_obtainability_certified"])
+        self.assertFalse(diagnostic["enhanced_perk_legality_certified"])
+
+    def test_all_current_flags_are_non_discriminating(self):
+        index = fixture()
+        index["weapons"][0]["sockets"] = [
+            socket(2, current=(11, 33)), socket(3, current=(22, 44))]
+        result = run(index)
+        diagnostic = result["current_flag_filter_diagnostic"]
+        self.assertEqual(diagnostic["randomized_memberships"], 6)
+        self.assertTrue(diagnostic["all_randomized_memberships_flagged_current"])
+        self.assertFalse(diagnostic["current_flag_filter_discriminates_retired_memberships"])
+        self.assertTrue(result["both_explicit_current_flags"])
+        self.assertIsNone(result["current_obtainable_roll"])
+
+    def test_unknown_without_retired_does_not_discriminate_retired(self):
+        index = fixture()
+        index["weapons"][0]["sockets"][0] = socket(
+            2, current=(11,), unknown=(33,))
+        diagnostic = run(index)["current_flag_filter_diagnostic"]
+        self.assertFalse(diagnostic["current_flag_filter_discriminates_retired_memberships"])
+        self.assertFalse(diagnostic["all_randomized_memberships_flagged_current"])
+
+    def test_empty_snapshot_is_not_all_current(self):
+        index = fixture()
+        index["weapons"][0]["sockets"] = [socket(2), socket(3)]
+        index["weapons"][1]["sockets"] = [socket(2), socket(3)]
+        result = run(index)
+        diagnostic = result["current_flag_filter_diagnostic"]
+        self.assertEqual(diagnostic["randomized_memberships"], 0)
+        self.assertFalse(diagnostic["all_randomized_memberships_flagged_current"])
+        self.assertFalse(diagnostic["current_flag_filter_discriminates_retired_memberships"])
+
+    def test_corrupt_unqueried_variant_fails_closed(self):
+        index = fixture()
+        index["weapons"][1]["sockets"][0][
+            "explicit_noncurrent_flag_plug_hashes"].append(22)
+        with self.assertRaises(ValueError):
+            run(index)
+
+    def test_version_mismatch_and_missing_hash_have_no_diagnostic(self):
+        self.assertIsNone(run(expected_manifest_version="wrong")[
+            "current_flag_filter_diagnostic"])
+        self.assertIsNone(run(item_hash=999)[
+            "current_flag_filter_diagnostic"])
+
+
 if __name__ == "__main__":
     unittest.main()
