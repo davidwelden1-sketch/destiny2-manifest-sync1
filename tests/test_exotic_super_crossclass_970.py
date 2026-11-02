@@ -37,7 +37,10 @@ class ExoticSuperCrossclass970Tests(unittest.TestCase):
     def test_titan_ward_core_has_two_relocations_not_three(self):
         args = dict(mechanic="ward_of_dawn_core", guardian_class="titan",
                     event_kind="ward_core_relocation")
-        for count in (0, 1, 2):
+        zero = assess(**args, relocation_count=0)
+        self.assertEqual(zero["status"], "no_ward_relocation_event_observed")
+        self.assertIsNone(zero["published_component_change"])
+        for count in (1, 2):
             result = assess(**args, relocation_count=count)
             self.assertTrue(result["official_historical_rule_applicable"])
             self.assertEqual(result["published_component_change"][
