@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:patch970:arc-jolt-knockout-healing:2026-11-02",
+  "reviewed_at": "2026-11-02",
+  "patch_version": "9.7.0",
+  "source_published_at": "2026-06-09",
+  "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+  "latest_located_patch": {
+    "version": "9.7.0.6",
+    "published_at": "2026-10-20",
+    "url": "https://www.bungie.net/7/en-us/News/Article/destiny_2_update_9_7_0_6",
+    "reviewed_at": "2026-11-02"
+  },
+  "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+  "manifest_version_last_verified_utc": "2026-11-02T16:21:40Z",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:arc-construct-jolt-icd",
+      "title": "Spark of Shock / Facet of Dominance construct jolt reapplication cooldown",
+      "summary": "Official four-second reapplication gate for Spark of Shock with Arc Soul or Ionic Sentry and Facet of Dominance with Arc Soul.",
+      "text": "Track construct hits separately from jolt applications. Source does not certify shared timer ownership or any jolt damage multiplier.",
+      "guardian": "warlock/prismatic",
+      "activity": "pve_and_pvp",
+      "evidence": "official_historical",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "internal_cooldown_seconds": 4,
+      "documented_combinations": [
+        [
+          "Spark of Shock",
+          "Arc Soul"
+        ],
+        [
+          "Spark of Shock",
+          "Ionic Sentry"
+        ],
+        [
+          "Facet of Dominance",
+          "Arc Soul"
+        ]
+      ],
+      "shared_cooldown_across_constructs_verified": false,
+      "pve_boss_dps_measured": null,
+      "pve_dr_measured": null,
+      "pvp_guardian_ttk_measured": null,
+      "ability_cooldown_measured": null,
+      "exact_perk_legality_verified": false,
+      "current_artifact_verified": false,
+      "confidence_grade": "official_historical_patch_component",
+      "certified_for_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:titan-knockout-pvp-melee",
+      "title": "Knockout PvP melee reach and early bonus correction",
+      "summary": "No extra Knockout melee lunge versus players; early activating-melee bonus causing unexpected one-hit kills corrected.",
+      "text": "Do not extrapolate a historical one-hit kill or range increase into current Guardian TTK. PvE damage unaffected by this specifically PvP-labelled evidence.",
+      "guardian": "titan",
+      "activity": "pvp",
+      "evidence": "official_historical",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "extra_lunge_vs_players": false,
+      "early_bonus_on_activating_melee": false,
+      "pve_boss_dps_measured": null,
+      "pve_dr_measured": null,
+      "pvp_guardian_damage_measured": null,
+      "pvp_guardian_ttk_measured": null,
+      "melee_range_meters_measured": null,
+      "current_artifact_verified": false,
+      "confidence_grade": "official_historical_patch_component",
+      "certified_for_build_recommendation": false
+    },
+    {
+      "id": "d2:patch-rule:970:hunter:on-your-mark-red-death-healing",
+      "title": "On Your Mark Restoration and Red Death Reformed Cure activation",
+      "summary": "On Your Mark ten-stack final blow gives Restoration x1 for three seconds; Red Death Reformed final blows grant Cure x1 and Restoration x1 for three seconds in the same patch section.",
+      "text": "These are final-blow triggers, not guaranteed healing on hit or permanent protection. No DR stacking or PvP healing rate measured.",
+      "guardian": "hunter",
+      "activity": "pve_and_pvp",
+      "evidence": "official_historical",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "patch_version": "9.7.0",
+      "on_your_mark_stacks_required": 10,
+      "restoration_tier": 1,
+      "restoration_seconds": 3,
+      "red_death_cure_tier": 1,
+      "red_death_restoration_tier": 1,
+      "red_death_restoration_seconds": 3,
+      "pve_healing_per_second_measured": null,
+      "pve_dr_measured": null,
+      "pve_boss_dps_measured": null,
+      "pvp_healing_measured": null,
+      "pvp_guardian_ttk_measured": null,
+      "exact_weapon_hash_legality_verified": false,
+      "current_artifact_verified": false,
+      "confidence_grade": "official_historical_patch_component",
+      "certified_for_build_recommendation": false
+    }
+  ],
+  "release_policy": "Official historical patch statements only; do not certify current perk socket legality, enhanced eligibility, Artifact builds, in-game DPS, DR or PvP TTK."
+}

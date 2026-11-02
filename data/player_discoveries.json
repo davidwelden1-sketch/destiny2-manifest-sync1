@@ -691,6 +691,100 @@
         "watch_out": "Bungie's patch does not specify the rapid-kill time window, enhanced-perk differences, firing-rate change or Guardian TTK here. The trigger requires a reload, and three rapid kills may be unrealistic in many PvP duels. Artifact bonuses must be assessed separately and are disabled in Competitive and Trials.",
         "status": "Official Bungie Update 9.7.0, 9 June 2026. Both activation routes are historical official rules; no current gameplay timing or PvP TTK has been measured in this guide."
       }
+    },
+    {
+      "id": "player:arc-construct-jolt-icd",
+      "title": "Arc Soul and Ionic Sentry: jolt has a four-second reapplication gate",
+      "summary": "Bungie's June update introduced a four-second internal cooldown before Arc Soul or Ionic Sentry can apply jolt again through Spark of Shock; Arc Soul with Facet of Dominance has the same stated limit.",
+      "text": "Bungie's June update introduced a four-second internal cooldown before Arc Soul or Ionic Sentry can apply jolt again through Spark of Shock; Arc Soul with Facet of Dominance has the same stated limit.\n\nWhy it matters\nRapid Arc Soul hits do not mean a new jolt on every hit. That matters when judging add-clear and boss damage: a stream of projectiles can look busy while the jolt application is waiting on its internal cooldown. Bungie named Arc Soul and Ionic Sentry under Spark of Shock, but only Arc Soul under Facet of Dominance.\n\nHow to use it\n1. Choose Spark of Shock with an appropriate Arc Soul or Ionic Sentry setup, or Facet of Dominance with Arc Soul.\n2. Watch the jolt application itself rather than counting every construct hit as a new jolt.\n3. When comparing builds, separate construct hits, jolt applications and weapon damage in your observations.\n\nWhat to watch for\nFour seconds is a published reapplication restriction, not a guaranteed trigger at four seconds. The source does not establish a shared timer across different constructs, jolt damage numbers, or current boss DPS.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. Historical rule, not a fresh in-game damage measurement.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Arc Soul",
+        "Ionic Sentry",
+        "Spark of Shock",
+        "Facet of Dominance"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ability timing",
+        "activity": "PvE / eligible PvP",
+        "guardian": "Warlock / Prismatic",
+        "takeaway": "Bungie's June update introduced a four-second internal cooldown before Arc Soul or Ionic Sentry can apply jolt again through Spark of Shock; Arc Soul with Facet of Dominance has the same stated limit.",
+        "explanation": "Rapid Arc Soul hits do not mean a new jolt on every hit. That matters when judging add-clear and boss damage: a stream of projectiles can look busy while the jolt application is waiting on its internal cooldown. Bungie named Arc Soul and Ionic Sentry under Spark of Shock, but only Arc Soul under Facet of Dominance.",
+        "steps": [
+          "Choose Spark of Shock with an appropriate Arc Soul or Ionic Sentry setup, or Facet of Dominance with Arc Soul.",
+          "Watch the jolt application itself rather than counting every construct hit as a new jolt.",
+          "When comparing builds, separate construct hits, jolt applications and weapon damage in your observations."
+        ],
+        "watch_out": "Four seconds is a published reapplication restriction, not a guaranteed trigger at four seconds. The source does not establish a shared timer across different constructs, jolt damage numbers, or current boss DPS.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. Historical rule, not a fresh in-game damage measurement."
+      }
+    },
+    {
+      "id": "player:knockout-pvp-lunge",
+      "title": "Knockout in Crucible: do not rely on the old extra melee reach",
+      "summary": "Bungie's June update removed Knockout's extra melee lunge range against players and corrected an early damage bonus that could cause unexpected one-hit kills.",
+      "text": "Bungie's June update removed Knockout's extra melee lunge range against players and corrected an early damage bonus that could cause unexpected one-hit kills.\n\nWhy it matters\nThis changes the reliability of Titan close-range fights. An older build video may show an unusually long lunge or a knockout punch that benefits from the bonus before Knockout should have activated. Neither behaviour is a safe basis for a present-day Guardian damage breakpoint.\n\nHow to use it\n1. Equip Knockout on a Titan and compare ordinary melee reach against a consistent Guardian target.\n2. Treat the melee that activates Knockout separately from later attacks while its effect is active.\n3. Test follow-up weapon and melee damage in the actual PvP playlist before claiming a one-hit or two-hit combination.\n\nWhat to watch for\nThese are published PvP corrections, not a measurement of current melee range, exact Guardian damage or TTK. They do not say Knockout lost every other benefit.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. No current private-match damage measurement has been certified.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Knockout",
+        "Striker"
+      ],
+      "player": {
+        "version": 1,
+        "category": "PvP melee",
+        "activity": "PvP",
+        "guardian": "Titan",
+        "takeaway": "Bungie's June update removed Knockout's extra melee lunge range against players and corrected an early damage bonus that could cause unexpected one-hit kills.",
+        "explanation": "This changes the reliability of Titan close-range fights. An older build video may show an unusually long lunge or a knockout punch that benefits from the bonus before Knockout should have activated. Neither behaviour is a safe basis for a present-day Guardian damage breakpoint.",
+        "steps": [
+          "Equip Knockout on a Titan and compare ordinary melee reach against a consistent Guardian target.",
+          "Treat the melee that activates Knockout separately from later attacks while its effect is active.",
+          "Test follow-up weapon and melee damage in the actual PvP playlist before claiming a one-hit or two-hit combination."
+        ],
+        "watch_out": "These are published PvP corrections, not a measurement of current melee range, exact Guardian damage or TTK. They do not say Knockout lost every other benefit.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. No current private-match damage measurement has been certified."
+      }
+    },
+    {
+      "id": "player:on-your-mark-restoration-red-death",
+      "title": "On Your Mark + Red Death: a Hunter healing loop with exact triggers",
+      "summary": "Bungie's June update gave On Your Mark Restoration x1 for three seconds after final blows at ten stacks, and specified Cure x1 plus Restoration x1 for three seconds on Red Death Reformed final blows.",
+      "text": "Bungie's June update gave On Your Mark Restoration x1 for three seconds after final blows at ten stacks, and specified Cure x1 plus Restoration x1 for three seconds on Red Death Reformed final blows.\n\nWhy it matters\nThe important distinction is between building On Your Mark stacks and securing the final blow that pays off. The published Red Death interaction gives Hunters a specific healing route to investigate without pretending that every hit heals or that Restoration lasts indefinitely.\n\nHow to use it\n1. Equip On Your Mark on a Gunslinger Hunter and monitor its stack counter while fighting weaker enemies.\n2. At ten stacks, secure a final blow and watch for Restoration x1 and its three-second timer.\n3. If using Red Death Reformed, separately observe the Cure and Restoration effects after a final blow; compare with a different weapon.\n\nWhat to watch for\nThese are the June patch conditions, not a guarantee of uninterrupted healing. Do not add Cure and Restoration as damage-resistance percentages, and do not assume the same healing on a hit that is not a final blow.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. Exact current uptime, PvP scaling and Artifact interactions are unmeasured.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "On Your Mark",
+        "Red Death Reformed",
+        "Restoration",
+        "Cure"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Survival",
+        "activity": "PvE / eligible PvP",
+        "guardian": "Hunter",
+        "takeaway": "Bungie's June update gave On Your Mark Restoration x1 for three seconds after final blows at ten stacks, and specified Cure x1 plus Restoration x1 for three seconds on Red Death Reformed final blows.",
+        "explanation": "The important distinction is between building On Your Mark stacks and securing the final blow that pays off. The published Red Death interaction gives Hunters a specific healing route to investigate without pretending that every hit heals or that Restoration lasts indefinitely.",
+        "steps": [
+          "Equip On Your Mark on a Gunslinger Hunter and monitor its stack counter while fighting weaker enemies.",
+          "At ten stacks, secure a final blow and watch for Restoration x1 and its three-second timer.",
+          "If using Red Death Reformed, separately observe the Cure and Restoration effects after a final blow; compare with a different weapon."
+        ],
+        "watch_out": "These are the June patch conditions, not a guarantee of uninterrupted healing. Do not add Cure and Restoration as damage-resistance percentages, and do not assume the same healing on a hit that is not a final blow.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026; reviewed 2 November 2026. Exact current uptime, PvP scaling and Artifact interactions are unmeasured."
+      }
     }
   ]
 }
