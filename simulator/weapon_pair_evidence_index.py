@@ -117,6 +117,36 @@ def _validate_sockets(item):
     return sorted(result)
 
 
+
+def _current_flag_diagnostic(weapons):
+    """Audit the *entire* snapshot, not only the queried item.
+
+    An all-current manifest flag population cannot discriminate retired
+    sockets. This is never evidence of current item acquisition.
+    """
+    counts = {
+        "explicit_current_flag_memberships": 0,
+        "explicit_noncurrent_flag_memberships": 0,
+        "unknown_current_flag_memberships": 0,
+    }
+    for item in weapons:
+        for _, partitions in _validate_sockets(item):
+            for _, label, hashes in partitions:
+                counts[label + "_memberships"] += len(hashes)
+    total = sum(counts.values())
+    return {
+        "randomized_memberships": total,
+        **counts,
+        "current_flag_filter_discriminates_retired_memberships":
+            counts["explicit_noncurrent_flag_memberships"] > 0,
+        "all_randomized_memberships_flagged_current":
+            total > 0 and counts["explicit_current_flag_memberships"] == total,
+        "current_obtainability_certified": False,
+        "enhanced_perk_legality_certified": False,
+    }
+
+
+
 def query_pair(index, *, item_hash, plug_a, plug_b, expected_manifest_version):
     """Find same-item, different-socket candidates, never certify legal rolls.
 
@@ -154,12 +184,14 @@ def query_pair(index, *, item_hash, plug_a, plug_b, expected_manifest_version):
         "candidate_socket_pairs": [],
         "both_explicit_current_flags": False,
         "structural_candidate": False,
+        "current_flag_filter_diagnostic": None,
     }
     if version != expected_manifest_version:
         return dict(base, status="manifest_version_mismatch")
     item = next((row for row in weapons if row["item_hash"] == item_hash), None)
     if item is None:
         return dict(base, status="item_hash_not_in_index")
+    diagnostic = _current_flag_diagnostic(weapons)
     sockets = _validate_sockets(item)
     matches = []
     for left_index, left_states in sockets:
@@ -180,6 +212,7 @@ def query_pair(index, *, item_hash, plug_a, plug_b, expected_manifest_version):
         base,
         status="structural_candidate_only" if matches else "no_distinct_socket_membership",
         candidate_socket_pairs=matches,
+        current_flag_filter_diagnostic=diagnostic,
         structural_candidate=bool(matches),
         both_explicit_current_flags=any(
             row["plug_a_state"] == row["plug_b_state"] == "explicit_current_flag"
