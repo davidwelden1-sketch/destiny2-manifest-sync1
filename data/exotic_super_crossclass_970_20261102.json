@@ -13,7 +13,13 @@
     "python_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421076228",
     "simulation_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421076287",
     "audit_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421076257",
-    "note": "Python and simulation completed success on code/test SHA; autonomous audit must be independently checked. Tests are synthetic, not gameplay measurements."
+    "note": "Code/test SHA e7d6afa: Python, simulation and autonomous audit all SUCCESS (1220 synthetic tests). Separate data-index SHA d95e18a: Python CI and autonomous audit SUCCESS (1220 tests); live Bungie manifest version unchanged. No gameplay measurement or build certification.",
+    "data_index_ci_receipt": {
+      "verified_commit_sha": "d95e18a9a2a6cdce48631f0216cf7f61048dba4f",
+      "python_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421145320",
+      "autonomous_audit_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41421145432",
+      "verified_tests_passed": 1220
+    }
   },
   "records": [
     {
