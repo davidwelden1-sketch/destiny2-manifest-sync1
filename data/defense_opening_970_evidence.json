@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:patch-evidence:970:defense-opening",
+  "indexed_at_utc": "2026-11-02T07:28:12Z",
+  "source_scope": "Official Bungie historical patch, not independent gameplay measurements",
+  "code_path": "simulator/defense_opening_970.py",
+  "test_path": "tests/test_defense_opening_970.py",
+  "test_count_added": 15,
+  "ci_verification": {
+    "sha": "80c2c0e49d96db5aec415f79881084e154c99598",
+    "python_ci": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502879",
+    "simulation_ci": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502924",
+    "autonomous_audit": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502898",
+    "tests_passed": 1194
+  },
+  "records": [
+    {
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "manifest_version_probe_source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502898",
+      "confidence_grade": "official_historical_patch_not_live_measured",
+      "runtime_verified": false,
+      "exact_item_hash_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "measured_pve_dps": null,
+      "measured_pve_dr": null,
+      "measured_pvp_damage": null,
+      "measured_pvp_ttk": null,
+      "measured_cooldown_seconds": null,
+      "id": "d2:patch-rule:970:defense:frost_armor",
+      "classes": [
+        "hunter",
+        "titan",
+        "warlock"
+      ],
+      "activities": [
+        "pve"
+      ],
+      "trigger": "frost_armor_active",
+      "official_values": {
+        "five_stacks_dr_approx": 0.35,
+        "whisper_of_rime_max_stacks": 7,
+        "seven_stacks_max_dr": 0.5,
+        "decay": "one_stack_at_a_time"
+      },
+      "illustrative_single_source_ehp_multiplier_at_five_stacks": 1.5384615384615383,
+      "illustrative_single_source_ehp_multiplier_at_seven_stacks": 2,
+      "limits": "No interpolated stack values, PvP DR, live uptime or cross-source stacking certified."
+    },
+    {
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "manifest_version_probe_source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502898",
+      "confidence_grade": "official_historical_patch_not_live_measured",
+      "runtime_verified": false,
+      "exact_item_hash_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "measured_pve_dps": null,
+      "measured_pve_dr": null,
+      "measured_pvp_damage": null,
+      "measured_pvp_ttk": null,
+      "measured_cooldown_seconds": null,
+      "id": "d2:patch-rule:970:defense:no_backup_plans",
+      "classes": [
+        "titan"
+      ],
+      "activities": [
+        "pve",
+        "pvp"
+      ],
+      "trigger": "shotgun_or_melee_final_blow",
+      "official_values": {
+        "extends_existing_buffs": [
+          "void_overshield",
+          "restoration",
+          "amplified",
+          "frost_armor",
+          "woven_mail"
+        ],
+        "starts_health_regeneration": true,
+        "grants_new_void_overshield": false
+      },
+      "limits": "Exact extension duration, Exotic damage bonus, PvE/PvP effect magnitude and live interaction unmeasured."
+    },
+    {
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "manifest_version_probe_source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502898",
+      "confidence_grade": "official_historical_patch_not_live_measured",
+      "runtime_verified": false,
+      "exact_item_hash_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "measured_pve_dps": null,
+      "measured_pve_dr": null,
+      "measured_pvp_damage": null,
+      "measured_pvp_ttk": null,
+      "measured_cooldown_seconds": null,
+      "id": "d2:patch-rule:970:defense:smoke_jumper",
+      "classes": [
+        "hunter",
+        "titan",
+        "warlock"
+      ],
+      "activities": [
+        "pve"
+      ],
+      "trigger": "two_piece_set_bonus",
+      "official_values": {
+        "old_max_dr": 0.5,
+        "new_max_dr": 0.4
+      },
+      "limits": "Maximum bonus is not an always-active DR, and stacking/uptime not measured; no PvP value inferred."
+    },
+    {
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "manifest_version_probe_source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41406502898",
+      "confidence_grade": "official_historical_patch_not_live_measured",
+      "runtime_verified": false,
+      "exact_item_hash_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "measured_pve_dps": null,
+      "measured_pve_dr": null,
+      "measured_pvp_damage": null,
+      "measured_pvp_ttk": null,
+      "measured_cooldown_seconds": null,
+      "id": "d2:patch-rule:970:defense:pvp_multicharge",
+      "classes": [
+        "hunter",
+        "titan",
+        "warlock"
+      ],
+      "activities": [
+        "pvp",
+        "competitive",
+        "trials"
+      ],
+      "trigger": "match_start_with_multi_charge_ability",
+      "official_values": {
+        "starting_charges": 1
+      },
+      "limits": "No cooldown, recharge or subsequent charges inferred; Artifact perks disabled in Competitive/Trials."
+    }
+  ],
+  "app_deployment_policy": "Do not promote historical patch statements, approximate DR anchors, or synthetic EHP to current certified build damage/TTK."
+}
