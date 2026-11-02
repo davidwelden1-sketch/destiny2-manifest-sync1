@@ -981,6 +981,68 @@
         "watch_out": "These are official historical patch rules, not current gameplay measurements. Teammate kills, assists, grenade charge overflow, exact Ex Diris proc ownership, boss DPS and Guardian TTK are not established. Artifact perks do not operate in Competitive or Trials.",
         "status": "Bungie 9.7.0 published 9 June 2026; Ex Diris interaction fix published in 9.7.0.2 on 23 June 2026. Reviewed 2 November 2026, not independently gameplay-tested."
       }
+    },
+    {
+      "id": "player:tarrabah-scorched-ravenous-beast-970",
+      "title": "Tarrabah: Scorch helps charge Ravenous Beast faster",
+      "player": {
+        "version": 1,
+        "category": "Weapon synergy",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie's June update says damaging Scorched combatants grants 33% more Ravenous Beast progress, while final blows add 10% meter progress.",
+        "explanation": "This gives Tarrabah a specific reason to pair with a reliable Scorch source. Bungie says hitting a Scorched enemy with the entire magazine can fill the meter. A Solar teammate, ability or suitable weapon might set up the target, but the Scorch source, attribution and exact activation loop still need controlled testing.",
+        "steps": [
+          "Apply Scorch to a combatant using a separately verified source before firing Tarrabah.",
+          "Track Ravenous Beast meter progress from Tarrabah hits against the Scorched target and compare with an otherwise identical unscorched target.",
+          "Compare sustained damage and final blows separately, and confirm the meter result before designing a boss-damage rotation."
+        ],
+        "watch_out": "The published 33% modifies meter progress, not weapon damage. The wording refers to combatants; it does not establish the same activation against Guardians or prove a faster PvP TTK. No current Artifact selection or full build is certified.",
+        "status": "Official Bungie Update 9.7.0, published 9 June 2026; historical patch rule reviewed 2 November 2026, not a current gameplay measurement."
+      },
+      "summary": "Bungie's June update says damaging Scorched combatants grants 33% more Ravenous Beast progress, while final blows add 10% meter progress.",
+      "text": "Bungie's June update says damaging Scorched combatants grants 33% more Ravenous Beast progress, while final blows add 10% meter progress.\n\nWhy it matters\nThis gives Tarrabah a specific reason to pair with a reliable Scorch source. Bungie says hitting a Scorched enemy with the entire magazine can fill the meter. A Solar teammate, ability or suitable weapon might set up the target, but the Scorch source, attribution and exact activation loop still need controlled testing.\n\nHow to use it\n1. Apply Scorch to a combatant using a separately verified source before firing Tarrabah.\n2. Track Ravenous Beast meter progress from Tarrabah hits against the Scorched target and compare with an otherwise identical unscorched target.\n3. Compare sustained damage and final blows separately, and confirm the meter result before designing a boss-damage rotation.\n\nWhat to watch for\nThe published 33% modifies meter progress, not weapon damage. The wording refers to combatants; it does not establish the same activation against Guardians or prove a faster PvP TTK. No current Artifact selection or full build is certified.\n\nSource & status\nOfficial Bungie Update 9.7.0, published 9 June 2026; historical patch rule reviewed 2 November 2026, not a current gameplay measurement.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Tarrabah",
+        "Ravenous Beast",
+        "Scorch"
+      ]
+    },
+    {
+      "id": "player:jade-rabbit-fate-firefly-970",
+      "title": "Jade Rabbit: precision kills build stacks, Firefly splash keeps them",
+      "player": {
+        "version": 1,
+        "category": "Weapon synergy",
+        "activity": "PvP / PvE",
+        "guardian": "All classes",
+        "takeaway": "Jade Rabbit's revised Fate of All Fools gains a stack on precision kills, loses one on direct body-shot damage and no longer loses stacks merely by reloading.",
+        "explanation": "Bungie's update raised the magazine to 15 and added Firefly. Precision kills refill the magazine; Firefly's explosion scales with Fate stacks, but splash damage does not spend them. With the catalyst, a special reload consumes stacks for a single Micro Missile round whose bonus damage depends on the stacks spent. That creates a precision-first setup to investigate in Crucible and PvE.",
+        "steps": [
+          "Watch the Fate of All Fools stack counter after a precision final blow and after a reload.",
+          "Compare direct body-shot damage with Firefly splash to verify which event removes a stack.",
+          "If the catalyst is active, test the special reload at different stack counts and record the missile's actual damage against controlled targets."
+        ],
+        "watch_out": "The 15-stack cap is a maximum, not an assumed achievable Crucible sequence. The catalyst missile damage and Guardian TTK have not been measured, and the patch does not prove the weapon is the fastest scout rifle.",
+        "status": "Official Bungie Update 9.7.0, published 9 June 2026; historical mechanics reviewed 2 November 2026, not live damage or TTK certification."
+      },
+      "summary": "Jade Rabbit's revised Fate of All Fools gains a stack on precision kills, loses one on direct body-shot damage and no longer loses stacks merely by reloading.",
+      "text": "Jade Rabbit's revised Fate of All Fools gains a stack on precision kills, loses one on direct body-shot damage and no longer loses stacks merely by reloading.\n\nWhy it matters\nBungie's update raised the magazine to 15 and added Firefly. Precision kills refill the magazine; Firefly's explosion scales with Fate stacks, but splash damage does not spend them. With the catalyst, a special reload consumes stacks for a single Micro Missile round whose bonus damage depends on the stacks spent. That creates a precision-first setup to investigate in Crucible and PvE.\n\nHow to use it\n1. Watch the Fate of All Fools stack counter after a precision final blow and after a reload.\n2. Compare direct body-shot damage with Firefly splash to verify which event removes a stack.\n3. If the catalyst is active, test the special reload at different stack counts and record the missile's actual damage against controlled targets.\n\nWhat to watch for\nThe 15-stack cap is a maximum, not an assumed achievable Crucible sequence. The catalyst missile damage and Guardian TTK have not been measured, and the patch does not prove the weapon is the fastest scout rifle.\n\nSource & status\nOfficial Bungie Update 9.7.0, published 9 June 2026; historical mechanics reviewed 2 November 2026, not live damage or TTK certification.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Jade Rabbit",
+        "Fate of All Fools",
+        "Firefly"
+      ]
     }
   ]
 }
