@@ -1106,6 +1106,72 @@
         "watch_out": "Do not apply +30% to hand cannons or assume every shotgun and bow can roll Adagio. Enhanced eligibility, stacking, RPM change, PvP breakpoints and current Artifact effects remain unverified. Artifact effects are disabled in Competitive and Trials.",
         "status": "Official Bungie Update 9.7.0, 9 June 2026, reviewed 2 November 2026; historical damage bonus only, not measured Guardian TTK or PvE DPS."
       }
+    },
+    {
+      "id": "player:sentinel-offensive-bulwark-overshield-kill-970",
+      "title": "Sentinel: Void Overshield final blows now feed both abilities",
+      "summary": "Offensive Bulwark now awards melee and grenade ability energy on final blows while a Void Overshield is active.",
+      "text": "Offensive Bulwark now awards melee and grenade ability energy on final blows while a Void Overshield is active.\n\nWhy it matters\nPreviously, the grenade benefit was a recharge-rate increase. Bungie's June patch moves it to final blows and adds melee-energy gain. That makes securing kills during Overshield uptime a distinct rotation from merely waiting behind cover; it does not establish an infinite ability loop.\n\nHow to use it\n1. Equip Sentinel's Offensive Bulwark Aspect and a legitimate source of Void Overshield.\n2. Confirm the Overshield is still active immediately before a final blow, then compare grenade and melee energy before and after.\n3. Repeat without Overshield, and separately in PvE and Crucible, to establish real energy return and cooldown.\n\nWhat to watch for\nDo not assume assists, damage without a final blow or an expired Overshield trigger the return. Bungie did not publish energy percentages or cooldowns in this note, and other effects may alter observed results.\n\nSource & status\nBungie Update 9.7.0, published 9 June 2026; historical patch description reviewed 2 November 2026. Current live uptime, damage and timing have not been independently measured.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Offensive Bulwark",
+        "Sentinel",
+        "Void Overshield",
+        "grenade energy",
+        "melee energy"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ability regeneration",
+        "activity": "PvE / PvP",
+        "guardian": "Titan",
+        "takeaway": "Offensive Bulwark now awards melee and grenade ability energy on final blows while a Void Overshield is active.",
+        "explanation": "Previously, the grenade benefit was a recharge-rate increase. Bungie's June patch moves it to final blows and adds melee-energy gain. That makes securing kills during Overshield uptime a distinct rotation from merely waiting behind cover; it does not establish an infinite ability loop.",
+        "steps": [
+          "Equip Sentinel's Offensive Bulwark Aspect and a legitimate source of Void Overshield.",
+          "Confirm the Overshield is still active immediately before a final blow, then compare grenade and melee energy before and after.",
+          "Repeat without Overshield, and separately in PvE and Crucible, to establish real energy return and cooldown."
+        ],
+        "watch_out": "Do not assume assists, damage without a final blow or an expired Overshield trigger the return. Bungie did not publish energy percentages or cooldowns in this note, and other effects may alter observed results.",
+        "status": "Bungie Update 9.7.0, published 9 June 2026; historical patch description reviewed 2 November 2026. Current live uptime, damage and timing have not been independently measured."
+      }
+    },
+    {
+      "id": "player:arc-soul-acquisition-24m-970",
+      "title": "Arc Soul: the 24-metre acquisition limit matters in Crucible",
+      "summary": "Bungie reduced Arc Soul's maximum target-acquisition range from 30 to 24 metres, a six-metre reduction.",
+      "text": "Bungie reduced Arc Soul's maximum target-acquisition range from 30 to 24 metres, a six-metre reduction.\n\nWhy it matters\nThe published range is 20% shorter than before, which can affect whether an Arc Soul starts engaging an opponent across a lane. It is not a six-metre reduction in weapon range or proof that an acquired target stops taking damage exactly at 24 metres.\n\nHow to use it\n1. With Arc Soul active, test an unobstructed stationary Guardian at controlled distances inside and outside 24 metres.\n2. Record whether the Soul first acquires the target, separately from its projectile travel, hit registration and damage.\n3. Repeat against PvE combatants and with relevant buffs to check for mode-specific behavior.\n\nWhat to watch for\nThe patch describes target acquisition, not projectile falloff, target tracking after acquisition, body/crit damage or Guardian TTK. Exact boundary behavior at 24 metres and interactions with other targeting bonuses require measurement.\n\nSource & status\nBungie Update 9.7.0, published 9 June 2026; historical patch description reviewed 2 November 2026. Current live uptime, damage and timing have not been independently measured.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Arc Soul",
+        "Stormcaller",
+        "24 metres",
+        "target acquisition",
+        "Crucible"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Engagement range",
+        "activity": "PvP / PvE",
+        "guardian": "Warlock",
+        "takeaway": "Bungie reduced Arc Soul's maximum target-acquisition range from 30 to 24 metres, a six-metre reduction.",
+        "explanation": "The published range is 20% shorter than before, which can affect whether an Arc Soul starts engaging an opponent across a lane. It is not a six-metre reduction in weapon range or proof that an acquired target stops taking damage exactly at 24 metres.",
+        "steps": [
+          "With Arc Soul active, test an unobstructed stationary Guardian at controlled distances inside and outside 24 metres.",
+          "Record whether the Soul first acquires the target, separately from its projectile travel, hit registration and damage.",
+          "Repeat against PvE combatants and with relevant buffs to check for mode-specific behavior."
+        ],
+        "watch_out": "The patch describes target acquisition, not projectile falloff, target tracking after acquisition, body/crit damage or Guardian TTK. Exact boundary behavior at 24 metres and interactions with other targeting bonuses require measurement.",
+        "status": "Bungie Update 9.7.0, published 9 June 2026; historical patch description reviewed 2 November 2026. Current live uptime, damage and timing have not been independently measured."
+      }
     }
   ]
 }
