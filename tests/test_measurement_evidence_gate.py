@@ -120,3 +120,45 @@ class MeasurementEvidenceGateTests(unittest.TestCase):
                 data = fixture()
                 data["inputs"]["hit_sequence"] = sequence
                 evaluate_observation(data)
+
+    def test_extreme_precision_pvp_shortfall_never_rounds_to_lethal(self):
+        data = fixture()
+        data["inputs"]["precision_damage"] = "114.9999999999999999999999999999999999999999999"
+        with self.assertRaises(ValueError):
+            evaluate_observation(data)
+
+    def test_pvp_exact_rational_ttk_140rpm(self):
+        data = fixture()
+        data["inputs"]["rpm"] = 140
+        result = evaluate_observation(data)
+        self.assertEqual(result["derived"]["conditional_ttk_exact_ratio"],
+                         {"numerator": "3", "denominator": "7"})
+        self.assertTrue(result["derived"]["conditional_ttk_seconds"].startswith("0.428571"))
+
+    def test_pve_dr_extreme_near_full_not_rounded_to_one(self):
+        data = fixture("pve_dr")
+        data["inputs"]["baseline_hit"] = "1000000000000000000000000000000000000000000000"
+        data["inputs"]["mitigated_hit"] = "1"
+        result = evaluate_observation(data)
+        self.assertNotEqual(result["derived"]["conditional_dr_fraction"], "1")
+        self.assertEqual(result["derived"]["conditional_dr_exact_ratio"]["denominator"],
+                         "1000000000000000000000000000000000000000000000")
+        self.assertFalse(result["certified_for_app_build_recommendation"])
+
+    def test_pve_dps_exact_rational_repeating(self):
+        data = fixture("pve_dps")
+        data["inputs"]["total_damage"] = 1
+        data["inputs"]["duration_seconds"] = 3
+        result = evaluate_observation(data)
+        self.assertEqual(result["derived"]["conditional_dps_exact_ratio"],
+                         {"numerator": "1", "denominator": "3"})
+        self.assertTrue(result["derived"]["conditional_dps"].startswith("0.333333"))
+
+    def test_pve_dr_exact_zero_and_full_controls(self):
+        data = fixture("pve_dr")
+        data["inputs"]["mitigated_hit"] = 100
+        self.assertEqual(evaluate_observation(data)["derived"]["conditional_dr_exact_ratio"],
+                         {"numerator": "0", "denominator": "1"})
+        data["inputs"]["mitigated_hit"] = 0
+        self.assertEqual(evaluate_observation(data)["derived"]["conditional_dr_exact_ratio"],
+                         {"numerator": "1", "denominator": "1"})
