@@ -8,7 +8,7 @@
   "confidence_grade": "software_regression_synthetic",
   "manifest_context": {
     "version": "245114.26.10.13.2000-1-bnet.66137",
-    "source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41444277070",
+    "source": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41453560131",
     "note": "Last verified successful version probe, not a new full extraction"
   },
   "patch_context": {
@@ -66,7 +66,25 @@
   },
   "verification": {
     "new_regression_tests": 5,
-    "github_ci_status": "pending",
-    "commit_sha": "6e52419ac0b921795204b765c42615d176b800e3"
+    "code_and_index_ci_commit_sha": "f90b0f4c7d3fcf26f0bae09d1b02c2b592e36da5",
+    "python_ci": {
+      "url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41453560029",
+      "status": "completed_success",
+      "tests_passed": 1268
+    },
+    "autonomous_audit": {
+      "url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41453560131",
+      "status": "completed_success",
+      "tests_passed": 1268,
+      "live_manifest_probe": "unchanged",
+      "manifest_version": "245114.26.10.13.2000-1-bnet.66137"
+    },
+    "simulation_ci": {
+      "url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41453524164",
+      "status": "completed_success",
+      "tests_passed": 1268,
+      "code_test_commit_sha": "6e52419ac0b921795204b765c42615d176b800e3"
+    },
+    "note": "These receipts apply to their specified SHAs; this metadata-only commit needs separate final-SHA CI check."
   }
 }
