@@ -74,8 +74,13 @@
   "test_suite": {
     "path": "tests/test_numerical_boundary_safety.py",
     "new_test_methods": 13,
-    "execution_status": "verify_final_commit_ci",
-    "all_values_are_synthetic": true
+    "execution_status": "verified_final_commit_ci_passed",
+    "all_values_are_synthetic": true,
+    "verified_commit_sha": "e1bc46c2a5af24110bb406e890abe581d37c5b12",
+    "verified_python_ci_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41399798052",
+    "verified_autonomous_audit_url": "https://github.com/davidwelden1-sketch/destiny2-manifest-sync1/actions/runs/41399798003",
+    "verified_test_count": 1179,
+    "ci_receipt_scope": "historical final SHA; passing software tests are not in-game damage, DR, or TTK certification"
   },
   "deployment_gate": "No build or damage numbers may be promoted to verified gameplay based on this dataset."
 }
