@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "vaeltrion:official-patch:970:super-activity-split:2026-11-02",
+  "indexed_at_utc": "2026-11-02T08:44:00Z",
+  "evidence_scope": "two previously unindexed official patch statements; historical not gameplay-measured",
+  "records": [
+    {
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "confidence_grade": "official_historical_patch_not_live_measured",
+      "current_runtime_verified": false,
+      "exact_item_hash_verified": false,
+      "current_artifact_allocation_verified": false,
+      "measured_pve_dps": null,
+      "measured_pvp_guardian_damage": null,
+      "measured_pvp_ttk": null,
+      "measured_ability_cooldown_seconds": null,
+      "certified_for_app_build_recommendation": false,
+      "id": "d2:patch-rule:970:warlock:skull-dire-ahamkara-nova-lance",
+      "guardian_class": "warlock",
+      "activity": "pve_candidate_not_pvp_certified",
+      "equipment": "Skull of Dire Ahamkara",
+      "trigger": "after_casting_nova_bomb",
+      "official_behavior": {
+        "grants_short_nova_lance_window": true,
+        "cataclysm_nova_bomb_destroyed_with_nova_lance": "creates_nova_vortex_alongside_cataclysm_seekers",
+        "window_duration_seconds": null
+      },
+      "research_test": "Compare Cataclysm Nova Bomb + timed Nova Lance vs control on the same PvE boss; record exact cast delay, seeker hits, Vortex damage, weapon swap delay, Super tier and DPS phase.",
+      "limitations": "No published Nova Lance damage, timing window or PvP effect; no boss DPS can be calculated from this patch note."
+    },
+    {
+      "patch_version": "9.7.0",
+      "patch_published_on": "2026-06-09",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_checked_on_utc": "2026-11-02",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "confidence_grade": "official_historical_patch_not_live_measured",
+      "current_runtime_verified": false,
+      "exact_item_hash_verified": false,
+      "current_artifact_allocation_verified": false,
+      "measured_pve_dps": null,
+      "measured_pvp_guardian_damage": null,
+      "measured_pvp_ttk": null,
+      "measured_ability_cooldown_seconds": null,
+      "certified_for_app_build_recommendation": false,
+      "id": "d2:patch-rule:970:hunter:deadshot-player-kill-super-energy",
+      "guardian_class": "hunter",
+      "activity": "pvp",
+      "equipment": "Golden Gun: Deadshot",
+      "trigger": "player_kill_during_super",
+      "official_behavior": {
+        "super_energy_gain_from_player_kills_relative_multiplier": 0.6,
+        "super_energy_gain_reduction_fraction": 0.4
+      },
+      "research_test": "Controlled PvP comparison with same Guardian target, initial Super energy, exact number of kills and identical modifiers; compare prepatch archive versus postpatch meter gain if reproducible.",
+      "limitations": "The 40% change applies to the super-energy gain component from player kills, not to weapon damage, Guardian health, TTK, entire Super duration or all recharge sources."
+    }
+  ],
+  "release_policy": "No app build certification without current activity, exact item/ability, current Artifact and independently measured PvE/PvP validation."
+}
