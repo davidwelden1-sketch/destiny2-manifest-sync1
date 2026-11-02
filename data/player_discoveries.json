@@ -1043,6 +1043,69 @@
         "Fate of All Fools",
         "Firefly"
       ]
+    },
+    {
+      "id": "player:rocket-pulse-boss-damage-970",
+      "title": "Rocket Pulse boss damage: the two reductions compound",
+      "summary": "Bungie's June patch cut Rocket Pulse PvE damage by 10%, then applied another 25% reduction against bosses.",
+      "text": "Bungie's June patch cut Rocket Pulse PvE damage by 10%, then applied another 25% reduction against bosses.\n\nWhy it matters\nFor a boss, applying both published reductions multiplicatively gives 0.90 × 0.75 = 0.675 of the previous damage, a 32.5% reduction compared with the pre-patch baseline. That is patch arithmetic, not a measured DPS number. Rocket Pulses are also excluded from the separate 20% special-weapon damage increase against elites.\n\nHow to use it\n1. Check whether the weapon is actually a Rocket Pulse rather than a Rocket Sidearm or ordinary Pulse Rifle.\n2. For PvE boss comparisons, use the 0.675 historical relative multiplier only against a verified pre-patch baseline; do not treat it as an absolute current damage value.\n3. Measure the same boss, power, buffs, range and magazine conditions before ranking a damage rotation.\n\nWhat to watch for\nThe extra 25% reduction is boss-specific. Do not transfer it to Champions, ordinary enemies or Guardians. No actual boss DPS, live weapon-hash/frame eligibility, current Artifact or enhanced perk roll has been certified.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026, reviewed 2 November 2026; historical patch-relative arithmetic only, not current gameplay damage.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Rocket Pulse",
+        "boss damage",
+        "damage phase"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon damage",
+        "activity": "PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie's June patch cut Rocket Pulse PvE damage by 10%, then applied another 25% reduction against bosses.",
+        "explanation": "For a boss, applying both published reductions multiplicatively gives 0.90 × 0.75 = 0.675 of the previous damage, a 32.5% reduction compared with the pre-patch baseline. That is patch arithmetic, not a measured DPS number. Rocket Pulses are also excluded from the separate 20% special-weapon damage increase against elites.",
+        "steps": [
+          "Check whether the weapon is actually a Rocket Pulse rather than a Rocket Sidearm or ordinary Pulse Rifle.",
+          "For PvE boss comparisons, use the 0.675 historical relative multiplier only against a verified pre-patch baseline; do not treat it as an absolute current damage value.",
+          "Measure the same boss, power, buffs, range and magazine conditions before ranking a damage rotation."
+        ],
+        "watch_out": "The extra 25% reduction is boss-specific. Do not transfer it to Champions, ordinary enemies or Guardians. No actual boss DPS, live weapon-hash/frame eligibility, current Artifact or enhanced perk roll has been certified.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026, reviewed 2 November 2026; historical patch-relative arithmetic only, not current gameplay damage."
+      }
+    },
+    {
+      "id": "player:adagio-family-damage-970",
+      "title": "Adagio: hand cannons, bows and shotguns have different bonuses",
+      "summary": "Bungie's June update lists Adagio at +27% damage on hand cannons and +30% on shotguns and bows.",
+      "text": "Bungie's June update lists Adagio at +27% damage on hand cannons and +30% on shotguns and bows.\n\nWhy it matters\nThe weapon family changes the published damage bonus. A larger percentage does not automatically mean a faster Crucible kill: Adagio also affects firing cadence, and a proper TTK comparison needs exact weapon damage, frame, range, activation and Guardian health. These bonuses are patch-described values, not a tested roll recommendation.\n\nHow to use it\n1. Check the exact weapon's current perk pool before planning an Adagio roll.\n2. Activate Adagio and record actual body and precision damage, rate of fire and range against a controlled Guardian.\n3. Compare shots to kill and time between shots with the perk off and on, then repeat for PvE targets separately.\n\nWhat to watch for\nDo not apply +30% to hand cannons or assume every shotgun and bow can roll Adagio. Enhanced eligibility, stacking, RPM change, PvP breakpoints and current Artifact effects remain unverified. Artifact effects are disabled in Competitive and Trials.\n\nSource & status\nOfficial Bungie Update 9.7.0, 9 June 2026, reviewed 2 November 2026; historical damage bonus only, not measured Guardian TTK or PvE DPS.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Adagio",
+        "hand cannon",
+        "bow",
+        "shotgun"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Weapon perk",
+        "activity": "PvP / PvE",
+        "guardian": "All classes",
+        "takeaway": "Bungie's June update lists Adagio at +27% damage on hand cannons and +30% on shotguns and bows.",
+        "explanation": "The weapon family changes the published damage bonus. A larger percentage does not automatically mean a faster Crucible kill: Adagio also affects firing cadence, and a proper TTK comparison needs exact weapon damage, frame, range, activation and Guardian health. These bonuses are patch-described values, not a tested roll recommendation.",
+        "steps": [
+          "Check the exact weapon's current perk pool before planning an Adagio roll.",
+          "Activate Adagio and record actual body and precision damage, rate of fire and range against a controlled Guardian.",
+          "Compare shots to kill and time between shots with the perk off and on, then repeat for PvE targets separately."
+        ],
+        "watch_out": "Do not apply +30% to hand cannons or assume every shotgun and bow can roll Adagio. Enhanced eligibility, stacking, RPM change, PvP breakpoints and current Artifact effects remain unverified. Artifact effects are disabled in Competitive and Trials.",
+        "status": "Official Bungie Update 9.7.0, 9 June 2026, reviewed 2 November 2026; historical damage bonus only, not measured Guardian TTK or PvE DPS."
+      }
     }
   ]
 }
