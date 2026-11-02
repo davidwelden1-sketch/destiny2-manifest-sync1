@@ -1,0 +1,347 @@
+{
+  "dataset_id": "vaeltrion:patch970:champion-frame-legality-evidence",
+  "schema_version": "1.0.0",
+  "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+  "source_published_at": "2026-06-09",
+  "reviewed_at": "2026-11-02",
+  "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+  "source_scope": "official historical rules; not a manifest-backed current item-hash index",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:champion:base:aggressive",
+      "title": "Anti-Champion 2.0: aggressive frame",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Bungie Update 9.7.0 maps the aggressive frame family to unstoppable Champion interaction in PvE. Not proof of an individual weapon hash or PvP damage.",
+      "text": "Base frame category aggressive; Champion effect unstoppable; exact weapon-hash and frame eligibility require manifest verification.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "aggressive",
+      "effect": "unstoppable",
+      "weapon_type": null,
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:base:high_impact",
+      "title": "Anti-Champion 2.0: high impact frame",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Bungie Update 9.7.0 maps the high impact frame family to unstoppable Champion interaction in PvE. Not proof of an individual weapon hash or PvP damage.",
+      "text": "Base frame category high_impact; Champion effect unstoppable; exact weapon-hash and frame eligibility require manifest verification.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "high_impact",
+      "effect": "unstoppable",
+      "weapon_type": null,
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:base:precision",
+      "title": "Anti-Champion 2.0: precision frame",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Bungie Update 9.7.0 maps the precision frame family to barrier Champion interaction in PvE. Not proof of an individual weapon hash or PvP damage.",
+      "text": "Base frame category precision; Champion effect barrier; exact weapon-hash and frame eligibility require manifest verification.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "precision",
+      "effect": "barrier",
+      "weapon_type": null,
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:base:adaptive",
+      "title": "Anti-Champion 2.0: adaptive frame",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Bungie Update 9.7.0 maps the adaptive frame family to barrier Champion interaction in PvE. Not proof of an individual weapon hash or PvP damage.",
+      "text": "Base frame category adaptive; Champion effect barrier; exact weapon-hash and frame eligibility require manifest verification.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "adaptive",
+      "effect": "barrier",
+      "weapon_type": null,
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:base:lightweight",
+      "title": "Anti-Champion 2.0: lightweight frame",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Bungie Update 9.7.0 maps the lightweight frame family to overload Champion interaction in PvE. Not proof of an individual weapon hash or PvP damage.",
+      "text": "Base frame category lightweight; Champion effect overload; exact weapon-hash and frame eligibility require manifest verification.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "lightweight",
+      "effect": "overload",
+      "weapon_type": null,
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:base:rapid_fire",
+      "title": "Anti-Champion 2.0: rapid fire frame",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Bungie Update 9.7.0 maps the rapid fire frame family to overload Champion interaction in PvE. Not proof of an individual weapon hash or PvP damage.",
+      "text": "Base frame category rapid_fire; Champion effect overload; exact weapon-hash and frame eligibility require manifest verification.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "rapid_fire",
+      "effect": "overload",
+      "weapon_type": null,
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:override:auto_rifle:support",
+      "title": "Anti-Champion 2.0: support auto rifle",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Specific Bungie 9.7.0 override: support auto rifle counters overload Champions in PvE; do not apply generic frame mapping instead.",
+      "text": "Frame-specific exception for auto_rifle / support. Weapon-hash frame eligibility, current ownership, PvP applicability and perk socket legality not established by patch note.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "support",
+      "effect": "overload",
+      "weapon_type": "auto_rifle",
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:override:linear_fusion_rifle:adaptive_burst",
+      "title": "Anti-Champion 2.0: adaptive burst linear fusion rifle",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Specific Bungie 9.7.0 override: adaptive burst linear fusion rifle counters barrier Champions in PvE; do not apply generic frame mapping instead.",
+      "text": "Frame-specific exception for linear_fusion_rifle / adaptive_burst. Weapon-hash frame eligibility, current ownership, PvP applicability and perk socket legality not established by patch note.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "adaptive_burst",
+      "effect": "barrier",
+      "weapon_type": "linear_fusion_rifle",
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:override:breech_grenade_launcher:area_denial",
+      "title": "Anti-Champion 2.0: area denial breech grenade launcher",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Specific Bungie 9.7.0 override: area denial breech grenade launcher counters overload Champions in PvE; do not apply generic frame mapping instead.",
+      "text": "Frame-specific exception for breech_grenade_launcher / area_denial. Weapon-hash frame eligibility, current ownership, PvP applicability and perk socket legality not established by patch note.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "area_denial",
+      "effect": "overload",
+      "weapon_type": "breech_grenade_launcher",
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:override:breech_grenade_launcher:double_fire",
+      "title": "Anti-Champion 2.0: double fire breech grenade launcher",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Specific Bungie 9.7.0 override: double fire breech grenade launcher counters unstoppable Champions in PvE; do not apply generic frame mapping instead.",
+      "text": "Frame-specific exception for breech_grenade_launcher / double_fire. Weapon-hash frame eligibility, current ownership, PvP applicability and perk socket legality not established by patch note.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "double_fire",
+      "effect": "unstoppable",
+      "weapon_type": "breech_grenade_launcher",
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:override:breech_grenade_launcher:micro_missile",
+      "title": "Anti-Champion 2.0: micro missile breech grenade launcher",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Specific Bungie 9.7.0 override: micro missile breech grenade launcher counters unstoppable Champions in PvE; do not apply generic frame mapping instead.",
+      "text": "Frame-specific exception for breech_grenade_launcher / micro_missile. Weapon-hash frame eligibility, current ownership, PvP applicability and perk socket legality not established by patch note.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "micro_missile",
+      "effect": "unstoppable",
+      "weapon_type": "breech_grenade_launcher",
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    },
+    {
+      "id": "d2:patch-rule:970:champion:override:breech_grenade_launcher:wave",
+      "title": "Anti-Champion 2.0: wave breech grenade launcher",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "reviewed_at": "2026-11-02",
+      "evidence": "official_historical",
+      "summary": "Specific Bungie 9.7.0 override: wave breech grenade launcher counters unstoppable Champions in PvE; do not apply generic frame mapping instead.",
+      "text": "Frame-specific exception for breech_grenade_launcher / wave. Weapon-hash frame eligibility, current ownership, PvP applicability and perk socket legality not established by patch note.",
+      "patch_version": "9.7.0",
+      "patch_published_at": "2026-06-09",
+      "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+      "activities": [
+        "pve"
+      ],
+      "frame": "wave",
+      "effect": "unstoppable",
+      "weapon_type": "breech_grenade_launcher",
+      "exact_weapon_hash": null,
+      "enhanced_perk_legality_verified": false,
+      "artifact_allocation_verified": false,
+      "unknown_measurements": {
+        "pve_dps": null,
+        "pvp_ttk": null,
+        "pve_dr": null,
+        "cooldown_seconds": null
+      },
+      "certified_for_live_build": false
+    }
+  ]
+}
