@@ -19,11 +19,12 @@ def build(root):
    raise ValueError('Player guide needs a valid HTTPS source URL')
   for date_field in ('reviewed_at','source_published_at'):
    value=v.get(date_field)
+   if date_field=='source_published_at' and value is None:continue
    if not isinstance(value,str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',value):
     raise ValueError('Player guide needs ISO source and review dates')
    try:datetime.date.fromisoformat(value)
    except ValueError:raise ValueError('Player guide has invalid calendar date')
-  if v['reviewed_at']<v['source_published_at']:
+  if v.get('source_published_at') and v['reviewed_at']<v['source_published_at']:
    raise ValueError('Review date predates source publication')
   ids.add(v['id']);text=player['takeaway']+'\n\nWhy it matters\n'+player['explanation']+'\n\nHow to use it\n'+'\n'.join(str(i+1)+'. '+x for i,x in enumerate(player['steps']))+'\n\nWhat to watch for\n'+player['watch_out']+'\n\nSource & status\n'+player['status']
   records.append({**v,'summary':player['takeaway'],'text':text,'provenance':{'dataset':p.name,'sha256':hashlib.sha256(raw).hexdigest(),'commit':os.environ.get('GITHUB_SHA','local-import')}})
