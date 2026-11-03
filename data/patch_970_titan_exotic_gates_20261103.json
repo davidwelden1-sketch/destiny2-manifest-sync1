@@ -1,0 +1,82 @@
+{
+  "dataset_id": "vaeltrion:patch970:titan-exotic-mode-gates:2026-11-03",
+  "schema_version": "1.0.0",
+  "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+  "source_published_at": "2026-06-09",
+  "reviewed_at": "2026-11-03",
+  "patch_version": "9.7.0",
+  "manifest_version_context": "245114.26.10.13.2000-1-bnet.66137",
+  "manifest_context_verified_on": "2026-11-02",
+  "source_scope": "Historical official patch mechanics only, not current in-game measurements",
+  "records": [
+    {
+      "id": "d2:patch-rule:970:titan:point-contact-thunderclap-charge-lightning",
+      "title": "Point-Contact Cannon Brace charge-scaled lightning strikes",
+      "summary": "Thunderclap lightning strikes scale up to 2x with charge duration; this stacks with Amplified bonus. Lightning strikes begin on wind-up.",
+      "text": "Thunderclap lightning strikes scale up to 2x with charge duration; this stacks with Amplified bonus. Lightning strikes begin on wind-up.",
+      "guardian_class": "Titan",
+      "activities": [
+        "pve",
+        "pvp"
+      ],
+      "ability": "Thunderclap",
+      "exotic": "Point-Contact Cannon Brace",
+      "published_charge_strike_damage_multiplier_max": 2,
+      "amplified_stacking_published": true,
+      "charge_curve_measured": false,
+      "amplified_multiplier_measured": null,
+      "melee_energy_return_per_lightning_final_blow": null,
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-03",
+      "patch_version": "9.7.0",
+      "evidence": "official_historical",
+      "confidence": "official_patch_description_not_live_measurement",
+      "runtime_verified": false,
+      "certified_for_live_build": false,
+      "artifact_allocation_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "exact_weapon_hash": null,
+      "unknown_measurements": {
+        "pve_boss_dps": null,
+        "pve_dr": null,
+        "pvp_ttk": null,
+        "pvp_damage": null,
+        "ability_cooldown_seconds": null
+      }
+    },
+    {
+      "id": "d2:patch-rule:970:titan:acd0-no-player-melee-dr",
+      "title": "ACD/0 Feedback Fence no melee DR against players",
+      "summary": "9.7.0 removes melee damage resistance versus players from ACD/0 Feedback Fence.",
+      "text": "9.7.0 removes melee damage resistance versus players from ACD/0 Feedback Fence.",
+      "guardian_class": "Titan",
+      "activities": [
+        "pvp"
+      ],
+      "exotic": "ACD/0 Feedback Fence",
+      "damage_source": "Guardian melee",
+      "pvp_melee_damage_resistance_from_exotic_removed": true,
+      "remaining_effects_measured": false,
+      "pve_damage_resistance_measured": null,
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-03",
+      "patch_version": "9.7.0",
+      "evidence": "official_historical",
+      "confidence": "official_patch_description_not_live_measurement",
+      "runtime_verified": false,
+      "certified_for_live_build": false,
+      "artifact_allocation_verified": false,
+      "enhanced_perk_legality_verified": false,
+      "exact_weapon_hash": null,
+      "unknown_measurements": {
+        "pve_boss_dps": null,
+        "pve_dr": null,
+        "pvp_ttk": null,
+        "pvp_damage": null,
+        "ability_cooldown_seconds": null
+      }
+    }
+  ]
+}
