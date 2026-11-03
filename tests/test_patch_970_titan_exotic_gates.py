@@ -30,6 +30,12 @@ class TitanExotic970GatesTest(unittest.TestCase):
    self.assertFalse(r["certified_for_live_build"])
    self.assertIsNone(r["unknown_measurements"]["pvp_ttk"])
    self.assertIsNone(r["unknown_measurements"]["pve_boss_dps"])
+ def test_strike_multiplier_is_not_a_melee_or_boss_dps_multiplier(self):
+  d=json.loads((ROOT/"data/patch_970_titan_exotic_gates_20261103.json").read_text())
+  point=d["records"][0]
+  self.assertIn("lightning",point["id"])
+  self.assertIsNone(point["unknown_measurements"]["pve_boss_dps"])
+  self.assertFalse(point["runtime_verified"])
  def test_player_guides_exist_without_false_measurements(self):
   d=json.loads((ROOT/"data/player_discoveries.json").read_text())
   ids={r["id"]:r for r in d["records"]}
