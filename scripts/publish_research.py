@@ -14,8 +14,17 @@ def build(root):
    raise ValueError('Player guide needs readable steps')
   if v['id'] in ids or v.get('evidence') not in ('official_historical','research') or v.get('runtime_verified') is not False:
    raise ValueError('Duplicate or invalid player guide')
-  if not v.get('source_url','').startswith('https://') or not v.get('reviewed_at'):
-   raise ValueError('Player guide needs source and review date')
+  source=v.get('source_url','');parsed=urllib.parse.urlsplit(source)
+  if parsed.scheme!='https' or not parsed.hostname or parsed.username or parsed.password or any(c.isspace() for c in source):
+   raise ValueError('Player guide needs a valid HTTPS source URL')
+  for date_field in ('reviewed_at','source_published_at'):
+   value=v.get(date_field)
+   if not isinstance(value,str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',value):
+    raise ValueError('Player guide needs ISO source and review dates')
+   try:datetime.date.fromisoformat(value)
+   except ValueError:raise ValueError('Player guide has invalid calendar date')
+  if v['reviewed_at']<v['source_published_at']:
+   raise ValueError('Review date predates source publication')
   ids.add(v['id']);text=player['takeaway']+'\n\nWhy it matters\n'+player['explanation']+'\n\nHow to use it\n'+'\n'.join(str(i+1)+'. '+x for i,x in enumerate(player['steps']))+'\n\nWhat to watch for\n'+player['watch_out']+'\n\nSource & status\n'+player['status']
   records.append({**v,'summary':player['takeaway'],'text':text,'provenance':{'dataset':p.name,'sha256':hashlib.sha256(raw).hexdigest(),'commit':os.environ.get('GITHUB_SHA','local-import')}})
  return {'schema_version':1,'generated_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'revision':os.environ.get('GITHUB_SHA','initial-import'),'records':records}
