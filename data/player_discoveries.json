@@ -1172,6 +1172,72 @@
         "watch_out": "The patch describes target acquisition, not projectile falloff, target tracking after acquisition, body/crit damage or Guardian TTK. Exact boundary behavior at 24 metres and interactions with other targeting bonuses require measurement.",
         "status": "Bungie Update 9.7.0, published 9 June 2026; historical patch description reviewed 2 November 2026. Current live uptime, damage and timing have not been independently measured."
       }
+    },
+    {
+      "id": "player:point-contact-thunderclap-charge-970",
+      "title": "Point-Contact Cannon Brace: charge the lightning, not just the punch",
+      "summary": "Bungie's June 9 update made Point-Contact Cannon Brace lightning strikes scale with Thunderclap charge duration, up to twice the lightning-strike damage, and says this stacks with the bonus from being Amplified.",
+      "text": "Bungie's June 9 update made Point-Contact Cannon Brace lightning strikes scale with Thunderclap charge duration, up to twice the lightning-strike damage, and says this stacks with the bonus from being Amplified.\n\nWhy it matters\nThis creates a testable Thunderclap rotation: entering the wind-up now sends lightning strikes, and a longer charge can strengthen the strikes. The published 2x refers to lightning-strike damage from charging, not automatically to the entire punch or overall boss DPS. Lightning-strike final blows also use a reworked flat melee-energy return rather than the old target-tier scaling.\n\nHow to use it\n1. Equip Point-Contact Cannon Brace and Thunderclap, and test on the same combatant type with no other damage buffs.\n2. Compare a short charge and a long charge, recording lightning-strike damage separately from the punch impact.\n3. Repeat both charge durations while Amplified, then track energy refunded from lightning-strike final blows.\n\nWhat to watch for\nDo not multiply the whole melee damage by two or claim infinite melee energy. The exact charge curve, amplified multiplier, boss damage, melee refund and cooldown are not established by the patch notes.\n\nSource & status\nOfficial historical Bungie Update 9.7.0 dated 9 June 2026; reviewed 3 November 2026. Current live damage and cooldowns have not been independently measured.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-03",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "Point-Contact Cannon Brace",
+        "Thunderclap",
+        "Amplified",
+        "lightning strike",
+        "Titan"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Ability damage",
+        "activity": "PvE",
+        "guardian": "Titan",
+        "takeaway": "Bungie's June 9 update made Point-Contact Cannon Brace lightning strikes scale with Thunderclap charge duration, up to twice the lightning-strike damage, and says this stacks with the bonus from being Amplified.",
+        "explanation": "This creates a testable Thunderclap rotation: entering the wind-up now sends lightning strikes, and a longer charge can strengthen the strikes. The published 2x refers to lightning-strike damage from charging, not automatically to the entire punch or overall boss DPS. Lightning-strike final blows also use a reworked flat melee-energy return rather than the old target-tier scaling.",
+        "steps": [
+          "Equip Point-Contact Cannon Brace and Thunderclap, and test on the same combatant type with no other damage buffs.",
+          "Compare a short charge and a long charge, recording lightning-strike damage separately from the punch impact.",
+          "Repeat both charge durations while Amplified, then track energy refunded from lightning-strike final blows."
+        ],
+        "watch_out": "Do not multiply the whole melee damage by two or claim infinite melee energy. The exact charge curve, amplified multiplier, boss damage, melee refund and cooldown are not established by the patch notes.",
+        "status": "Official historical Bungie Update 9.7.0 dated 9 June 2026; reviewed 3 November 2026. Current live damage and cooldowns have not been independently measured."
+      }
+    },
+    {
+      "id": "player:acd0-no-pvp-melee-dr-970",
+      "title": "ACD/0 Feedback Fence: do not count on its old melee protection in Crucible",
+      "summary": "Bungie's June 9 patch explicitly removed ACD/0 Feedback Fence's melee damage resistance against players.",
+      "text": "Bungie's June 9 patch explicitly removed ACD/0 Feedback Fence's melee damage resistance against players.\n\nWhy it matters\nA PvE defensive build can appear tanky on paper while failing in Crucible if the calculator carries a player-versus-environment reduction into player-versus-player combat. ACD/0's former player melee resistance must not be included in a PvP survivability or weapon-cleanup breakpoint model.\n\nHow to use it\n1. If using ACD/0 Feedback Fence in Crucible, remove its old melee damage resistance from your expected protection.\n2. Compare a controlled incoming Guardian melee hit with and without the Exotic under otherwise identical conditions.\n3. Evaluate any remaining Exotic effects separately; do not treat the removed resistance as evidence that the whole Exotic is inactive.\n\nWhat to watch for\nThe note only removes melee damage resistance versus players. It does not quantify any remaining effects, other defensive buffs or damage in PvE, and it does not provide a new Guardian TTK.\n\nSource & status\nOfficial historical Bungie Update 9.7.0 dated 9 June 2026; reviewed 3 November 2026. Current live PvP damage has not been independently measured.",
+      "source_url": "https://www.bungie.net/7/en/News/Article/destiny_update_9_7_0",
+      "source_published_at": "2026-06-09",
+      "reviewed_at": "2026-11-03",
+      "evidence": "official_historical",
+      "runtime_verified": false,
+      "match_terms": [
+        "ACD/0 Feedback Fence",
+        "melee damage resistance",
+        "Crucible",
+        "PvP",
+        "Titan"
+      ],
+      "player": {
+        "version": 1,
+        "category": "Survival",
+        "activity": "PvP",
+        "guardian": "Titan",
+        "takeaway": "Bungie's June 9 patch explicitly removed ACD/0 Feedback Fence's melee damage resistance against players.",
+        "explanation": "A PvE defensive build can appear tanky on paper while failing in Crucible if the calculator carries a player-versus-environment reduction into player-versus-player combat. ACD/0's former player melee resistance must not be included in a PvP survivability or weapon-cleanup breakpoint model.",
+        "steps": [
+          "If using ACD/0 Feedback Fence in Crucible, remove its old melee damage resistance from your expected protection.",
+          "Compare a controlled incoming Guardian melee hit with and without the Exotic under otherwise identical conditions.",
+          "Evaluate any remaining Exotic effects separately; do not treat the removed resistance as evidence that the whole Exotic is inactive."
+        ],
+        "watch_out": "The note only removes melee damage resistance versus players. It does not quantify any remaining effects, other defensive buffs or damage in PvE, and it does not provide a new Guardian TTK.",
+        "status": "Official historical Bungie Update 9.7.0 dated 9 June 2026; reviewed 3 November 2026. Current live PvP damage has not been independently measured."
+      }
     }
   ]
 }
