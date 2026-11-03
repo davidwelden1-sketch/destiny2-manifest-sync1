@@ -19,4 +19,11 @@ class PlayerGuidesTest(unittest.TestCase):
   with tempfile.TemporaryDirectory() as folder:
    root=Path(folder);(root/'data').mkdir();v=json.loads((ROOT/'data/player_discoveries.json').read_text())['records'][0];(root/'data/player_discoveries.json').write_text(json.dumps({'records':[v,v]}))
    with self.assertRaises(ValueError):m.build(root)
+ def test_provenance_rejects_invalid_urls_and_dates(self):
+  base=json.loads((ROOT/'data/player_discoveries.json').read_text())['records'][0]
+  for field,value in [('source_url','https://'),('source_url','https://user:pass@example.org/a'),('source_url','http://example.org/a'),('reviewed_at','2026-02-30'),('source_published_at','not-a-date'),('reviewed_at','2020-01-01')]:
+   with self.subTest(field=field,value=value),tempfile.TemporaryDirectory() as folder:
+    root=Path(folder);(root/'data').mkdir();v=json.loads(json.dumps(base));v[field]=value
+    (root/'data/player_discoveries.json').write_text(json.dumps({'records':[v]}))
+    with self.assertRaises(ValueError):m.build(root)
 if __name__=='__main__':unittest.main()
