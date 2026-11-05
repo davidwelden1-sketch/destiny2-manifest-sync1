@@ -2,7 +2,7 @@ name: Publish VAELTRION research feed
 on:
   push:
     branches: [main]
-    paths: ['data/**', 'scripts/publish_research.py', '.github/workflows/publish-research.yml']
+    paths: ['data/**', 'scripts/publish_research.py', 'tests/test_player_discoveries.py', '.github/workflows/publish-research.yml']
   schedule:
     - cron: '29 * * * *'
   workflow_dispatch:
