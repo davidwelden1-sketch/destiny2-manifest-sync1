@@ -10,6 +10,8 @@ def build(root):
   player=v.get('player',{})
   if player.get('version')!=1 or not all(isinstance(player.get(k),str) and len(player[k])>=20 for k in ('takeaway','explanation','watch_out','status')):
    raise ValueError('Player guide needs a written explanation, practical advice and honest status')
+  if not all(isinstance(player.get(k),str) and player[k].strip() for k in ('category','activity','guardian')) or not isinstance(v.get('title'),str) or not v['title'].strip():
+   raise ValueError('Player guide needs readable title, category, activity and guardian labels')
   if not isinstance(player.get('steps'),list) or not 1<=len(player['steps'])<=8 or not all(isinstance(x,str) and len(x)>=12 for x in player['steps']):
    raise ValueError('Player guide needs readable steps')
   if v['id'] in ids or v.get('evidence') not in ('official_historical','research') or v.get('runtime_verified') is not False:
